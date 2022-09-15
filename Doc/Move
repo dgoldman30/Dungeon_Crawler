@@ -23,7 +23,7 @@ The user should be able to move their character to the location in the map where
 The user inputs the location they want to move to by tapping the location in the GUI and their selected character will move to that location in the game.
 
 #Extensions
-The input movement isn't possible and the player is alerted to move to a location within the parameters.
+The input movement isn't possible and the player is alerted to move to a location within the parameters. If there is an enemy in the location of the tap, the character should attack the enemy.
 
 #Special Requirements
 Touch screen UI on an andriod device.
