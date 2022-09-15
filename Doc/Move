@@ -14,7 +14,7 @@ The user
 The user cares about this function so they can play the game effectively. The programmers care about this function so the game is interactable.
 
 #Preconditions
-Create a character and start the game.
+Creae a character and start the game.
 
 #Postconditions
 The user should be able to move their character to the location in the map where they press the screen.
