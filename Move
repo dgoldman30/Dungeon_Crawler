@@ -1,0 +1,13 @@
+#Use Case Name
+#Scope
+#Level
+#Primary actor
+#Stakeholders and interest
+#Preconditions
+#Postconditions
+#Main Success scenario
+#Extensions
+#Special Requirements
+#Technology and data variations list
+#Frequency of occurrence
+#Miscellaneous
