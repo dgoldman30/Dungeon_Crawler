@@ -1,0 +1,29 @@
+# Glossary
+- Roguelike - a type of game that features permadeath and unlockables through successive playthroughs
+- Permadeath - death is permanent
+- Race - the species of a creature. The user selects a race during character creation
+- Class - the specialization of the creature. The user selects a class during character creation.
+- Attributes:
+  - Strength - influences the creatures' damage and health
+  - Dexterity - influences the creatures' accuracy and dodge value (DV)
+  - Intelligence - influences the creatures' magic prowess and mana reserves. With higher intelligence a creature is able to cast higher level spells and deal more damage.
+  - Willpower - influences the creatures' spell resistance and cooldown rate on skills.
+- Skills:
+  - Melee - influences characters' ability with melee weapons
+  - Ranged - influences characters' ability with ranged weapons
+  - Spellcasting - influences characters' ability to overcome spell resistance
+  - Shield - influences characters' ability to block attacks
+  - Dodge - influences characters' DV
+  - Armor - influences characters' armor value (AV)
+  - Invocation - character's ability to use magic items
+  - Faith - represents characters' connection with their deity
+  - Fire magic - represents the characters' ability with fire magic
+  - Earth magic - represents the characters' ability with earth magic
+  - Air magic - represents the characters' ability with air magic
+  - Water magic - represents the characters' ability with water magic
+- Items:
+  - Scroll - can be consumed to cast or learn the spell written upon it
+  - Potion - can be consumed to receive the potion's effect
+  - Wand - can be activated a limited number of times to discharge the given spell
+  - Artifact - rare items with extra effects
+  
