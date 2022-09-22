@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6ee96b81-5b88-4f7c-b3f5-a35b415b3c62" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Doc/supplementary-spec.md" beforeDir="false" afterPath="$PROJECT_DIR$/Doc/supplementary-spec.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dungeon Crawler/High-level vision.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/High-level vision.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Doc/iteration-plan.md" beforeDir="false" afterPath="$PROJECT_DIR$/Doc/iteration-plan.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,6 +18,9 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2Ep8Ftc4sZ28t0LJPXH3TV7FjyB" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
