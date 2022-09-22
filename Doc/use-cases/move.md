@@ -1,0 +1,37 @@
+# Use Case Name
+Move
+
+# Scope
+The Game
+
+# Level
+User goal
+
+# Primary actor
+The user
+
+# Stakeholders and interest
+The user cares about this function, so they can play the game effectively. The programmers care about this function so the game is interactable.
+
+# Preconditions
+Create a character and start the game.
+
+# Postconditions
+The user should be able to move their character to the location in the map where they press the screen.
+
+# Main success scenario
+The user inputs the location they want to move to by tapping the location in the GUI and their selected character will move to that location in the game.
+
+# Extensions
+The input movement isn't possible and the player is alerted to move to a location within the parameters.
+
+# Special Requirements
+Touch screen UI on an android device.
+
+# Technology and data variations list
+Where the screen is touched on the touch screen UI.
+
+# Frequency of occurrence
+High priority as users will be consistently moving in the game to fight enemies and collect items.
+
+# Miscellaneous
