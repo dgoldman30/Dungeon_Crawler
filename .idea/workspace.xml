@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6ee96b81-5b88-4f7c-b3f5-a35b415b3c62" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="8e5e9e66-51d0-4a2f-a330-b883ce5d1712" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/Doc/iteration-plan.md" beforeDir="false" afterPath="$PROJECT_DIR$/Doc/iteration-plan.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
