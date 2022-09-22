@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6ee96b81-5b88-4f7c-b3f5-a35b415b3c62" name="Changes" comment="Labels fixed">
-      <change afterPath="$PROJECT_DIR$/Doc/Supspec.md" afterDir="false" />
+    <list default="true" id="6ee96b81-5b88-4f7c-b3f5-a35b415b3c62" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Doc/Actions/Move" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Doc/Actions/attack.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Doc/Actions/cast-spell.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Doc/Actions/equip-items.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Doc/Actions/itemInteract.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Doc/Actions/use-items.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Doc/save-game.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Doc/start-game.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Doc/use-cases/Move" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Doc/supplementary-spec.md" beforeDir="false" afterPath="$PROJECT_DIR$/Doc/supplementary-spec.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dungeon Crawler/High-level vision.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/High-level vision.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,7 +115,14 @@
       <option name="project" value="LOCAL" />
       <updated>1663685553887</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Added supplementary-spec.md">
+      <created>1663884963603</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1663884963603</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -144,6 +144,7 @@
     <MESSAGE value="updated" />
     <MESSAGE value="Finished item interact" />
     <MESSAGE value="Labels fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="Labels fixed" />
+    <MESSAGE value="Added supplementary-spec.md" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added supplementary-spec.md" />
   </component>
 </project>
