@@ -1,5 +1,5 @@
 # Use Case Name
-Attack
+Fight Enemy
 
 # Scope
 The Game
@@ -13,7 +13,8 @@ The user
 # Stakeholders and interest
 User wants to be able to attack enemy 
 # Preconditions
-User must move and tap on enemy 
+- User must move and tap on enemy 
+- User must have found enemy in the dungeon
 
 # Postconditions
 User attacks enemy and inflicts a specific amount of damage.
@@ -23,7 +24,7 @@ The user taps on an enemy, the hit registers and the enemy takes damage.
 
 # Extensions
 - If no enemy is present, the character goes to the tapped location
-- Spell possibilities, in which we use spells on enemies
+- Spell and item possibilities, in which we use spells or items on enemies(call upon use-item)
 
 # Special Requirements
 - Functioning touch screen UI
