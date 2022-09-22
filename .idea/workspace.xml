@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6ee96b81-5b88-4f7c-b3f5-a35b415b3c62" name="Changes" comment="Labels fixed">
-      <change beforePath="$PROJECT_DIR$/Doc/Move" beforeDir="false" afterPath="$PROJECT_DIR$/Doc/Move" afterDir="false" />
+    <list default="true" id="6ee96b81-5b88-4f7c-b3f5-a35b415b3c62" name="Changes" comment="word editing">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,7 +109,21 @@
       <option name="project" value="LOCAL" />
       <updated>1663685553887</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Move txt file now a markdown">
+      <created>1663685958075</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1663685958075</updated>
+    </task>
+    <task id="LOCAL-00012" summary="word editing">
+      <created>1663686043800</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1663686043800</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -131,6 +145,8 @@
     <MESSAGE value="updated" />
     <MESSAGE value="Finished item interact" />
     <MESSAGE value="Labels fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="Labels fixed" />
+    <MESSAGE value="Move txt file now a markdown" />
+    <MESSAGE value="word editing" />
+    <option name="LAST_COMMIT_MESSAGE" value="word editing" />
   </component>
 </project>
