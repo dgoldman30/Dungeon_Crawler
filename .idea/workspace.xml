@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6ee96b81-5b88-4f7c-b3f5-a35b415b3c62" name="Changes" comment="Labels fixed">
-      <change beforePath="$PROJECT_DIR$/Doc/Move" beforeDir="false" afterPath="$PROJECT_DIR$/Doc/Move" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Doc/Actions/attack.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +22,9 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "/home/dgoldman/cmpu203-team-b",
     "settings.editor.selected.configurable": "editor.preferences.tabs"
   }
 }]]></component>
