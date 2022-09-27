@@ -1,21 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-
-    <list default="true" id="6ee96b81-5b88-4f7c-b3f5-a35b415b3c62" name="Changes" comment="">
+    <list default="true" id="6ee96b81-5b88-4f7c-b3f5-a35b415b3c62" name="Changes" comment="Added supplementary-spec.md">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Doc/glossary.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/glossary.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Doc/iteration-plan.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/iteration-plan.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Doc/supplementary-spec.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/supplementary-spec.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Doc/use-cases/attack.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/use-cases/attack.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Doc/use-cases/cast-spell.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/use-cases/cast-spell.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Doc/use-cases/equip-items.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/use-cases/equip-items.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Doc/use-cases/itemInteract.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/use-cases/itemInteract.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Doc/use-cases/move.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/use-cases/move.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Doc/use-cases/save-game.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/use-cases/save-game.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Doc/use-cases/start-game.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/use-cases/start-game.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Doc/use-cases/use-items.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/use-cases/use-items.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Doc/vision.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/vision.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/doc/use-cases/attack.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/use-cases/fight-enemy.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,14 +24,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/dgoldman/cmpu203-team-b&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.appearance&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "/home/dgoldman/cmpu203-team-b",
+    "settings.editor.selected.configurable": "Settings.Markdown"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/Doc" />
@@ -159,5 +147,9 @@
     <MESSAGE value="Labels fixed" />
     <MESSAGE value="Added supplementary-spec.md" />
     <option name="LAST_COMMIT_MESSAGE" value="Added supplementary-spec.md" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
