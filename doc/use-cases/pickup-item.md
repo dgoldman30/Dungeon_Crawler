@@ -1,5 +1,5 @@
 # Use Case Name
-Interact with item
+Pickup item
 
 # Scope
 The Game
@@ -14,16 +14,18 @@ The user
 The user cares about this function, so they can interact with items and increase their xp. The programmers care about this function so the game is fun and addictive.
 
 # Preconditions
-1. Create a character
-2. start the game
-3. Move to item/kill enemy 
+- The user needs a character
+- The character needs to be standing in the same square as an item on the ground
 
 # Postconditions
-The user should acquire object that could possibly affect their health/xp/attacking ability.
+The user has looted the item(s) on the ground
+
 # Main success scenario
-The user picks up the item and are affected based on what the item is.
+The user moves an item from the ground to their character's inventory
+
 # Extensions
-No inventory space and the user has to remove items in their inventory to pick new items up.
+- The character's inventory is full, and they must drop something
+- There isn't any pickup-able item on the ground
 
 # Special Requirements
 Touch screen UI on an andriod device.
