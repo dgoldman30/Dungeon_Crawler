@@ -26,7 +26,6 @@ User has cast their memorized spell
 
 # Extensions
 - User cancels their spell action (1,2)
-- The spell fails (3)
 
 # Special Requirements
 - Display memorized spell and allow for ranged targeting
