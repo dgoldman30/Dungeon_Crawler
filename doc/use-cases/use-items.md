@@ -20,12 +20,15 @@ The user must have a character with use-able items in their inventory.
 User has used the selected item
 
 # Main success scenario
-The user selects an item from their inventory to use.
+1. The character's inventory window is brought up
+2. The user selects an item from the inventory and uses it
+3. The effects of the item are applied to the character
+4. The window is closed
 
 # Extensions
-- The user tries to use an invalid item
-- The user consumes an item with a special effect that must be applied
-- The user learns a new spell and can decide to memorize it
+- The user tries to use an invalid item (2)
+- The user consumes an item with a special effect that must be applied (3)
+- The user learns a new spell and can decide to memorize it (3)
 
 # Special Requirements
 - Display the effects of use-able items in the inventory

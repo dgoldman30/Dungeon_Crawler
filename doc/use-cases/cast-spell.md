@@ -20,11 +20,13 @@ User must have a character with a memorized spell
 User has cast their memorized spell
 
 # Main success scenario
-The user casts their spell and selects a target if required.
+1. The cast spell button is selected
+2. The user selects a target if required
+3. The spell is cast and its effects are applied
 
 # Extensions
-- User cancels their spell action
-- The spell fails
+- User cancels their spell action (1,2)
+- The spell fails (3)
 
 # Special Requirements
 - Display memorized spell and allow for ranged targeting

@@ -14,31 +14,27 @@ The user
 User wants to start game so that they can begin playing
 
 # Preconditions
-Game must be installed
+No preconditions
 
 # Postconditions
 User has created a character and is ready to explore
 
 # Main success scenario
-The user selects:
-- Difficulty
-- Race
-- Class
-- Attributes
-- Name
+1. User selects a race
+2. User selects a class
+3. User assigns attribute points
+4. The character is created and placed in a random low-level dungeon
 
 # Extensions
-- User returns to the main menu
-- User quites the game
+- User can close the application (*)
+- User could return to main menu (*)
 
 # Special Requirements
 - Display character creation using a text based interface
 - Providing adequate space for touch selection 
 
 # Technology and data variations list
-- Touch select character creation options
-- Touch select to navigate the character creation screens
-- Touch select to confirm choices
+No significant technology/data variations
 
 # Frequency of occurrence
 Occurs once at the beginning of each new game

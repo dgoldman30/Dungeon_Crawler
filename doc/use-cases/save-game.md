@@ -20,11 +20,12 @@ User must be currently playing the game.
 User has saved and exited the game.
 
 # Main success scenario
-The user's game is saved, and they are returned to the main screen.
+1. The character's data is saved locally
+2. The user is returned to the start screen
 
 # Extensions
-- User is in a zone that doesn't allow saving
-- User cancels the save & quit request
+- User is in a zone that doesn't allow saving (1)
+- User cancels the save & quit request (*)
 
 # Special Requirements
 - Save the character's data to the device

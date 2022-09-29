@@ -3,6 +3,7 @@
 - Permadeath - death is permanent
 - Race - the species of a creature. The user selects a race during character creation
 - Class - the specialization of the creature. The user selects a class during character creation.
+- Experience(exp) - characters collect this by defeating enemies in order to level up
 - Attributes:
   - Strength - influences the creatures' damage and health
   - Dexterity - influences the creatures' accuracy and dodge value (DV)

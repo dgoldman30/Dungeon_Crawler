@@ -12,19 +12,22 @@ The user
 
 # Stakeholders and interest
 User wants to be able to attack enemy 
+
 # Preconditions
-- User must move and tap on enemy 
-- User must have found enemy in the dungeon
+- There must be an enemy in sight of the character
 
 # Postconditions
 User attacks enemy and inflicts a specific amount of damage.
 
 # Main success scenario
-The user taps on an enemy, the hit registers and the enemy takes damage. 
+1. The user taps on an adjacent enemy (or a further enemy if their character wields a ranged weapon)
+2. Both the character and the enemy perform their attack(s) on each other
+3. They take whatever damage the attack dealt
 
 # Extensions
-- If no enemy is present, the character goes to the tapped location
-- Spell and item possibilities, in which we use spells or items on enemies(call upon use-item)
+- If the enemy is out of range or the character is out of ammunition for their ranged weapon, the character will [move](file:///C:/CMPU-203/cmpu203-team-b/dpc/use-cases/move.md)  in the direction the user tapped
+- If the character takes lethal damage they die and receive a game over
+- If the enemy takes lethal damage they die and drop loot and the character receives exp for the kill
 
 # Special Requirements
 - Functioning touch screen UI

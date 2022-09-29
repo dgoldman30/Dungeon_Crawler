@@ -20,13 +20,15 @@ User must have a character with equip-able items.
 User has managed their equipped items.
 
 # Main success scenario
-The equip-item screen is pulled up and the user is able to change the items they have equipped in different slots.
+1. The equip-item window is brought up
+2. The user selects an item and attempts to equip it, replacing the item currently in the slot
+3. The equip-item window is closed
 
 # Extensions
-- User closes the equip-item window
-- User tries to equip an item in an invalid slot
-- User inspects an item
-- User removes an equipped item
+- User closes the equip-item window (*)
+- User tries to equip an item in an invalid slot (2)
+- User inspects an item (2)
+- User removes an equipped item (2)
 
 # Special Requirements
 - Display the available equipment slots and the equip-able items in the inventory

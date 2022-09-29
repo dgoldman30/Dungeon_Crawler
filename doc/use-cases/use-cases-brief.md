@@ -6,3 +6,4 @@
 - character-sheet - open the users character sheet and allow for inspection of information
 - throw-item - put item in your thrown item slot. Improvised weapons deal damage based on their weight
 - game-over - return to the main menu / character creation upon defeat
+- enter-combat - when the character comes into range of an enemy, they enter combat and each creature begins acting each turn until the combat is over
