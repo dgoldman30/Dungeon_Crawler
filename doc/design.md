@@ -1,3 +1,4 @@
+
 ```plantuml
 
 @startuml
@@ -7,10 +8,18 @@ hide empty methods
 
 'classes
 class Character {
+    race
+    class
     attributes
     skills
     items
     inventory
+    location
+}
+
+class Race {
+    favoredSkills
+    baseAttributes
 }
 
 class Item {
@@ -46,6 +55,14 @@ class Attack {
     range
 }
 
+class Map {
+    map[Tile]
+}
+
+class Tile {
+    contents
+}
+
 
 
 'associations
@@ -66,8 +83,34 @@ Character "1" --- "1" Attack : \tExecutes\t
 
 
 @enduml
+```
+
+```plantuml
 
 @startuml
-@enduml
+hide footbox
 
+actor User
+participant "c1 : Character" as character
+participant "race : Race" as race
+participant "class : Class" as class
+participant "attributes[i] : Attribute" as attribute
+
+User --> character : createCharacter()
+character --> race : race = create(pickRace())
+character --> class : class = creat(pickClass())
+character -> attribute : attribute[i] = setAttribute()
+
+@enduml
+```
+
+```plantuml
+@startuml
+
+hide footbox
+
+actor Character
+participant "location : "
+
+@enduml
 ```
