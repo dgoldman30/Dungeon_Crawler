@@ -1,4 +1,4 @@
-
+# Domain Model
 ```plantuml
 
 @startuml
@@ -84,7 +84,8 @@ Character "1" --- "1" Attack : \tExecutes\t
 
 @enduml
 ```
-
+# Sequence Diagrams
+start-game
 ```plantuml
 
 @startuml
@@ -104,6 +105,7 @@ character -> attribute : attribute[i] = setAttribute()
 @enduml
 ```
 
+move
 ```plantuml
 @startuml
 
@@ -121,6 +123,7 @@ char -> loc : moveTo()
 @enduml
 ```
 
+build-map
 ```plantuml
 @startuml
 
@@ -135,3 +138,35 @@ map -> tile : tile = create()
 
 @enduml
 ```
+
+cast-spell
+```plantuml
+@startuml
+
+hide footbox
+
+actor Character
+participant "s1 : Spell" as spell
+participant "t[i] : Tile" as target
+
+Character -> spell : castSpell()
+spell -> target : target = selectTile()
+
+@enduml
+```
+
+attack
+```plantuml
+@startuml
+
+hide footbox
+
+actor Character
+participant "e1 : Character" as enemy
+
+Character -> enemy : combat()
+@enduml
+```
+
+# Class Diagram
+
