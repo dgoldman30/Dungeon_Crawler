@@ -109,8 +109,29 @@ character -> attribute : attribute[i] = setAttribute()
 
 hide footbox
 
-actor Character
-participant "location : "
+actor User
+participant "location : Tile" as loc
+participant "c1 : Character" as char
+
+User -> loc : selectTile()
+char -> loc : moveTo()
+
+
+
+@enduml
+```
+
+```plantuml
+@startuml
+
+hide footbox
+
+actor System
+participant "map : Map" as map
+participant "t[i] : Tile" as tile
+
+System -> map : createMap()
+map -> tile : tile = create()
 
 @enduml
 ```
