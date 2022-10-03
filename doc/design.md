@@ -170,3 +170,59 @@ Character -> enemy : combat()
 
 # Class Diagram
 
+```plantuml
+@startuml
+
+hide footbox
+
+'classes
+class Character {
+    race
+    class
+    attributes
+    skills
+    items
+    inventory
+    location
+    --
+    moveTo(tile : Tile)
+    ...
+}
+
+class Enemy {
+    target
+}
+Character <|-- Enemy
+
+
+class Race {
+    favoredSkills
+    baseAttributes
+    --
+    
+}
+
+class Item {
+    description
+    --
+    
+}
+
+class Attribute {
+    value
+    name
+    --
+    public void increment()
+}
+
+class Skill {
+    value
+    name
+    description
+    toggled
+    --
+    public void increment()
+    public void toggle()
+}
+@enduml
+```
