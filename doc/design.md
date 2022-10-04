@@ -131,10 +131,10 @@ hide footbox
 
 actor System
 participant "map : Map" as map
-participant "t[i] : Tile" as tile
+participant "tiles : List<Tile>" as tiles
 
-System -> map : createMap()
-map -> tile : tile = create()
+System --> map : createMap()
+map --> tiles : tiles = create()
 
 @enduml
 ```
@@ -185,12 +185,15 @@ class Character {
     inventory
     location
     --
-    moveTo(tile : Tile)
-    ...
+    public void moveTo(tile : Tile)
+    public void attack(dir)
 }
 
 class Enemy {
     target
+    aggression
+    --
+    public Move[] pathfind()
 }
 Character <|-- Enemy
 
@@ -198,14 +201,13 @@ Character <|-- Enemy
 class Race {
     favoredSkills
     baseAttributes
-    --
-    
 }
 
 class Item {
     description
     --
-    
+    public void drop()
+    public void use()
 }
 
 class Attribute {
