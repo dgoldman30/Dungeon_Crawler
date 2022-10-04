@@ -164,7 +164,7 @@ hide footbox
 actor Character
 participant "e1 : Character" as enemy
 
-Character -> enemy : combat()
+Character -> enemy : attack()
 @enduml
 ```
 
