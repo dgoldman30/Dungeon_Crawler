@@ -258,10 +258,9 @@ Item <|-- Potion
 Item <|-- Armor
 
 class Tile {
-avaiable : boolean
-enemyTile : boolean
-
+available : boolean
 }
+
 class Game {
 Map : Tile[][]
 --
