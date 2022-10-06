@@ -2,7 +2,6 @@ public class Game {
     char[][] board;
     final char avail = 'X';
     final char occupied = 'E';
-    final char myChar = 'P';
     public Game() {
         this.board=  new char[10][10];
         for (int i = 0; i < board.length; i++) {
@@ -11,6 +10,7 @@ public class Game {
             }
         }
     }
+
 
     @Override
     public String toString() {

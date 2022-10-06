@@ -261,6 +261,8 @@ class Tile {
 available : boolean
 }
 
+'Here we're going to need to add associations between classes and specify now. We can do this while coding.
+'Association between Game and Player
 class Game {
 Map : Tile[][]
 --

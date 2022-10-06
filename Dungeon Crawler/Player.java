@@ -10,10 +10,12 @@ class Player extends Character {
     ArrayList<Item> inventory = new ArrayList<Item>();
     Tile location;
     Spell attunedSpell;
+    final char myChar;
 
     Player(Race race, Caste caste) {
         this.race = race;
         this.caste = caste;
+        myChar = 'P';
 
         for (int i = 0; i < this.race.favoredSkills.length; i++) {
             this.playerSkills.add(i, this.race.favoredSkills[i]);
@@ -27,6 +29,7 @@ class Player extends Character {
         for (int i = 0; i < this.caste.startingEquipment.length; i++) {
             this.inventory.add(this.caste.startingEquipment[i]);
         }
+
 
     }
 }
