@@ -1,6 +1,5 @@
 # Domain Model
 ```plantuml
-
 @startuml
 
 hide circle
@@ -9,7 +8,7 @@ hide empty methods
 'classes
 class Character {
     race
-    class
+    caste
     attributes
     skills
     items
@@ -17,7 +16,7 @@ class Character {
     location
 }
 
-class Race {
+class Caste {
     favoredSkills
     baseAttributes
 }
@@ -55,8 +54,8 @@ class Attack {
     range
 }
 
-class Map {
-    map[Tile]
+class Game {
+    map[TileR][TileC]
 }
 
 class Tile {
@@ -83,6 +82,7 @@ Character "1" --- "1" Attack : \tExecutes\t
 
 
 @enduml
+
 ```
 # Sequence Diagrams
 start-game
@@ -94,14 +94,15 @@ hide footbox
 actor User
 participant "c1 : Character" as character
 participant "race : Race" as race
-participant "class : Class" as class
+participant "caste : Caste" as caste
+participant "game : Game" as game
 participant "attributes[i] : Attribute" as attribute
 
 User --> character : createCharacter()
-character --> race : race = create(pickRace())
-character --> class : class = creat(pickClass())
+character --> race : race = pickRace()
+character --> caste : caste = pickCaste()
+character -> game : game = createGame()
 character -> attribute : attribute[i] = setAttribute()
-
 @enduml
 ```
 
@@ -123,19 +124,15 @@ char -> loc : moveTo()
 @enduml
 ```
 
-build-map
+updateGame
 ```plantuml
 @startuml
 
 hide footbox
 
 actor System
-participant "map : Map" as map
-participant "tiles : List<Tile>" as tiles
-
-System --> map : createMap()
-map --> tiles : tiles = create()
-
+participant "g1 : Game" as Game
+System -> Game : updateGame()
 @enduml
 ```
 
@@ -147,7 +144,7 @@ hide footbox
 
 actor Character
 participant "s1 : Spell" as spell
-participant "t[i] : Tile" as target
+participant "t[i][j] : Tile" as target
 
 Character -> spell : castSpell()
 spell -> target : target = selectTile()
@@ -180,7 +177,7 @@ abstract class Character {
     level : Int
     race : Race
     class : Class
-    attributes : Int[]
+    attributes : Attribute[]
     skills : Skill[]
     items : Item[]
     inventory : Tile[]
@@ -189,6 +186,8 @@ abstract class Character {
     --
     public void moveTo(tile : Tile)
     public void attack(dir : String)
+    public void selectRace()
+    public void selectClass()
 }
 
 class  NPC {
@@ -220,7 +219,7 @@ class Class {
     startingEquipment : Item[]
 }
 
-class Item {
+interface Item {
     description
     --
     public void drop()
@@ -236,12 +235,41 @@ class Attribute {
 
 class Skill {
     value : float
-    name
-    description
-    toggled
+    name : String
+    description : String
+    toggled : Boolean
     --
     public void increment()
     public void toggle()
 }
+class Weapon {
+damage : int 
+accuracy : int 
+}
+class Potion {
+attributeMulti : int 
+usageTime : int 
+}
+class Armor {
+healthMulti : int 
+}
+Item <|-- Weapon
+Item <|-- Potion
+Item <|-- Armor
+
+class Tile {
+avaiable : boolean
+enemyTile : boolean
+
+}
+class Game {
+Map : Tile[][]
+--
+public Game updateGame()
+public String toString()
+}
+
+
+
 @enduml
 ```
