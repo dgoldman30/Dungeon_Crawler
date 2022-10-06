@@ -176,31 +176,48 @@ Character -> enemy : attack()
 hide footbox
 
 'classes
-class Character {
-    race
-    class
-    attributes
-    skills
-    items
-    inventory
-    location
+abstract class Character {
+    level : Int
+    race : Race
+    class : Class
+    attributes : Int[]
+    skills : Skill[]
+    items : Item[]
+    inventory : Tile[]
+    location : Tile
+    attunedSpell : Spell
     --
     public void moveTo(tile : Tile)
-    public void attack(dir)
+    public void attack(dir : String)
 }
 
-class Enemy {
-    target
-    aggression
+class  NPC {
+    target : Character
+    disposition : Int
     --
     public Move[] pathfind()
 }
-Character <|-- Enemy
+
+class Player {
+    experience : Int
+    --
+    public void equip(item : Item)
+    public void attune(spell : Spell)
+    public void levelUp()
+}
+
+Character <|-- NPC
+Character <|-- Player
 
 
 class Race {
-    favoredSkills
-    baseAttributes
+    favoredSkills : Skills[]
+    baseAttributes : Attributes[]
+}
+
+class Class {
+    favoredSkills : Skills[]
+    startingEquipment : Item[]
 }
 
 class Item {
@@ -211,14 +228,14 @@ class Item {
 }
 
 class Attribute {
-    value
+    value : int
     name
     --
     public void increment()
 }
 
 class Skill {
-    value
+    value : float
     name
     description
     toggled
