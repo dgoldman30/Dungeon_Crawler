@@ -187,7 +187,7 @@ abstract class Character {
     public void moveTo(tile : Tile)
     public void attack(dir : String)
     public void selectRace()
-    public void selectClass()
+    public void selectCaste()
 }
 
 class  NPC {
@@ -214,7 +214,7 @@ class Race {
     baseAttributes : Attributes[]
 }
 
-class Class {
+class Caste {
     favoredSkills : Skills[]
     startingEquipment : Item[]
 }
