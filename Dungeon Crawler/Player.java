@@ -5,30 +5,34 @@ class Player extends Character {
     Race race;
     Caste caste ;
     ArrayList<Attribute> attributes = new ArrayList<Attribute>(Character.attributes);
-    ArrayList<Skill> playerSkills = new ArrayList<Skill>(Character.skills);
+    ArrayList<Skill> skills = new ArrayList<Skill>(Game.skills);
     ArrayList<Item> equipment = new ArrayList<Item>();
     ArrayList<Item> inventory = new ArrayList<Item>();
     Tile location;
     Spell attunedSpell;
-    final char myChar;
+    char myChar;
 
-    Player(Race race, Caste caste) {
+    Player(Race race, Caste caste, int[] attPoints) {
         this.race = race;
         this.caste = caste;
         myChar = 'P';
 
-        for (int i = 0; i < this.race.favoredSkills.length; i++) {
-            this.playerSkills.add(i, this.race.favoredSkills[i]);
+        // increment aptitude for favorite caste and race skills
+        for (int i = 0; i < this.race.favoredSkills.size(); i++) {
+            this.skills.get(this.skills.indexOf(this.race.favoredSkills.get(i))).aptitude++;
         }
-        for (int i = 0; i < this.caste.favoredSkills.length; i++) {
-            if (!this.playerSkills.contains(this.caste.favoredSkills[i])) {
-                this.playerSkills.add(i, this.caste.favoredSkills[i]);
-            }
+        for (int i = 0; i < this.caste.favoredSkills.size(); i++) {
+            this.skills.get(this.skills.indexOf(this.caste.favoredSkills.get(i))).aptitude++;
         }
 
-        for (int i = 0; i < this.caste.startingEquipment.length; i++) {
-            this.inventory.add(this.caste.startingEquipment[i]);
+        // add the race attributes
+        for (int i = 0; i < attributes.size(); i++) {
+            this.attributes.get(i).value += (race.attributeAdjustments[i] + attPoints[i]);
         }
+
+       // for (int i = 0; i < this.caste.startingEquipment.length; i++) {
+       //     this.inventory.add(this.caste.startingEquipment[i]);
+       // }
 
 
     }

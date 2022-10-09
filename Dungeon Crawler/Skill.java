@@ -4,6 +4,7 @@ public class Skill {
     String name;
     String description;
     boolean toggled = false;
+    int aptitude;
 
     public Skill(String name, String description) {
         this.name = name;
@@ -11,7 +12,10 @@ public class Skill {
     }
 
     private void increment() {
-        if (this.toggled) {this.value+= 1;} else {this.value+=0.5;}
+        if (this.toggled) {
+            this.value += (1 * aptitude);
+        } else { this.value += 0.5 * aptitude; }
+
     }
 
     private void toggle() {

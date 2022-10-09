@@ -1,13 +1,15 @@
 import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
-class Caste {
-    ArrayList<Skill> favoredSkills = new ArrayList<Skill>();
-    ArrayList<Item> startingItems = new ArrayList<Item>();
+final class Caste {
+    ArrayList<Skill> favoredSkills;
+    ArrayList<Item> startingItems;
     String description;
+    String name;
 
-    Caste(ArrayList<Skill> favoredSkills, ArrayList<Item> startingItems, String description) {
+    Caste(ArrayList<Skill> favoredSkills, ArrayList<Item> startingItems, String name, String description) {
         this.favoredSkills = favoredSkills;
         this.startingItems = startingItems;
+        this.name = name;
         this.description = description;
     }
 
