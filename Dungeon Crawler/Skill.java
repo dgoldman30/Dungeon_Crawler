@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 public class Skill {
-    float value;
+    float value = 0;
     String name;
     String description;
     boolean toggled = false;
-    int aptitude;
+    int aptitude = 0;
 
     public Skill(String name, String description) {
         this.name = name;
@@ -13,7 +13,7 @@ public class Skill {
 
     private void increment() {
         if (this.toggled) {
-            this.value += (1 * aptitude);
+            this.value += (aptitude);
         } else { this.value += 0.5 * aptitude; }
 
     }

@@ -1,39 +1,74 @@
+import java.awt.event.KeyAdapter;
 import java.util.ArrayList;
+import java.awt.event.KeyEvent;
+import java.util.Scanner;
+
 public class Game {
-    Tile[][] board;
-    char[][] boardDisplay;
+    Tile[][] map;
+    char[][] mapDisplay;
     final char avail = 'X';
     final char enemy = 'E';
     final char pc = 'C';
     final char vertWall = '|';
     final char horWall = '—';
 
+    // static arrays of castes and races
     public final static Caste[] castes = {Gladiator(), Urchin(), Woodsman(), Fisherman(), Apprentice(), Clergyman() };
     public final static Race[] races = {Human(), Minotaur(), Spriggan(), Dwarf(), Nymph(), Orc(), Kenku() };
 
     public Game() {
+        TextUI ui = new TextUI();
+        // create a player character
+        Player pc = ui.characterCreation();
+        // create a map
+        createMap(10);
 
-        this.board =  new Tile[10][10];
-        this.boardDisplay = new char[10][10];
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[0].length; j++) {
-                board[i][j] = new Tile(avail);
+        move(pc);
+    }
+
+    public void move(Character subject) {
+        Tile curLoc = subject.location;
+        Tile loc = curLoc;
+        Scanner scanner = new Scanner(System.in);
+        String keyCode = scanner.next();
+
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[i].length; j++) {
+                if (map[i][j] == curLoc) {
+                    switch (keyCode) {
+                        case "37" -> loc = map[i-1][j]; // if left move left
+                        case "38" -> loc = map[i][j-1]; // if up move up
+                        case "39" -> loc = map[i+1][j]; // if right move right
+                        case "40" -> loc = map[i][j+1]; // if down move down
+                    }
+                }
+            }
+        }
+        subject.location = loc;
+    }
+
+    public void createMap(int size) {
+        this.map = new Tile[size][size];
+        this.mapDisplay = new char[size][size];
+
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[0].length; j++) {
+                map[i][j] = new Tile(avail);
                 /*
                 Need to check if the Tile has a Character on it and display the appropriate char
                  */
-                boardDisplay[i][j] = board[i][j].display; //create the visual field
+                mapDisplay[i][j] = map[i][j].display; //create the visual field
             }
         }
     }
 
-
     @Override
     public String toString() {
         String ret = "";
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[0].length; j++) {
-                ret += boardDisplay[i][j] + "  ";
-                if (j == board.length - 1) {
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[0].length; j++) {
+                ret += mapDisplay[i][j] + "  ";
+                if (j == map.length - 1) {
                     ret += "\n";
                 }
             }
@@ -60,7 +95,6 @@ public class Game {
         skills.add(melee);skills.add(ranged);skills.add(spellcasting);skills.add(shield);skills.add(dodge);skills.add(armor);
         skills.add(invocation);skills.add(faith);skills.add(fireMagic);skills.add(earthMagic);skills.add(airMagic);skills.add(waterMagic);
     }
-
 
     // CASTES
     // Gladiator
@@ -252,5 +286,4 @@ public class Game {
                 "Kenku resemble large crows and typically reside in the slums of large cities.");
         return kenku;
     }
-
 }

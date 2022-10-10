@@ -36,4 +36,13 @@ class Player extends Character {
 
 
     }
+
+    public void move(Tile newLoc) {
+        this.location = newLoc;
+    }
+
+    public void setAttunedSpell(Spell spell) {
+        this.attunedSpell = spell;
+    }
+
 }
