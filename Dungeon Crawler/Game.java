@@ -5,14 +5,9 @@ import java.util.Scanner;
 
 public class Game {
     Tile[][] map;
-    char[][] mapDisplay;
     final char avail = 'X';
     final char enemy = 'E';
     final char pc = 'C';
-    final char vertWall = '|';
-    final char horWall = '—';
-
-    // static arrays of castes and races
 
     public Game() {
         TextUI ui = new TextUI();
@@ -24,6 +19,7 @@ public class Game {
         // create a map
         createMap(10);
         pc.location = map[0][0];
+        ui.displayMap(map);
         move(pc);
     }
 
@@ -50,33 +46,13 @@ public class Game {
 
     public void createMap(int size) {
         this.map = new Tile[size][size];
-        this.mapDisplay = new char[size][size];
-
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[0].length; j++) {
-                map[i][j] = new Tile(avail);
-                /*
-                Need to check if the Tile has a Character on it and display the appropriate char
-                 */
-                mapDisplay[i][j] = map[i][j].display; //create the visual field
+                map[i][j] = new Tile();
             }
         }
     }
-
-    @Override
-    public String toString() {
-        String ret = "";
-        for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map[0].length; j++) {
-                ret += mapDisplay[i][j] + "  ";
-                if (j == map.length - 1) {
-                    ret += "\n";
-                }
-            }
-        }
-        return ret;
-    }
-
+    
     // SKILLS
     public static ArrayList<Skill> skills = new ArrayList<Skill>(11);
     public void createSkills() {

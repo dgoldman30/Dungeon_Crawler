@@ -22,6 +22,7 @@ abstract class Character {
     ArrayList<Item> inventory = new ArrayList<Item>();
     Tile location;
     Spell attunedSpell;
+    char myChar;
 
     Character(){}
     Character(Race race, Caste caste) {

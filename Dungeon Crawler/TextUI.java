@@ -7,7 +7,6 @@ public class TextUI {
         System.out.println("You have created a new " + pc.race.name + pc.caste.name + "! Time to explore!");
         return pc;
     }
-
     public Race pickRace() {
         Race race;
         System.out.println("Each Race has different set of favored Skills \n Please Select a Race from the list below");
@@ -20,7 +19,6 @@ public class TextUI {
         System.out.println("You have selected Race: " + race.name);
         return race;
     }
-
     public Caste pickCaste() {
         Caste caste;
         System.out.println("Each caste favored skills and a set of starting equipment \n Please select a caste from the list below");
@@ -33,7 +31,6 @@ public class TextUI {
         System.out.println("You have selected " + caste.name);
         return caste;
     }
-
     public int[] pickAtt() {
         int[] points = new int[4];
         System.out.println("You get to assign 4 additional attribute points to your character \n " +
@@ -48,6 +45,14 @@ public class TextUI {
         return points;
     }
 
-
+    public void displayMap(Tile[][] map) {
+        char[][] ret = new char[map.length][map.length];
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map.length; j++) {
+                ret[i][j] = map[i][j].display;
+            }
+        }
+        System.out.print(ret);
+    }
 
 }

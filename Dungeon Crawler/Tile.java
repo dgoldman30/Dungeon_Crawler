@@ -6,7 +6,9 @@ public class Tile {
     //char display = occupant.sprite; //display the occupants sprite
     ArrayList<Item> contents = new ArrayList<>();
 
-    Tile(char display) {
-        this.display = display;
+    Tile() {
+        if (occupant != null) {
+            display = occupant.myChar;
+        } else display = 'X';
     }
 }
