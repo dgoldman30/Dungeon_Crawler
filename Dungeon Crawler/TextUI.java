@@ -4,7 +4,7 @@ public class TextUI {
 
     public Player characterCreation() {
         Player pc = new Player(pickRace(), pickCaste(), pickAtt());
-        System.out.println("You have created a new " + pc.race.name + pc.caste.name + "! Time to explore!");
+        System.out.println("You have created a new " + pc.race.name + " " + pc.caste.name + "! Time to explore! Use the WASD keys to move around");
         return pc;
     }
     public Race pickRace() {
@@ -45,14 +45,18 @@ public class TextUI {
         return points;
     }
 
-    public void displayMap(Tile[][] map) {
-        char[][] ret = new char[map.length][map.length];
+
+    public String displayMap(Tile[][] map) {
+        String ret = "";
+        char[][] chars = new char[map.length][map.length];
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map.length; j++) {
-                ret[i][j] = map[i][j].display;
+                chars[i][j] = map[i][j].display;
+                ret += chars[i][j] + " ";
+                if (j == map.length -1) ret += "\n";
             }
         }
-        System.out.print(ret);
+        return ret;
     }
 
 }

@@ -48,4 +48,9 @@ class Player extends Character {
         this.attunedSpell = spell;
     }
 
+    public void occupy(Tile tile) {
+        this.location = tile;
+        tile.display = this.myChar;
+    }
+
 }

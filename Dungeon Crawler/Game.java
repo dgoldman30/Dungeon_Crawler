@@ -10,7 +10,7 @@ public class Game {
     final char enemy = 'E';
     final char pc = 'C';
 
-    public Game() {
+    public Game(int size) {
         TextUI ui = new TextUI();
         createSkills();
         createCastes();
@@ -18,11 +18,14 @@ public class Game {
         // create a player character
         Player pc = ui.characterCreation();
         // create a map
-        createMap(10);
-        pc.location = map[0][0];
-        ui.displayMap(map);
-        move(pc);
+        createMap(size);
+        pc.occupy(map[0][0]);
+        while (true) {
+            System.out.print(ui.displayMap(map));
+            move(pc);
+        }
     }
+
 
     public void move(Character subject) {
         Tile curLoc = subject.location;
@@ -34,10 +37,14 @@ public class Game {
             for (int j = 0; j < map[i].length; j++) {
                 if (map[i][j] == curLoc) {
                     switch (keyCode) {
-                        case "37" -> loc = map[i-1][j]; // if left move left
-                        case "38" -> loc = map[i][j-1]; // if up move up
-                        case "39" -> loc = map[i+1][j]; // if right move right
-                        case "40" -> loc = map[i][j+1]; // if down move down
+                        case "65": loc = map[i-1][j]; // if left move left
+                            break;
+                        case "87": loc = map[i][j-1]; // if up move up
+                            break;
+                        case "68": loc = map[i+1][j]; // if right move right
+                            break;
+                        case "83": loc = map[i][j+1]; // if down move down
+                            break;
                     }
                 }
             }
@@ -53,7 +60,9 @@ public class Game {
             }
         }
     }
-    
+
+
+
     // SKILLS
     public static ArrayList<Skill> skills = new ArrayList<Skill>(11);
     public void createSkills() {
