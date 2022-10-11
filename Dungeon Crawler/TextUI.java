@@ -4,6 +4,7 @@ public class TextUI {
 
     public Player characterCreation() {
         Player pc = new Player(pickRace(), pickCaste(), pickAtt());
+        System.out.println("You have created a new " + pc.race.name + pc.caste.name + "! Time to explore!");
         return pc;
     }
 
@@ -16,7 +17,7 @@ public class TextUI {
         }
         Scanner scanner = new Scanner(System.in);
         race =  Game.races[scanner.nextInt()];
-        System.out.println("You have selected Race: " + race);
+        System.out.println("You have selected Race: " + race.name);
         return race;
     }
 
@@ -29,7 +30,7 @@ public class TextUI {
         }
         Scanner scanner = new Scanner(System.in);
         caste = Game.castes[scanner.nextInt()];
-        System.out.println("You have selected " + caste);
+        System.out.println("You have selected " + caste.name);
         return caste;
     }
 
@@ -38,10 +39,11 @@ public class TextUI {
         System.out.println("You get to assign 4 additional attribute points to your character \n " +
                 "Select 1 for STR, 2 for DEX, 3 for INT, and 4 for WILL");
         Scanner scanner = new Scanner(System.in);
-        for (int i = 0; i < 5; i++) {
-            int ref = scanner.nextInt() - 1;
+        for (int i = 0; i < 4; i++) {
+            int ref = scanner.nextInt()-1;
             points[ref] += 1;
             System.out.println("You have increased your " + Character.attributes.get(ref).name);
+
         }
         return points;
     }

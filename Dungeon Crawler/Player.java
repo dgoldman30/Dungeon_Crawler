@@ -26,8 +26,8 @@ class Player extends Character {
         }
 
         // add the race attributes
-        for (int i = 0; i < attributes.size(); i++) {
-            this.attributes.get(i).value += (race.attributeAdjustments[i] + attPoints[i]);
+        for (int i = 0; i < attributes.size()-1; i++) {
+                this.attributes.get(i).value += (race.attributeAdjustments[i] + attPoints[i]);
         }
 
        // for (int i = 0; i < this.caste.startingEquipment.length; i++) {

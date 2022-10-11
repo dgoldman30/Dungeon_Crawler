@@ -13,17 +13,17 @@ public class Game {
     final char horWall = '—';
 
     // static arrays of castes and races
-    public final static Caste[] castes = {Gladiator(), Urchin(), Woodsman(), Fisherman(), Apprentice(), Clergyman() };
-    public final static Race[] races = {Human(), Minotaur(), Spriggan(), Dwarf(), Nymph(), Orc(), Kenku() };
 
     public Game() {
         TextUI ui = new TextUI();
         createSkills();
+        createCastes();
+        createRaces();
         // create a player character
         Player pc = ui.characterCreation();
         // create a map
         createMap(10);
-
+        pc.location = map[0][0];
         move(pc);
     }
 
@@ -78,9 +78,8 @@ public class Game {
     }
 
     // SKILLS
-    public static ArrayList<Skill> skills = new ArrayList<Skill>();
+    public static ArrayList<Skill> skills = new ArrayList<Skill>(11);
     public void createSkills() {
-        ArrayList<Skill> skills = new ArrayList<Skill>();
         Skill melee = new Skill("Melee", "Effects the character's accuracy and damage with melee weapons");
         Skill ranged = new Skill("Ranged", "Effects the character's accuracy and damage with ranged weapons");
         Skill spellcasting = new Skill("Spellcasting", "Effects the character's success rate with magical effects");
@@ -93,13 +92,31 @@ public class Game {
         Skill earthMagic = new Skill("Earth Magic", "Effects the character's ability with earth magic");
         Skill airMagic = new Skill("Air Magic", "Effects the character's ability with air magic");
         Skill waterMagic = new Skill("Water Magic", "Effects the character's ability with water magic");
-
-        skills.add(melee);skills.add(ranged);skills.add(spellcasting);skills.add(shield);skills.add(dodge);skills.add(armor);
-        skills.add(invocation);skills.add(faith);skills.add(fireMagic);skills.add(earthMagic);skills.add(airMagic);skills.add(waterMagic);
-        this.skills = skills;
+        this.skills.add(0, melee);
+        this.skills.add(1, ranged);
+        this.skills.add(2, spellcasting);
+        this.skills.add(3, shield);
+        this.skills.add(4, dodge);
+        this.skills.add(5, armor);
+        this.skills.add(6, invocation);
+        this.skills.add(7, faith);
+        this.skills.add(8, fireMagic);
+        this.skills.add(9, earthMagic);
+        this.skills.add(10, airMagic);
+        this.skills.add(11, waterMagic);
     }
 
     // CASTES
+    public static Caste[] castes = new Caste[6];
+    public void createCastes() {
+        this.castes[0] = Gladiator();
+        this.castes[1] = Urchin();
+        this.castes[2] = Woodsman();
+        this.castes[3] = Fisherman();
+        this.castes[4] = Apprentice();
+        this.castes[5] = Clergyman();
+    }
+
     // Gladiator
     static ArrayList<Skill> gladSkills = new ArrayList<Skill>(4);
     static ArrayList<Item> gladItems = new ArrayList<Item>();
@@ -133,7 +150,7 @@ public class Game {
     static ArrayList<Item> woodItems = new ArrayList<Item>();
     public static Caste Woodsman() {
         woodSkills.add(skills.get(1)); //ranged
-        woodSkills.add(skills.get(3)); //dodge
+        woodSkills.add(skills.get(4)); //dodge
         woodSkills.add(skills.get(7)); //faith
         woodSkills.add(skills.get(9)); //earthMagic
 
@@ -185,6 +202,16 @@ public class Game {
     }
 
     // RACES
+    public static Race[] races = new Race[7];
+    public void createRaces() {
+        this.races[0] = Human();
+        this.races[1] = Minotaur();
+        this.races[2] = Spriggan();
+        this.races[3] = Dwarf();
+        this.races[4] = Nymph();
+        this.races[5] = Orc();
+        this.races[6] = Kenku();
+    }
     // Human
     static ArrayList<Skill> humSkills = new ArrayList<Skill>();
     static int[] humAtt = {2,2,3,1,9};
@@ -192,7 +219,7 @@ public class Game {
     public static Race Human() {
         humSkills.add(skills.get(1)); //ranged
         humSkills.add(skills.get(7)); //faith
-        humSkills.add(skills.get(3)); //dodge
+        humSkills.add(skills.get(4)); //dodge
         humSkills.add(skills.get(6)); //invocation
 
         Race human = new Race(humSkills, humAtt, "Human",
@@ -235,10 +262,10 @@ public class Game {
     static int[] sprAtt = {1,4,3,2,7};
 
     public static Race Spriggan() {
-        sprSkills.add(ranged);
-        sprSkills.add(spellcasting);
-        sprSkills.add(dodge);
-        sprSkills.add(earthMagic);
+        sprSkills.add(skills.get(1)); //ranged
+        sprSkills.add(skills.get(2)); //spellcasting
+        sprSkills.add(skills.get(4)); //dodge
+        sprSkills.add(skills.get(9)); //earthMagic
 
         Race spriggan = new Race(sprSkills, sprAtt, "Spriggan",
                 "Spriggans are dexterous and nimble creatures that seem to be more plant than animal.");
@@ -250,10 +277,10 @@ public class Game {
     static int[] nyAtt = {1,3,4,2,6};
 
     public static Race Nymph() {
-        nySkills.add(dodge);
-        nySkills.add(spellcasting);
-        nySkills.add(waterMagic);
-        nySkills.add(earthMagic);
+        nySkills.add(skills.get(4)); //dodge
+        nySkills.add(skills.get(2)); //spellcasting
+        nySkills.add(skills.get(11)); //waterMagic
+        nySkills.add(skills.get(9)); //earthMagic
 
         Race nymph = new Race(nySkills, nyAtt, "Nymph",
                 "Nymph's are furtive fae who specialize in the arcane.");
@@ -265,10 +292,10 @@ public class Game {
     static int[] orcAtt = {4,2,1,3,9};
 
     public static Race Orc() {
-        orcSkills.add(melee);
-        orcSkills.add(faith);
-        orcSkills.add(shield);
-        orcSkills.add(armor);
+        orcSkills.add(skills.get(0)); //melee
+        orcSkills.add(skills.get(7)); //faith
+        orcSkills.add(skills.get(3)); //shield
+        orcSkills.add(skills.get(5)); //armor
 
         Race orc = new Race(orcSkills, orcAtt, "Orc",
                 "Orcs are incredibly strong, though not terribly hearty, and usual quite devout.");
@@ -280,10 +307,10 @@ public class Game {
     static int[] kAtt = {2,4,2,2,6};
 
     public static Race Kenku() {
-        kSkills.add(ranged);
-        kSkills.add(dodge);
-        kSkills.add(invocation);
-        kSkills.add(airMagic);
+        kSkills.add(skills.get(1)); //ranged
+        kSkills.add(skills.get(4)); //dodge
+        kSkills.add(skills.get(6)); //invocation
+        kSkills.add(skills.get(10)); //airMagic
 
         Race kenku = new Race(kSkills, kAtt, "Kenku",
                 "Kenku resemble large crows and typically reside in the slums of large cities.");
