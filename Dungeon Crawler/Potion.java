@@ -2,8 +2,9 @@ class Potion implements Item {
     String description;
     //Effect effect;
 
-    public void drop() {
-
+    public Item drop() {
+        System.out.println("You have dropped " + name + " Potion");
+        return this;
     }
 
     public Character drink(Character target) {

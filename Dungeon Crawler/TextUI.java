@@ -9,7 +9,7 @@ public class TextUI {
     }
     public Race pickRace() {
         Race race;
-        System.out.println("Each Race has different set of favored Skills \n Please Select a Race from the list below");
+        System.out.println("Each race has different set of favored Skills \n Please Select a Race from the list below");
         for (int i = 0; i < Game.races.length; i++) {
 
             System.out.println(i + ": " + Game.races[i].name);

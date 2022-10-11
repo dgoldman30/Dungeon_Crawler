@@ -1,10 +1,13 @@
-import java.awt.event.KeyAdapter;
 import java.util.ArrayList;
-import java.awt.event.KeyEvent;
 import java.util.Scanner;
 
 public class Game {
     Tile[][] map;
+<<<<<<< HEAD
+=======
+    char[][] mapDisplay;
+    Tile randEnemy;
+>>>>>>> 45c96043fb120566cbb3610199a7efbd9432a6fe
     final char avail = 'X';
     final char enemy = 'E';
     final char pc = 'C';
@@ -52,7 +55,26 @@ public class Game {
             }
         }
     }
+<<<<<<< HEAD
     
+=======
+
+
+    @Override
+    public String toString() {
+        String ret = "";
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[0].length; j++) {
+                ret += mapDisplay[i][j] + "  ";
+                if (j == map.length - 1) {
+                    ret += "\n";
+                }
+            }
+        }
+        return ret;
+    }
+
+>>>>>>> 45c96043fb120566cbb3610199a7efbd9432a6fe
     // SKILLS
     public static ArrayList<Skill> skills = new ArrayList<Skill>(11);
     public void createSkills() {
