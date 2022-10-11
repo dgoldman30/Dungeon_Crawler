@@ -1,11 +1,10 @@
-import java.awt.event.KeyAdapter;
 import java.util.ArrayList;
-import java.awt.event.KeyEvent;
 import java.util.Scanner;
 
 public class Game {
     Tile[][] map;
     char[][] mapDisplay;
+    Tile randEnemy;
     final char avail = 'X';
     final char enemy = 'E';
     final char pc = 'C';
@@ -62,6 +61,7 @@ public class Game {
             }
         }
     }
+
 
     @Override
     public String toString() {

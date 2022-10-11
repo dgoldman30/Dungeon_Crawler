@@ -34,7 +34,10 @@ class Player extends Character {
        //     this.inventory.add(this.caste.startingEquipment[i]);
        // }
 
-
+    }
+    public void dropItem(Item item) {
+        item.drop();
+        inventory.remove(inventory.indexOf(item));
     }
 
     public void move(Tile newLoc) {

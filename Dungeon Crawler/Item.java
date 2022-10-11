@@ -1,5 +1,5 @@
 interface Item {
     String description = "";
-
-    void drop();
+    String name = "";
+    Item drop();
 }
