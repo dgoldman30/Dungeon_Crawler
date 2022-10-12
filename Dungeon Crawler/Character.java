@@ -5,6 +5,7 @@ abstract class Character {
     int level;
     Race race;
     Caste caste;
+    char myChar;
     public static ArrayList<Attribute> attributes = new ArrayList<Attribute>(5);
     static Attribute STR = new Attribute("strength");
     static Attribute DEX = new Attribute("dexterity");
@@ -23,7 +24,7 @@ abstract class Character {
     ArrayList<Item> inventory = new ArrayList<Item>();
     Tile location;
     Spell attunedSpell;
-    char myChar;
+
 
     Character(){}
     Character(Race race, Caste caste) {

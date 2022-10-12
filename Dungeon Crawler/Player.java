@@ -13,12 +13,11 @@ class Player extends Character {
     ArrayList<Item> inventory = new ArrayList<Item>();
     Tile location = new Tile(0,0);
     Spell attunedSpell;
-    char myChar = 'P';
 
     Player(Race race, Caste caste, int[] attPoints) {
         this.race = race;
         this.caste = caste;
-
+        this.myChar = 'P';
         // increment aptitude for favorite caste and race skills
         for (int i = 0; i < this.race.favoredSkills.size(); i++) {
             this.skills.get(this.skills.indexOf(this.race.favoredSkills.get(i))).aptitude++;
@@ -66,7 +65,7 @@ class Player extends Character {
         }
         // occupy new tile and set that tile in the right place on map
         this.occupy(newLoc);
-        map[newLoc.x][newLoc.y] = newLoc;
+        //map[newLoc.x][newLoc.y] = newLoc; redundant
         return map;
     }
 

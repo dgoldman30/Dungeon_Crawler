@@ -4,9 +4,9 @@ import java.util.Scanner;
 public class Game {
     Tile[][] map;
     Tile randEnemy;
-    final char avail = 'X';
-    final char enemy = 'E';
-    final char pc = 'C';
+   // final char avail = 'X';
+    //final char enemy = 'E';
+    //final char pc = 'C'; not neccessary anymore
 
     public Game(int size) {
         TextUI ui = new TextUI();
@@ -80,7 +80,7 @@ public class Game {
         Weapon dagger = new Weapon("Dagger", "Lightweight Dagger for quick attacks");
         Weapon sabre = new Weapon("Sabre", "Fence your enemy to the death!");
         Weapon harpoon = new Weapon("Harpoon", "Are you trying to kill a whale?");
-        Weapon brassKnucles = new Weapon("Brass Knuckles", "Wearable Brass Knuckles for critical attacks");
+        Weapon brassKnuckles = new Weapon("Brass Knuckles", "Wearable Brass Knuckles for critical attacks");
         weapons.add(knife);
         weapons.add(sword);
         weapons.add(hammer);
@@ -89,7 +89,7 @@ public class Game {
         weapons.add(dagger);
         weapons.add(sabre);
         weapons.add(harpoon);
-        weapons.add(brassKnucles);
+        weapons.add(brassKnuckles);
     }
     ArrayList<Potion> potions = new ArrayList<Potion>();
     private void createPotions() {
