@@ -15,6 +15,7 @@ public class Game {
         createSkills();
         createCastes();
         createRaces();
+        createWeapons();
         // create a player character
         Player pc = ui.characterCreation();
         // create a map
@@ -90,6 +91,30 @@ public class Game {
         this.skills.add(9, earthMagic);
         this.skills.add(10, airMagic);
         this.skills.add(11, waterMagic);
+    }
+    //WEAPONS
+    ArrayList<Weapon> weapons = new ArrayList<Weapon>();
+    public void createWeapons() {
+        Weapon knife = new Weapon("Knife", "High-grade damascus blade perfect for slicing enemies!");
+        Weapon sword = new Weapon("Sword", "Basic lightweight sword");
+        Weapon hammer = new Weapon("Hammer", "Perfectly weighted Hammer, best for heavy attacks");
+        Weapon ballAndChain = new Weapon("Ball and Chain", "The ole' ball and chain");
+        Weapon club = new Weapon("Club", "Heavy club");
+        Weapon dagger = new Weapon("Dagger", "Lightweight Dagger for quick attacks");
+        Weapon sabre = new Weapon("Sabre", "Fence your enemy to the death!");
+        Weapon harpoon = new Weapon("Harpoon", "Are you trying to kill a whale?");
+        Weapon brassKnucles = new Weapon("Brass Knuckles", "Wearable Brass Knuckles for critical attacks");
+        weapons.add(knife);
+        weapons.add(sword);
+        weapons.add(hammer);
+        weapons.add(ballAndChain);
+        weapons.add(club);
+        weapons.add(dagger);
+        weapons.add(sabre);
+        weapons.add(harpoon);
+        weapons.add(brassKnucles);
+
+
     }
 
     // CASTES

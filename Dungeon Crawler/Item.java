@@ -1,5 +1,5 @@
-interface Item {
+abstract class Item {
     String description = "";
     String name = "";
-    Item drop();
+    abstract Item drop();
 }

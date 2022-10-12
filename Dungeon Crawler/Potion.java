@@ -1,4 +1,4 @@
-class Potion implements Item {
+class Potion extends Item {
     String description;
     //Effect effect;
 
