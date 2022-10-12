@@ -16,6 +16,7 @@ public class Game {
         createCastes();
         createRaces();
         createWeapons();
+        createPotions();
         // create a player character
         Player pc = ui.characterCreation();
         // create a map
@@ -92,6 +93,7 @@ public class Game {
         this.skills.add(10, airMagic);
         this.skills.add(11, waterMagic);
     }
+
     //WEAPONS
     ArrayList<Weapon> weapons = new ArrayList<Weapon>();
     public void createWeapons() {
@@ -113,8 +115,19 @@ public class Game {
         weapons.add(sabre);
         weapons.add(harpoon);
         weapons.add(brassKnucles);
-
-
+    }
+    ArrayList<Potion> potions = new ArrayList<Potion>();
+    private void createPotions() {
+        Potion healPo = new Potion("Healing Potion", "Heals most wounds and recovers HP ");
+        Potion dexPo = new Potion("Dexerity Potion", "Increases Dexterity");
+        Potion strPo = new Potion("Strength Potion", "Increases Strength");
+        Potion intPo = new Potion("Intelligence Potion", "Increases brainpower and knowledge");
+        Potion willPo = new Potion("Willpower Potion", "Increases Willpower");
+        potions.add(healPo);
+        potions.add(dexPo);
+        potions.add(strPo);
+        potions.add(intPo);
+        potions.add(willPo);
     }
 
     // CASTES

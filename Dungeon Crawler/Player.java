@@ -51,6 +51,7 @@ class Player extends Character {
     public void occupy(Tile tile) {
         this.location = tile;
         tile.display = this.myChar;
+        tile.occupant = this;
     }
 
 }

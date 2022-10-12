@@ -1,5 +1,10 @@
 class Potion extends Item {
     String description;
+
+    public Potion(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
     //Effect effect;
 
     public Item drop() {
