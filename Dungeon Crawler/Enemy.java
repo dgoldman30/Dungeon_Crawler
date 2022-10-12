@@ -1,2 +1,3 @@
-package PACKAGE_NAME;public class Enemy {
+public class Enemy extends NPC {
+
 }

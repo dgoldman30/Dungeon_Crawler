@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.awt.event.KeyEvent;
 abstract class Character {
 
     int level;
@@ -43,5 +44,9 @@ abstract class Character {
         for (int i = 0; i < attributes.size(); i++) {
             attributes.get(i).value += race.attributeAdjustments[i];
         }
+    }
+
+    public Tile[][] move(Tile[][] map) {
+        return map;
     }
 }

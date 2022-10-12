@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import java.util.Scanner;
+//import java.awt.event.KeyEvent;
+//import java.awt.event.KeyListener;
 
 class Player extends Character {
     int level = 1;
@@ -8,14 +11,13 @@ class Player extends Character {
     ArrayList<Skill> skills = new ArrayList<Skill>(Game.skills);
     ArrayList<Item> equipment = new ArrayList<Item>();
     ArrayList<Item> inventory = new ArrayList<Item>();
-    Tile location;
+    Tile location = new Tile(0,0);
     Spell attunedSpell;
-    char myChar;
+    char myChar = 'P';
 
     Player(Race race, Caste caste, int[] attPoints) {
         this.race = race;
         this.caste = caste;
-        myChar = 'P';
 
         // increment aptitude for favorite caste and race skills
         for (int i = 0; i < this.race.favoredSkills.size(); i++) {
@@ -40,8 +42,32 @@ class Player extends Character {
         inventory.remove(inventory.indexOf(item));
     }
 
-    public void move(Tile newLoc) {
-        this.location = newLoc;
+    @Override
+    public Tile[][] move(Tile[][] map) {
+        Tile currLoc = this.location;
+        Tile newLoc = currLoc;
+        currLoc.occupant = null; //empty the occupant on the old tile
+        Scanner scanner = new Scanner(System.in);
+        String keyCode = scanner.next();
+
+        switch (keyCode) {
+            case "a": newLoc = map[currLoc.x][currLoc.y-1];
+                System.out.println("You moved left.");// if left move left
+                break;
+            case "w": newLoc = map[currLoc.x-1][currLoc.y];
+                System.out.println("You moved up.");// if up move up
+                break;
+            case "d": newLoc = map[currLoc.x][currLoc.y+1]; // if right move right
+                System.out.println("You moved right.");
+                break;
+            case "s": newLoc = map[currLoc.x+1][currLoc.y]; // if down move down
+                System.out.println("You moved down.");
+                break;
+        }
+        // occupy new tile and set that tile in the right place on map
+        this.occupy(newLoc);
+        map[newLoc.x][newLoc.y] = newLoc;
+        return map;
     }
 
     public void setAttunedSpell(Spell spell) {
@@ -49,9 +75,9 @@ class Player extends Character {
     }
 
     public void occupy(Tile tile) {
-        this.location = tile;
         tile.display = this.myChar;
         tile.occupant = this;
+        this.location.display();
+        this.location = tile;
     }
-
 }
