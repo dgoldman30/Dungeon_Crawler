@@ -3,8 +3,6 @@ import java.util.Scanner;
 
 public class Game {
     Tile[][] map;
-
-    char[][] mapDisplay;
     Tile randEnemy;
     final char avail = 'X';
     final char enemy = 'E';
@@ -19,46 +17,23 @@ public class Game {
         createPotions();
         // create a player character
         Player pc = ui.characterCreation();
+        NPC enemy = new NPC(races[0], castes[0], true);
+        enemy.setTarget(pc);
         // create a map
         createMap(size);
         pc.occupy(map[0][0]);
         while (true) {
             System.out.print(ui.displayMap(map));
-            move(pc);
+            this.map = pc.move(map);
+            //this.map = enemy.move(map);
         }
-    }
-
-
-    public void move(Character subject) {
-        Tile curLoc = subject.location;
-        Tile loc = curLoc;
-        Scanner scanner = new Scanner(System.in);
-        String keyCode = scanner.next();
-
-        for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map[i].length; j++) {
-                if (map[i][j] == curLoc) {
-                    switch (keyCode) {
-                        case "65": loc = map[i-1][j]; // if left move left
-                            break;
-                        case "87": loc = map[i][j-1]; // if up move up
-                            break;
-                        case "68": loc = map[i+1][j]; // if right move right
-                            break;
-                        case "83": loc = map[i][j+1]; // if down move down
-                            break;
-                    }
-                }
-            }
-        }
-        subject.location = loc;
     }
 
     public void createMap(int size) {
         this.map = new Tile[size][size];
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[0].length; j++) {
-                map[i][j] = new Tile();
+                map[i][j] = new Tile(i, j);
             }
         }
     }

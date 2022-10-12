@@ -51,9 +51,9 @@ public class TextUI {
         char[][] chars = new char[map.length][map.length];
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map.length; j++) {
-                chars[i][j] = map[i][j].display;
+                chars[i][j] = map[i][j].display();
                 ret += chars[i][j] + " ";
-                if (j == map.length -1) ret += "\n";
+                if (j == map.length - 1) ret += "\n";
             }
         }
         return ret;
