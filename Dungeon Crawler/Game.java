@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
 public class Game {
     Tile[][] map;
     static Player pc;
@@ -68,7 +67,6 @@ public class Game {
     }
 
     //WEAPONS
-    //ArrayList<Weapon> weapons = new ArrayList<Weapon>();
     public static Weapon[] weapons = new Weapon[9];
     public void createWeapons() {
         Weapon knife = new Weapon("Knife", "High-grade damascus blade perfect for slicing enemies!", 0.4, 0.9, false);
@@ -90,7 +88,8 @@ public class Game {
         weapons[7] = harpoon;//7
         weapons[8] = brassKnuckles;//8
     }
-   // ArrayList<Potion> potions = new ArrayList<Potion>();
+
+    // POTIONS
     public static Potion[] potions = new Potion[5];
     private void createPotions() {
         Potion healPo = new Potion("Healing Potion", "Heals most wounds and recovers HP ");
