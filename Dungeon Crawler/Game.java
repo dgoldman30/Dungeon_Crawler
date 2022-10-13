@@ -3,11 +3,6 @@ import java.util.Scanner;
 
 public class Game {
     Tile[][] map;
-    Tile randEnemy;
-   // final char avail = 'X';
-    //final char enemy = 'E';
-    //final char pc = 'C'; not neccessary anymore
-
     public Game(int size) {
         TextUI ui = new TextUI();
         createSkills();
@@ -18,11 +13,11 @@ public class Game {
         // create a player character
         Player pc = ui.characterCreation();
         NPC enemy = new NPC(races[0], castes[0], true);
+        createMap(size);
         enemy.setTarget(pc);
         // create a map
-        createMap(size);
         pc.occupy(map[0][0]);
-        enemy.occupy(map[(int) (Math.random() * 10)][(int) (Math.random() * 10)]);
+         enemy.occupy(map[(int) (Math.random() * 10)][(int) (Math.random() * 10)]);
         while (true) {
             System.out.print(ui.displayMap(map));
             this.map = pc.move(map);
