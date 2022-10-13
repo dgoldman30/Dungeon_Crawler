@@ -4,7 +4,7 @@ import java.awt.event.KeyListener;
 public class DungeonCrawler {
 
 
-    KeyListener listener = new KeyListener() {
+    /*KeyListener listener = new KeyListener() {
         @Override
         public void keyTyped(KeyEvent e) {
 
@@ -27,7 +27,7 @@ public class DungeonCrawler {
         public void keyReleased(KeyEvent e) {
 
         }
-    };
+    };*/
 
     public static void main(String[] args) {
         Game game = new Game(10);

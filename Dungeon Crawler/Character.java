@@ -65,4 +65,11 @@ abstract class Character {
         this.location = tile;
         this.location.display();
     }
+    public void attack(Character target) {
+        if (((Math.random() * 10) + this.attributes.get(0).value)  > target.armorValue) {
+            target.attributes.get(4).value -= attributes.get(0).value;
+            System.out.println("Damage: " + target.attributes.get(4).value);
+        }
+    }
+
 }
