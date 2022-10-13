@@ -2,32 +2,74 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Game {
+    int gameState; // default state
     Tile[][] map;
     static Player pc;
     Character enemy;
-    static TextUI ui = new TextUI();
-    Scanner scanner = new Scanner(System.in);
     public Game(int size) {
         createSkills();
         createCastes();
         createRaces();
         createWeapons();
         createPotions();
-        // create a player character
-        pc = ui.characterCreation();
         NPC enemy = new NPC(races[0], castes[0], true);
         this.enemy = enemy;
         createMap(size); // create map
-        pc.occupy(this.map[0][0]); // place the pc
         enemy.setTarget(pc); // set the pc as the target of enemy
         enemy.occupy(map[(int) (Math.random() * 10)][(int) (Math.random() * 10)]); // place the enemy in a random square
-       /* this.map = pc.move(map);
-            this.map = enemy.move(map);
-            if (pc.location == enemy.location) {
-                //enemy.myChar = 'F'; this line turns the char to F permanently
-                pc.attack(enemy);
-            }*/
+    }
+
+    public static void main(String[] args) {
+        Game game = new Game(10);
+        TextUI ui = new TextUI(game);
+
+        game.pc = ui.characterCreation();
+        game.pc.occupy(game.map[0][0]); // place the pc
+        game.gameState++; // set game state to 1 - moving state
+
+        while (true) {
+            switch (game.gameState) {
+                case 1:
+                    if (game.checkAdjacent(game.pc)) {
+                        game.gameState++;
+                        break;
+                    }
+                    ui.displayMap(game.map);
+                    ui.moving(game);
+                    break;
+                case 2:
+                    ui.combat(game.pc, game.enemy);
+
+            }
         }
+
+    }
+
+    public boolean checkAdjacent(Character player) {
+        boolean ret = false;
+        int x = player.location.x;
+        int y = player.location.y;
+
+        if (x > 0 && x < map.length-1 && y > 0 && y < map.length-1) { // no edges
+            return (!(map[x][y-1].available && map[x-1][y].available && map[x][y+1].available && map[x+1][y].available));
+        } else if (y == 0 && x > 0) { // left edge
+            return (!(map[x-1][y].available && map[x][y+1].available && map[x+1][y].available));
+        } else if (y == 0 && x == 0) { // top left
+            return (!(map[x][y+1].available && map[x+1][y].available));
+        } else if (x == 0 && y > 0) { // top edge
+            return (!(map[x][y-1].available && map[x][y+1].available && map[x+1][y].available));
+        } else if (x == 0 && y == map.length-1) { // top right
+            return (!(map[x][y-1].available && map[x+1][y].available));
+        } else if (y == map.length && x > 0) { // right edge
+            return (!(map[x-1][y].available && map[x][y-1].available && map[x+1][y].available));
+        } else if (x == map.length && y > 0) { // bottom edge
+            return (!(map[x-1][y].available && map[x][y+1].available && map[x][y-1].available));
+        } else if (x == map.length-1 && y == map.length-1) { // bottom right
+            return (!(map[x-1][y].available && map[x][y-1].available));
+        }
+
+        return ret;
+    }
 
 
     public void createMap(int size) {
@@ -38,17 +80,6 @@ public class Game {
             }
         }
     }
-
-    public void combat(Character c1, Character c2) {
-        while (c1.HP.value > 0 && c2.HP.value > 0) {
-            c1.attack(c2);
-            c2.attack(c1);
-        }
-        if (c1.HP.value <= 0) { c1.location = null; }
-        if (c2.HP.value <= 0) { c2.location = null; }
-    }
-
-
 
     // SKILLS
     public static ArrayList<Skill> skills = new ArrayList<Skill>(11);
@@ -247,7 +278,7 @@ public class Game {
         return clergyman;
     }
 
-    // RACES
+    // RACE
     public static Race[] races = new Race[7];
     public void createRaces() {
         races[0] = Human();

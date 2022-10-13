@@ -1,7 +1,5 @@
 import java.util.ArrayList;
-import java.util.Scanner;
-//import java.awt.event.KeyEvent;
-//import java.awt.event.KeyListener;
+
 
 class Player extends Character {
 
@@ -10,7 +8,7 @@ class Player extends Character {
         this.race = race;
         this.caste = caste;
         this.myChar = 'P';
-        attributes = new ArrayList<>(Character.attributes);
+
 
         // increment aptitude for favorite caste and race skills
         for (int i = 0; i < this.race.favoredSkills.size(); i++) {
@@ -21,13 +19,13 @@ class Player extends Character {
         }
 
         // add the race attributes
-        for (int i = 0; i < attributes.size(); i++) {
-                attributes.get(i).value += (race.attributeAdjustments[i] + attPoints[i]);
+        for (int i = 0; i < attributes.length; i++) {
+                attributes[i].value += (race.attributeAdjustments[i] + attPoints[i]);
         }
 
-        this.dodgeValue += attributes.get(1).value + skills.get(4).value;
+        this.dodgeValue += attributes[1].value + skills.get(4).value;
         this.armorValue += skills.get(5).value;
-        this.mental += attributes.get(3).value + skills.get(2).value;
+        this.mental += attributes[3].value + skills.get(2).value;
 
 
         for (int i = 0; i < this.caste.startingItems.size(); i++) {
@@ -41,8 +39,9 @@ class Player extends Character {
     }
 
 
-    public Tile[][] move(Tile[][] map, String input) {
-       // Tile[][] nMap = map;
+    public String move(Game game, String input) {
+        String ret = "";
+        Tile[][] map = game.map;
         Tile currLoc = this.location;
         Tile newLoc = currLoc;
 
@@ -50,29 +49,33 @@ class Player extends Character {
             case "a":
                 if (currLoc.y > 0 ) {
                     newLoc = map[currLoc.x][currLoc.y - 1];
-                } else System.out.println("You are at the map edge. You cannot move left.");
+                    ret += "You moved to the left.";
+                } else ret += "You're at the map edge. You cannot move left.";
                 break;
             case "w":
                 if (currLoc.x > 0) {
                     newLoc = map[currLoc.x - 1][currLoc.y];
-                } else System.out.println("You are at the map edge. You cannot move up.");
+                    ret += "You moved up.";
+                } else ret += "You are at the map edge. You cannot move up.";
                 break;
             case "d":
                 if (currLoc.y < map.length) {
-                    newLoc = map[currLoc.x][currLoc.y + 1]; // move right
-                } else System.out.println("You are at the map edge. You cannot move right.");
+                    newLoc = map[currLoc.x][currLoc.y + 1];
+                    ret += "You moved to the right."; // move right
+                } else ret += "You are at the map edge. You cannot move right.";
                 break;
             case "s":
                 if (currLoc.x < map.length) {
-                    newLoc = map[currLoc.x + 1][currLoc.y]; // move down
-                } else System.out.println("You are at the map edge. You cannot move down.");
+                    newLoc = map[currLoc.x + 1][currLoc.y];
+                    ret += "You moved down."; // move down
+                } else ret += "You are at the map edge. You cannot move down.";
                 break;
         }
 
         this.executeMove(newLoc);
-        return map;
-    }
 
+        return ret;
+    }
 
     public void setAttunedSpell(Spell spell) {
         this.attunedSpell = spell;
