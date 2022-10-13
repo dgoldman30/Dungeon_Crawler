@@ -14,9 +14,9 @@ public class Tile {
     }
 
     public char display() {
-        if (occupant != null) {
-            display = occupant.myChar;
-        } else display = 'X';
+        if (occupant == null) {
+            display = 'X';
+        }
 
         return this.display;
     }

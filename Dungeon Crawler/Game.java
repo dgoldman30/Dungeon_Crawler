@@ -1,8 +1,5 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
 
 public class Game {
     Tile[][] map;
@@ -10,25 +7,6 @@ public class Game {
    // final char avail = 'X';
     //final char enemy = 'E';
     //final char pc = 'C'; not neccessary anymore
-    KeyListener listener = new KeyListener() {
-       @Override
-       public void keyTyped(KeyEvent e) {
-
-       }
-
-       @Override
-       public void keyPressed(KeyEvent e) {
-           if (e.getKeyCode() == KeyEvent.VK_X) {
-
-           }
-       }
-
-       @Override
-       public void keyReleased(KeyEvent e) {
-
-
-       }
-   };
 
     public Game(int size) {
         TextUI ui = new TextUI();
@@ -44,13 +22,11 @@ public class Game {
         // create a map
         createMap(size);
         pc.occupy(map[0][0]);
-
+        enemy.occupy(map[(int) (Math.random() * 10)][(int) (Math.random() * 10)]);
         while (true) {
             System.out.print(ui.displayMap(map));
-
-            //if () { System.out.print(ui.characterScreen(pc)); }
             this.map = pc.move(map);
-            //this.map = enemy.move(map);
+            this.map = enemy.move(map);
         }
     }
 

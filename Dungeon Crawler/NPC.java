@@ -61,7 +61,7 @@ public class NPC extends Character {
     public void occupy(Tile tile) {
         tile.display = this.myChar;
         tile.occupant = this;
-        this.location.display();
         this.location = tile;
+        this.location.display();
     }
 }
