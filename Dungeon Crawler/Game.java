@@ -23,6 +23,10 @@ public class Game {
             System.out.print(ui.displayMap(map));
             this.map = pc.move(map);
             this.map = enemy.move(map);
+            if (pc.location == enemy.location) {
+                //enemy.myChar = 'F'; this line turns the char to F permanently
+                pc.attack(enemy);
+            }
         }
     }
 

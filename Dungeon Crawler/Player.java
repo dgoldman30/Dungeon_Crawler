@@ -90,9 +90,6 @@ class Player extends Character {
         return map;
     }
 
-    public void attack(Character target) {
-
-    }
 
     public void setAttunedSpell(Spell spell) {
         this.attunedSpell = spell;
