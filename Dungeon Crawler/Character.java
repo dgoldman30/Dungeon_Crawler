@@ -25,6 +25,10 @@ abstract class Character {
     Tile location;
     Spell attunedSpell;
 
+    int dodgeValue;
+    int armorValue;
+    int mental;
+
 
     Character(){}
     Character(Race race, Caste caste) {
@@ -45,9 +49,20 @@ abstract class Character {
         for (int i = 0; i < attributes.size(); i++) {
             attributes.get(i).value += race.attributeAdjustments[i];
         }
+
+        this.dodgeValue += this.attributes.get(1).value + skills.get(4).value;
+        this.armorValue += skills.get(5).value;
+        this.mental += this.attributes.get(3).value + skills.get(2).value;
     }
 
     public Tile[][] move(Tile[][] map) {
         return map;
+    }
+
+    public void occupy(Tile tile) {
+        tile.display = this.myChar;
+        tile.occupant = this;
+        this.location = tile;
+        this.location.display();
     }
 }

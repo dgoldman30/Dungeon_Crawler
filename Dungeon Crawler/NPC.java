@@ -12,7 +12,7 @@ public class NPC extends Character {
     Spell attunedSpell;
     boolean hostile;
     char myChar;
-    Character target;
+    Player target;
 
     NPC() {}
     NPC(Race race, Caste caste, boolean hostile) {
@@ -35,13 +35,15 @@ public class NPC extends Character {
        //     this.attributes.get(i).value += (race.attributeAdjustments[i] + attPoints[i]);
        // }
     }
-    public void setTarget(Character target) {
+    public void setTarget(Player target) {
         this.target = target;
     }
     @Override
     public Tile[][] move(Tile[][] map) {
-        Tile tLoc = this.target.location;
+        Tile tLoc = this.target.getLocation();
         Tile cLoc = this.location;
+
+        cLoc.occupant = null;
 
         int xDiff = tLoc.x - cLoc.x;
         int yDiff = tLoc.y - cLoc.y;
@@ -54,7 +56,7 @@ public class NPC extends Character {
 
         // occupy new tile and set that tile in the right place on map
         this.occupy(cLoc);
-        map[cLoc.x][cLoc.y] = cLoc;
+        //map[cLoc.x][cLoc.y] = cLoc;
         return map;
     }
 

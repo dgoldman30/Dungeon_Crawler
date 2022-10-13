@@ -1,23 +1,25 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
 public class Game {
     Tile[][] map;
+    static Player pc;
+    static TextUI ui = new TextUI();
     public Game(int size) {
-        TextUI ui = new TextUI();
         createSkills();
         createCastes();
         createRaces();
         createWeapons();
         createPotions();
         // create a player character
-        Player pc = ui.characterCreation();
+        pc = ui.characterCreation();
         NPC enemy = new NPC(races[0], castes[0], true);
-        createMap(size);
-        enemy.setTarget(pc);
-        // create a map
-        pc.occupy(map[0][0]);
-         enemy.occupy(map[(int) (Math.random() * 10)][(int) (Math.random() * 10)]);
+        createMap(size); // create map
+        pc.occupy(this.map[0][0]); // place the pc
+        enemy.setTarget(pc); // set the pc as the target of enemy
+        enemy.occupy(map[(int) (Math.random() * 10)][(int) (Math.random() * 10)]); // place the enemy in a random square
+
         while (true) {
             System.out.print(ui.displayMap(map));
             this.map = pc.move(map);

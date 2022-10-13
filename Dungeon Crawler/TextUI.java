@@ -1,6 +1,10 @@
 import java.util.Scanner;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 
 public class TextUI {
+
 
     public Player characterCreation() {
         Player pc = new Player(pickRace(), pickCaste(), pickAtt());
@@ -62,8 +66,6 @@ public class TextUI {
     }
 
     public String characterScreen(Player pc) {
-        Scanner scanner = new Scanner(System.in);
-
         String ret = "";
         ret += "-----------";
 
