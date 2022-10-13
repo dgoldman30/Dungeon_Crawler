@@ -68,39 +68,41 @@ public class Game {
     }
 
     //WEAPONS
-    ArrayList<Weapon> weapons = new ArrayList<Weapon>();
+    //ArrayList<Weapon> weapons = new ArrayList<Weapon>();
+    public static Weapon[] weapons = new Weapon[9];
     public void createWeapons() {
-        Weapon knife = new Weapon("Knife", "High-grade damascus blade perfect for slicing enemies!");
-        Weapon sword = new Weapon("Sword", "Basic lightweight sword");
-        Weapon hammer = new Weapon("Hammer", "Perfectly weighted Hammer, best for heavy attacks");
-        Weapon ballAndChain = new Weapon("Ball and Chain", "The ole' ball and chain");
-        Weapon club = new Weapon("Club", "Heavy club");
-        Weapon dagger = new Weapon("Dagger", "Lightweight Dagger for quick attacks");
-        Weapon sabre = new Weapon("Sabre", "Fence your enemy to the death!");
-        Weapon harpoon = new Weapon("Harpoon", "Are you trying to kill a whale?");
-        Weapon brassKnuckles = new Weapon("Brass Knuckles", "Wearable Brass Knuckles for critical attacks");
-        weapons.add(knife);
-        weapons.add(sword);
-        weapons.add(hammer);
-        weapons.add(ballAndChain);
-        weapons.add(club);
-        weapons.add(dagger);
-        weapons.add(sabre);
-        weapons.add(harpoon);
-        weapons.add(brassKnuckles);
+        Weapon knife = new Weapon("Knife", "High-grade damascus blade perfect for slicing enemies!", 0.4, 0.9, false);
+        Weapon sword = new Weapon("Sword", "Basic lightweight sword", 0.7, 0.9, false);
+        Weapon hammer = new Weapon("Hammer", "Perfectly weighted Hammer, best for heavy attacks", 0.8, 0.7, true);
+        Weapon ballAndChain = new Weapon("Ball and Chain", "The ole' ball and chain", 0.7, 0.8, true);
+        Weapon club = new Weapon("Club", "Heavy club", 0.9, 0.6, true);
+        Weapon dagger = new Weapon("Dagger", "Lightweight Dagger for quick attacks", 0.3, 1.0, false);
+        Weapon sabre = new Weapon("Sabre", "Fence your enemy to the death!", 0.7, 0.9, false);
+        Weapon harpoon = new Weapon("Harpoon", "Are you trying to kill a whale?", 0.9, 0.8, true);
+        Weapon brassKnuckles = new Weapon("Brass Knuckles", "Wearable Brass Knuckles for critical attacks", 0.7, 0.9, true);
+        weapons[0] = knife;//0
+        weapons[1] = sword;//1
+        weapons[2] = hammer;//2
+        weapons[3] = ballAndChain;//3
+        weapons[4] = club;//4
+        weapons[5] = dagger;//5
+        weapons[6] = sabre;//6
+        weapons[7] = harpoon;//7
+        weapons[8] = brassKnuckles;//8
     }
-    ArrayList<Potion> potions = new ArrayList<Potion>();
+   // ArrayList<Potion> potions = new ArrayList<Potion>();
+    public static Potion[] potions = new Potion[5];
     private void createPotions() {
         Potion healPo = new Potion("Healing Potion", "Heals most wounds and recovers HP ");
         Potion dexPo = new Potion("Dexerity Potion", "Increases Dexterity");
         Potion strPo = new Potion("Strength Potion", "Increases Strength");
         Potion intPo = new Potion("Intelligence Potion", "Increases brainpower and knowledge");
         Potion willPo = new Potion("Willpower Potion", "Increases Willpower");
-        potions.add(healPo);
-        potions.add(dexPo);
-        potions.add(strPo);
-        potions.add(intPo);
-        potions.add(willPo);
+        potions[0] = healPo;
+        potions[1] = dexPo;
+        potions[2] = strPo;
+        potions[3] = intPo;
+        potions[4] = willPo;
     }
 
     // CASTES
@@ -118,10 +120,15 @@ public class Game {
     static ArrayList<Skill> gladSkills = new ArrayList<Skill>(4);
     static ArrayList<Item> gladItems = new ArrayList<Item>();
     public static Caste Gladiator() {
+        //add skills
         gladSkills.add(skills.get(0)); //melee
         gladSkills.add(skills.get(3)); //shield
         gladSkills.add(skills.get(4)); //dodge
         gladSkills.add(skills.get(5)); //armor
+        //starting equipment
+        gladItems.add(weapons[1]);
+        gladItems.add(potions[0]);
+        gladItems.add(potions[2]);
 
         Caste gladiator = new Caste(gladSkills, gladItems, "Gladiator",
                 "The gladiator is a perennial warrior, never wandering far from their weapon.");
@@ -136,6 +143,11 @@ public class Game {
         urSkills.add(skills.get(1)); //ranged
         urSkills.add(skills.get(4)); //dodge
         urSkills.add(skills.get(6)); //invocation
+        //starting equipment
+        urItems.add(weapons[0]);
+        urItems.add(potions[1]);
+        // add rags
+        // add sling
 
         Caste urchin = new Caste(urSkills, urItems, "Urchin",
                 "An urchin lives life on the streets, clinging to shadows and surviving by sheer luck.");
@@ -150,6 +162,12 @@ public class Game {
         woodSkills.add(skills.get(4)); //dodge
         woodSkills.add(skills.get(7)); //faith
         woodSkills.add(skills.get(9)); //earthMagic
+        //starting equipment
+        woodItems.add(weapons[0]);
+        woodItems.add(potions[0]);
+        woodItems.add(potions[1]);
+        // add bow
+        // add leather armor
 
         Caste woodsman = new Caste(woodSkills, woodItems, "Woodsman",
                 "A woodsman lives by hunting and foraging in the forest.");
@@ -164,6 +182,12 @@ public class Game {
         fishSkills.add(skills.get(2)); //spellcasting
         fishSkills.add(skills.get(10)); //airMagic
         fishSkills.add(skills.get(11)); //waterMagic
+        //starting equipment
+        fishItems.add(weapons[7]);
+        fishItems.add(potions[3]);
+        // air spell
+        // water spell
+        // clothes
 
         Caste fisherman = new Caste(fishSkills, fishItems, "Fisherman",
                 "A fisherman spends their whole life at sea, becoming one with the winds and waters around them");
@@ -178,6 +202,13 @@ public class Game {
         appSkills.add(skills.get(8)); //fireMagic
         appSkills.add(skills.get(10)); //airMagic
         appSkills.add(skills.get(6)); //invocation
+        //starting equipment
+        appItems.add(weapons[0]); // knife
+        appItems.add(potions[3]); // magic potion
+        // robes
+        // fire spell
+        // air spell
+
 
         Caste apprentice = new Caste(appSkills, appItems, "Apprentice",
                 "An apprentice of a wizened wizard setting out on their own.");
@@ -192,6 +223,12 @@ public class Game {
         clerSkills.add(skills.get(3)); //shield
         clerSkills.add(skills.get(7)); //faith
         clerSkills.add(skills.get(11)); //waterMagic
+        //starting equipment
+        clerItems.add(weapons[2]); // hammer
+        // metal armor
+        // shield
+        // religious symbol
+        // holy water scroll
 
         Caste clergyman = new Caste(clerSkills, clerItems, "Clergyman",
                 "A clergyman set out on a holy pilgrimage.");
