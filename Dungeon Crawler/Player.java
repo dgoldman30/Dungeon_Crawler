@@ -63,24 +63,24 @@ class Player extends Character {
             case "a":
                 if (currLoc.y > 0 ) {
                     newLoc = nMap[currLoc.x][currLoc.y - 1];
-                    System.out.println("You moved left.");// if left move left
+                    System.out.println("You moved left.");// move left
                 } else System.out.println("You are at the map edge. You cannot move left.");
                 break;
             case "w":
                 if (currLoc.x > 0) {
                     newLoc = nMap[currLoc.x - 1][currLoc.y];
-                    System.out.println("You moved up.");// if up move up
+                    System.out.println("You moved up.");// move up
                 } else System.out.println("You are at the map edge. You cannot move up.");
                 break;
             case "d":
                 if (currLoc.y < map.length) {
-                    newLoc = nMap[currLoc.x][currLoc.y + 1]; // if right move right
+                    newLoc = nMap[currLoc.x][currLoc.y + 1]; // move right
                     System.out.println("You moved right.");
                 } else System.out.println("You are at the map edge. You cannot move right.");
                 break;
             case "s":
                 if (currLoc.x < map.length) {
-                    newLoc = nMap[currLoc.x + 1][currLoc.y]; // if down move down
+                    newLoc = nMap[currLoc.x + 1][currLoc.y]; // move down
                     System.out.println("You moved down.");
                 } else System.out.println("You are at the map edge. You cannot move down.");
                 break;
