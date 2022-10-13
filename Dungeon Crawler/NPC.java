@@ -38,10 +38,6 @@ public class NPC extends Character {
         int xDiff = tLoc.x - cLoc.x;
         int yDiff = tLoc.y - cLoc.y;
 
-        if (Math.abs(xDiff) == 1 && Math.abs(yDiff) == 1) {
-            this.attack(tLoc.occupant);
-            return map;
-        }
         if (Math.abs(xDiff) > Math.abs(yDiff)) {
             if (xDiff > 0) { cLoc = map[cLoc.x+1][cLoc.y]; }
             else { cLoc = map[cLoc.x-1][cLoc.y]; }
