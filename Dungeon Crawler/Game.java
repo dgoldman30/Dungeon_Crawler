@@ -4,7 +4,9 @@ import java.util.Scanner;
 public class Game {
     Tile[][] map;
     static Player pc;
+    Character enemy;
     static TextUI ui = new TextUI();
+    Scanner scanner = new Scanner(System.in);
     public Game(int size) {
         createSkills();
         createCastes();
@@ -14,21 +16,19 @@ public class Game {
         // create a player character
         pc = ui.characterCreation();
         NPC enemy = new NPC(races[0], castes[0], true);
+        this.enemy = enemy;
         createMap(size); // create map
         pc.occupy(this.map[0][0]); // place the pc
         enemy.setTarget(pc); // set the pc as the target of enemy
         enemy.occupy(map[(int) (Math.random() * 10)][(int) (Math.random() * 10)]); // place the enemy in a random square
-
-        while (true) {
-            System.out.print(ui.displayMap(map));
-            this.map = pc.move(map);
+       /* this.map = pc.move(map);
             this.map = enemy.move(map);
             if (pc.location == enemy.location) {
                 //enemy.myChar = 'F'; this line turns the char to F permanently
                 pc.attack(enemy);
-            }
+            }*/
         }
-    }
+
 
     public void createMap(int size) {
         this.map = new Tile[size][size];
@@ -37,6 +37,15 @@ public class Game {
                 map[i][j] = new Tile(i, j);
             }
         }
+    }
+
+    public void combat(Character c1, Character c2) {
+        while (c1.HP.value > 0 && c2.HP.value > 0) {
+            c1.attack(c2);
+            c2.attack(c1);
+        }
+        if (c1.HP.value <= 0) { c1.location = null; }
+        if (c2.HP.value <= 0) { c2.location = null; }
     }
 
 
@@ -56,18 +65,18 @@ public class Game {
         Skill earthMagic = new Skill("Earth Magic", "Effects the character's ability with earth magic");
         Skill airMagic = new Skill("Air Magic", "Effects the character's ability with air magic");
         Skill waterMagic = new Skill("Water Magic", "Effects the character's ability with water magic");
-        this.skills.add(0, melee);
-        this.skills.add(1, ranged);
-        this.skills.add(2, spellcasting);
-        this.skills.add(3, shield);
-        this.skills.add(4, dodge);
-        this.skills.add(5, armor);
-        this.skills.add(6, invocation);
-        this.skills.add(7, faith);
-        this.skills.add(8, fireMagic);
-        this.skills.add(9, earthMagic);
-        this.skills.add(10, airMagic);
-        this.skills.add(11, waterMagic);
+        skills.add(0, melee);
+        skills.add(1, ranged);
+        skills.add(2, spellcasting);
+        skills.add(3, shield);
+        skills.add(4, dodge);
+        skills.add(5, armor);
+        skills.add(6, invocation);
+        skills.add(7, faith);
+        skills.add(8, fireMagic);
+        skills.add(9, earthMagic);
+        skills.add(10, airMagic);
+        skills.add(11, waterMagic);
     }
 
     //WEAPONS
@@ -111,12 +120,12 @@ public class Game {
     // CASTES
     public static Caste[] castes = new Caste[6];
     public void createCastes() {
-        this.castes[0] = Gladiator();
-        this.castes[1] = Urchin();
-        this.castes[2] = Woodsman();
-        this.castes[3] = Fisherman();
-        this.castes[4] = Apprentice();
-        this.castes[5] = Clergyman();
+        castes[0] = Gladiator();
+        castes[1] = Urchin();
+        castes[2] = Woodsman();
+        castes[3] = Fisherman();
+        castes[4] = Apprentice();
+        castes[5] = Clergyman();
     }
 
     // Gladiator
@@ -241,13 +250,13 @@ public class Game {
     // RACES
     public static Race[] races = new Race[7];
     public void createRaces() {
-        this.races[0] = Human();
-        this.races[1] = Minotaur();
-        this.races[2] = Spriggan();
-        this.races[3] = Dwarf();
-        this.races[4] = Nymph();
-        this.races[5] = Orc();
-        this.races[6] = Kenku();
+        races[0] = Human();
+        races[1] = Minotaur();
+        races[2] = Spriggan();
+        races[3] = Dwarf();
+        races[4] = Nymph();
+        races[5] = Orc();
+        races[6] = Kenku();
     }
     // Human
     static ArrayList<Skill> humSkills = new ArrayList<Skill>();

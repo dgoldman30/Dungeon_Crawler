@@ -4,7 +4,7 @@ import java.util.Scanner;
 //import java.awt.event.KeyListener;
 
 class Player extends Character {
-    int level = 1;
+    /*int level = 1;
     Race race;
     Caste caste ;
     ArrayList<Attribute> attributes = new ArrayList<Attribute>(Character.attributes);
@@ -16,78 +16,83 @@ class Player extends Character {
 
     int dodgeValue;
     int armorValue;
-    int mental;
+    int mental;*/
 
     Player(Race race, Caste caste, int[] attPoints) {
         this.race = race;
         this.caste = caste;
         this.myChar = 'P';
+        attributes = new ArrayList<>(Character.attributes);
+
         // increment aptitude for favorite caste and race skills
         for (int i = 0; i < this.race.favoredSkills.size(); i++) {
-            this.skills.get(this.skills.indexOf(this.race.favoredSkills.get(i))).aptitude++;
+            skills.get(skills.indexOf(this.race.favoredSkills.get(i))).aptitude++;
         }
         for (int i = 0; i < this.caste.favoredSkills.size(); i++) {
-            this.skills.get(this.skills.indexOf(this.caste.favoredSkills.get(i))).aptitude++;
+            skills.get(skills.indexOf(this.caste.favoredSkills.get(i))).aptitude++;
         }
 
         // add the race attributes
-        for (int i = 0; i < attributes.size()-1; i++) {
-                this.attributes.get(i).value += (race.attributeAdjustments[i] + attPoints[i]);
+        for (int i = 0; i < attributes.size(); i++) {
+                attributes.get(i).value += (race.attributeAdjustments[i] + attPoints[i]);
         }
 
-        this.dodgeValue += this.attributes.get(1).value + skills.get(4).value;
+        this.dodgeValue += attributes.get(1).value + skills.get(4).value;
         this.armorValue += skills.get(5).value;
-        this.mental += this.attributes.get(3).value + skills.get(2).value;
+        this.mental += attributes.get(3).value + skills.get(2).value;
 
 
-       // for (int i = 0; i < this.caste.startingEquipment.length; i++) {
-       //     this.inventory.add(this.caste.startingEquipment[i]);
-       // }
+        for (int i = 0; i < this.caste.startingItems.size(); i++) {
+            this.inventory.add(this.caste.startingItems.get(i));
+        }
 
     }
     public void dropItem(Item item) {
         item.drop();
-        inventory.remove(inventory.indexOf(item));
+        inventory.remove(item);
     }
 
-    @Override
-    public Tile[][] move(Tile[][] map) {
+
+    public Tile[][] move(Tile[][] map, String input) {
+        Tile[][] nMap = map;
         Tile currLoc = this.location;
         Tile newLoc = currLoc;
         currLoc.occupant = null; //empty the occupant on the old tile
-        Scanner scanner = new Scanner(System.in);
-        String keyCode = scanner.next();
 
-        switch (keyCode) {
+        switch (input) {
             case "a":
-                if (currLoc.y > 0) {
-                    newLoc = map[currLoc.x][currLoc.y - 1];
+                if (currLoc.y > 0 ) {
+                    newLoc = nMap[currLoc.x][currLoc.y - 1];
                     System.out.println("You moved left.");// if left move left
                 } else System.out.println("You are at the map edge. You cannot move left.");
                 break;
             case "w":
                 if (currLoc.x > 0) {
-                    newLoc = map[currLoc.x - 1][currLoc.y];
+                    newLoc = nMap[currLoc.x - 1][currLoc.y];
                     System.out.println("You moved up.");// if up move up
                 } else System.out.println("You are at the map edge. You cannot move up.");
                 break;
             case "d":
                 if (currLoc.y < map.length) {
-                    newLoc = map[currLoc.x][currLoc.y + 1]; // if right move right
+                    newLoc = nMap[currLoc.x][currLoc.y + 1]; // if right move right
                     System.out.println("You moved right.");
                 } else System.out.println("You are at the map edge. You cannot move right.");
                 break;
             case "s":
                 if (currLoc.x < map.length) {
-                    newLoc = map[currLoc.x + 1][currLoc.y]; // if down move down
+                    newLoc = nMap[currLoc.x + 1][currLoc.y]; // if down move down
                     System.out.println("You moved down.");
                 } else System.out.println("You are at the map edge. You cannot move down.");
                 break;
         }
         // occupy new tile and set that tile in the right place on map
-        this.occupy(newLoc);
+        if (newLoc.available) { this.occupy(newLoc); }
+        else {
+            this.attack(newLoc.occupant);
+            return map;
+        }
         //map[newLoc.x][newLoc.y] = newLoc; redundant
-        return map;
+        return nMap;
     }
 
 
@@ -95,18 +100,9 @@ class Player extends Character {
         this.attunedSpell = spell;
     }
 
-    public void occupy(Tile tile) {
-        tile.display = this.myChar;
-        tile.occupant = this;
-        this.location = tile;
-        this.location.display();
-    }
 
     public void charScreen() {
 
     }
 
-    public Tile getLocation() {
-        return this.location;
-    }
 }

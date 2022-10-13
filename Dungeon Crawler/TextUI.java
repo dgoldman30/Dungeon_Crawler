@@ -36,7 +36,7 @@ public class TextUI {
         return caste;
     }
     public int[] pickAtt() {
-        int[] points = new int[4];
+        int[] points = new int[5];
         System.out.println("You get to assign 4 additional attribute points to your character \n " +
                 "Select 1 for STR, 2 for DEX, 3 for INT, and 4 for WILL");
         Scanner scanner = new Scanner(System.in);
@@ -67,15 +67,16 @@ public class TextUI {
 
     public String characterScreen(Player pc) {
         String ret = "";
-        ret += "-----------";
+        ret += "-----------\n";
 
-        for (int i = 0; i < pc.attributes.size(); i++) {
-            ret += i + ": " + pc.attributes.get(i).name + " - " + pc.attributes.get(i).value + "\n";
+        for (int i = 0; i < Character.attributes.size(); i++) {
+            ret += i + ": " + Character.attributes.get(i).name + " - " + Character.attributes.get(i).value + "\n";
         }
-        ret += "-----------";
-        for (int i = 0; i < pc.skills.size(); i++) {
-            ret += i + ": " + pc.skills.get(i).name + " - " + pc.skills.get(i).value + "\n";
+        ret += "-----------\n";
+        for (int i = 0; i < Character.skills.size(); i++) {
+            ret += i + ": " + Character.skills.get(i).name + " - " + Character.skills.get(i).value + "\n";
         }
+        ret += "-----------\n";
         return ret;
     }
 }
