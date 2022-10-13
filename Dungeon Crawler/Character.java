@@ -19,7 +19,7 @@ abstract class Character {
         attributes.add(WILL);
         attributes.add(HP);
     }
-    public static ArrayList<Skill> skills = new ArrayList<Skill>();
+    public static ArrayList<Skill> skills = new ArrayList<Skill>(Game.skills);
     ArrayList<Item> equipment = new ArrayList<Item>();
     ArrayList<Item> inventory = new ArrayList<Item>();
     Tile location;
@@ -50,25 +50,28 @@ abstract class Character {
             attributes.get(i).value += race.attributeAdjustments[i];
         }
 
-        this.dodgeValue += this.attributes.get(1).value + skills.get(4).value;
+        this.dodgeValue += attributes.get(1).value + skills.get(4).value;
         this.armorValue += skills.get(5).value;
-        this.mental += this.attributes.get(3).value + skills.get(2).value;
+        this.mental += attributes.get(3).value + skills.get(2).value;
+
+        for (int i = 0; i < this.caste.startingItems.size(); i++) {
+            this.inventory.add(this.caste.startingItems.get(i));
+        }
     }
 
-    public Tile[][] move(Tile[][] map) {
-        return map;
-    }
+    public Tile[][] move(Tile[][] map) {return map;}
 
     public void occupy(Tile tile) {
         tile.display = this.myChar;
         tile.occupant = this;
+        tile.available = false;
         this.location = tile;
         this.location.display();
     }
     public void attack(Character target) {
-        if (((Math.random() * 10) + this.attributes.get(0).value)  > target.armorValue) {
-            target.attributes.get(4).value -= attributes.get(0).value;
-            System.out.println("Damage: " + target.attributes.get(4).value);
+        if (((Math.random() * 10) + attributes.get(0).value)  > target.armorValue) {
+            attributes.get(4).value -= attributes.get(0).value;
+            System.out.println("Damage: " + attributes.get(4).value);
         }
     }
 

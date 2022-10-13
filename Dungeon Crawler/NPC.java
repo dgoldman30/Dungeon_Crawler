@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class NPC extends Character {
-    int level = 1;
+    /*int level = 1;
     Race race;
     Caste caste ;
     ArrayList<Attribute> attributes = new ArrayList<Attribute>(Character.attributes);
@@ -10,9 +10,10 @@ public class NPC extends Character {
     ArrayList<Item> inventory = new ArrayList<Item>();
     Tile location;
     Spell attunedSpell;
+
+    char myChar;*/
+    Character target;
     boolean hostile;
-    char myChar;
-    Player target;
 
     NPC() {}
     NPC(Race race, Caste caste, boolean hostile) {
@@ -24,10 +25,10 @@ public class NPC extends Character {
 
         // increment aptitude for favorite caste and race skills
         for (int i = 0; i < this.race.favoredSkills.size(); i++) {
-            this.skills.get(this.skills.indexOf(this.race.favoredSkills.get(i))).aptitude++;
+            skills.get(skills.indexOf(this.race.favoredSkills.get(i))).aptitude++;
         }
         for (int i = 0; i < this.caste.favoredSkills.size(); i++) {
-            this.skills.get(this.skills.indexOf(this.caste.favoredSkills.get(i))).aptitude++;
+            skills.get(skills.indexOf(this.caste.favoredSkills.get(i))).aptitude++;
         }
 
         // add the race attributes and any extra attribute modifiers
@@ -35,12 +36,11 @@ public class NPC extends Character {
        //     this.attributes.get(i).value += (race.attributeAdjustments[i] + attPoints[i]);
        // }
     }
-    public void setTarget(Player target) {
-        this.target = target;
-    }
+    public void setTarget(Character target) { this.target = target; }
+
     @Override
     public Tile[][] move(Tile[][] map) {
-        Tile tLoc = this.target.getLocation();
+        Tile tLoc = this.target.location;
         Tile cLoc = this.location;
 
         cLoc.occupant = null;
@@ -48,13 +48,17 @@ public class NPC extends Character {
         int xDiff = tLoc.x - cLoc.x;
         int yDiff = tLoc.y - cLoc.y;
 
+        if (Math.abs(xDiff) == 1 && Math.abs(yDiff) == 1) {
+            this.attack(tLoc.occupant);
+            return map;
+        }
         if (Math.abs(xDiff) > Math.abs(yDiff)) {
             if (xDiff > 0) { cLoc = map[cLoc.x+1][cLoc.y]; }
             else { cLoc = map[cLoc.x-1][cLoc.y]; }
         } else if (yDiff > 0) { cLoc = map[cLoc.x][cLoc.y+1]; }
         else { cLoc = map[cLoc.x][cLoc.y-1]; }
 
-        // occupy new tile and set that tile in the right place on map
+        // occupy new tile if it's available, else attack its occupant
         this.occupy(cLoc);
         //map[cLoc.x][cLoc.y] = cLoc;
         return map;
