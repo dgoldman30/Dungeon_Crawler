@@ -48,6 +48,7 @@ public class TextUI {
 
     public String displayMap(Tile[][] map) {
         String ret = "";
+        ret += "- - - - - - - - - -\n";
         char[][] chars = new char[map.length][map.length];
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map.length; j++) {
@@ -56,7 +57,23 @@ public class TextUI {
                 if (j == map.length - 1) ret += "\n";
             }
         }
+        ret += "- - - - - - - - - -\n";
         return ret;
     }
 
+    public String characterScreen(Player pc) {
+        Scanner scanner = new Scanner(System.in);
+
+        String ret = "";
+        ret += "-----------";
+
+        for (int i = 0; i < pc.attributes.size(); i++) {
+            ret += i + ": " + pc.attributes.get(i).name + " - " + pc.attributes.get(i).value + "\n";
+        }
+        ret += "-----------";
+        for (int i = 0; i < pc.skills.size(); i++) {
+            ret += i + ": " + pc.skills.get(i).name + " - " + pc.skills.get(i).value + "\n";
+        }
+        return ret;
+    }
 }

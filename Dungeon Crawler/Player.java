@@ -79,4 +79,8 @@ class Player extends Character {
         this.location.display();
         this.location = tile;
     }
+
+    public void charScreen() {
+
+    }
 }
