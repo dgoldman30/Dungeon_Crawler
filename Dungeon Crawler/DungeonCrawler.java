@@ -34,10 +34,9 @@ public class DungeonCrawler {
 
     public static void main(String[] args) {
         Game game = new Game(10);
-        boolean fighting = false;
 
-        while (!fighting) {
-            System.out.println("Enter an action: WASD to move - X to open character sheet");
+        while (true) {
+            System.out.println("Enter an action: WASD to move/attack - X to open character sheet");
             System.out.print(game.ui.displayMap(game.map));
             String input = scanner.next();
             switch (input) {
