@@ -75,4 +75,14 @@ abstract class Character {
         }
     }
 
+    public void executeMove(Tile tile) {
+        if (tile.available) {
+            this.location.occupant = null;
+            this.occupy(tile);
+            System.out.println("You moved!");
+        } else {
+            this.attack(tile.occupant);
+        }
+    }
+
 }

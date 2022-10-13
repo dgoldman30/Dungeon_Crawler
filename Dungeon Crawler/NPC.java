@@ -1,17 +1,7 @@
 import java.util.ArrayList;
 
 public class NPC extends Character {
-    /*int level = 1;
-    Race race;
-    Caste caste ;
-    ArrayList<Attribute> attributes = new ArrayList<Attribute>(Character.attributes);
-    ArrayList<Skill> skills = new ArrayList<Skill>(Game.skills);
-    ArrayList<Item> equipment = new ArrayList<Item>();
-    ArrayList<Item> inventory = new ArrayList<Item>();
-    Tile location;
-    Spell attunedSpell;
 
-    char myChar;*/
     Character target;
     boolean hostile;
 
@@ -59,7 +49,7 @@ public class NPC extends Character {
         else { cLoc = map[cLoc.x][cLoc.y-1]; }
 
         // occupy new tile if it's available, else attack its occupant
-        this.occupy(cLoc);
+        this.executeMove(cLoc);
         //map[cLoc.x][cLoc.y] = cLoc;
         return map;
     }
