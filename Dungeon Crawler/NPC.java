@@ -10,6 +10,7 @@ public class NPC extends Character {
         this.race = race;
         this.caste = caste;
         this.hostile = hostile;
+        setSlots();
 
         if(hostile) {myChar = 'E';} else myChar = 'N';
 
@@ -24,6 +25,8 @@ public class NPC extends Character {
         for (int i = 0; i < this.attributes.length; i++) {
             this.attributes[i].value += race.attributeAdjustments[i];
         }
+
+
     }
     public void setTarget(Character target) { this.target = target; }
 
@@ -55,4 +58,5 @@ public class NPC extends Character {
         this.location = tile;
         this.location.display();
     }
+
 }

@@ -1,5 +1,6 @@
-import java.util.ArrayList;
+import java.util.*;
 import java.awt.event.KeyEvent;
+
 abstract class Character {
 
     int level;
@@ -11,7 +12,8 @@ abstract class Character {
     int dodgeValue;
     int armorValue;
     int mental;
-    ArrayList<Item> equipment = new ArrayList<Item>();
+    Hashtable<String, Item> equipment = new Hashtable<String, Item>(7);
+
     ArrayList<Item> inventory = new ArrayList<Item>();
     Attribute STR = new Attribute("strength");
     Attribute DEX = new Attribute("dexterity");
@@ -78,4 +80,18 @@ abstract class Character {
         }
     }
 
+    public void setSlots() {
+        equipment.put("head", null);
+        equipment.put("body", null);
+        equipment.put("hands", null);
+        equipment.put("feet", null);
+        equipment.put("neck", null);
+        equipment.put("left", null);
+        equipment.put("right", null);
+    }
+
+    public void autoEquip() {
+        Iterator<Item> itr = inventory.iterator();
+
+    }
 }
