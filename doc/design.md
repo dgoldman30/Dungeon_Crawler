@@ -271,6 +271,18 @@ class Tile {
     public char display()
 
 }
+class TextUI {
+    game Game
+    --
+    public Player characterCreation()
+    public Race pickRace()
+    public Caste pickCaste()
+    public int[] pickAtt()
+    public String displayMap(map: Tile[][])
+    public void moving(game: Game)
+    public void combat(c1 : Character, c2 : Character)
+    public String characterScreen(pc : Player)
+    }
 
 Item <|-- Weapon
 Item <|-- Potion
@@ -280,7 +292,44 @@ Item <|-- Potion
 'Here we're going to need to add associations between classes and specify now. We can do this while coding.
 'Association between Game and Player
 class Game {
-Map : Tile[][]
+int gameState
+map : Tile[][]
+enemy : Character 
+{static} pc : Player
+{static} skills : ArrayList<Skill> 
+{static} weapons : Weapon[]
+{static} potions : Potion[]
+{static} castes : Caste[]
+{static} gladSkills : ArrayList<Skill>
+{static} gladItems : ArrayList<Item>
+{static} urSkills : ArrayList<Skill>
+{static} urItems : ArrayList<Item>
+{static} woodSkills : ArrayList<Skill>
+{static} woodItems : ArrayList<Item>
+{static} fishSkills : ArrayList<Skill>
+{static} fishItems : ArrayList<Item>
+{static} appSkills : ArrayList<Skill>
+{static} appItems : ArrayList<Item>
+{static} clerSkills : ArrayList<Skill>
+{static} clerItems : ArrayList<Item>
+{static} races : Race[]
+{static} humSkills : ArrayList<Skill>
+{static} humAtt : int[]
+{static} minSkills : ArrayList<Skill>
+{static} minAtt : int[]
+{static} dwSkills : ArrayList<Skill>
+{static} dwAtt : int[]
+{static} sprSkills : ArrayList<Skill>
+{static} sprAtt : int[]
+{static} nySkills : ArrayList<Skill>
+{static} nyAtt : int[]
+{static} orcSkills : ArrayList<Skill>
+{static} orcAtt : int[]
+{static} kSkills : ArrayList<Skill>
+{static} kAtt : int[]
+
+
+
 --
 public Game updateGame()
 public String toString()
