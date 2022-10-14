@@ -21,10 +21,9 @@ public class NPC extends Character {
             skills.get(skills.indexOf(this.caste.favoredSkills.get(i))).aptitude++;
         }
 
-        // add the race attributes and any extra attribute modifiers
-       // for (int i = 0; i < attributes.size()-1; i++) {
-       //     this.attributes.get(i).value += (race.attributeAdjustments[i] + attPoints[i]);
-       // }
+        for (int i = 0; i < this.attributes.length; i++) {
+            this.attributes[i].value += race.attributeAdjustments[i];
+        }
     }
     public void setTarget(Character target) { this.target = target; }
 
@@ -44,7 +43,7 @@ public class NPC extends Character {
         } else if (yDiff > 0) { cLoc = map[cLoc.x][cLoc.y+1]; }
         else { cLoc = map[cLoc.x][cLoc.y-1]; }
 
-        // occupy new tile if it's available, else attack its occupant
+        // occupy new tile if it's available
         this.executeMove(cLoc);
         //map[cLoc.x][cLoc.y] = cLoc;
         return map;

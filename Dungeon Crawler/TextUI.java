@@ -72,6 +72,7 @@ public class  TextUI {
         switch (input) {
             case "exit":
                 System.out.println("You have exited the game.");
+                System.exit(1);
                 break;
             case "x":
                 System.out.print(characterScreen(game.pc));
@@ -84,6 +85,7 @@ public class  TextUI {
             case "s":
             case "d":
                 System.out.print(game.pc.move(game, input));
+                System.out.println(game.enemy.move(game.map));
                 break;
         }
 
@@ -92,37 +94,44 @@ public class  TextUI {
     }
 
     public void combat(Character c1, Character c2) {
-        c1.location.display = 'F';
+        System.out.println("You have entered combat. Enter an input to attack the enemy.");
+        Scanner scanner = new Scanner(System.in);
         while (c1.HP.value > 0 && c2.HP.value > 0) {
+            scanner.next();
             // player attacks NPC
             if ((((Math.random() * 10) + c1.DEX.value) >= c2.dodgeValue && (((Math.random() * 10) + c1.STR.value) > c2.armorValue))) { // if attack beats dodge and armor deal damage
                 c2.HP.value -= c1.STR.value;
-                System.out.println(c1.race.name + " " + c1.caste.name + " hits " + c2.race.name + " " + c2.caste.name + " for " + c1.STR.value + " damage, leaving remaining HP at " + c2.HP.value);
-            } else System.out.println("Your attack missed!");
+                if (c2.HP.value > 0) System.out.println(c1.race.name + " " + c1.caste.name + " hits " + c2.race.name + " " + c2.caste.name + " for " + c1.STR.value + " damage, leaving remaining HP at " + c2.HP.value);
+                else {
+                    System.out.println(c1.race.name + " " + c1.caste.name + " hits " + c2.race.name + " " + c2.caste.name + " for " + c1.STR.value + " damage, killing them." );
+                    c2.location.occupant = null;
+                    c2.location = null;
+                    game.gameState = 3; // set game state to 3 - generate enemy
+                    System.out.println("All enemies are dead. Generating a new enemy.");
+                    break;
+                }
+            } else System.out.println("Your attack missed the " + c2.race.name + " " + c2.caste.name);
+
             // NPC attacks player
             if ((((Math.random() * 10) + c2.DEX.value) >= c1.dodgeValue && (((Math.random() * 10) + c2.STR.value) > c1.armorValue))) { // if attack beats dodge and armor deal damage
                 c1.HP.value -= c2.STR.value;
-                System.out.println(c2.race.name + " " + c2.caste.name + " hits " + c1.race.name + " " + c1.caste.name + " for " + c2.STR.value + " damage, leaving remaining HP at " + c1.HP.value);
+                if (c1.HP.value > 0) System.out.println(c2.race.name + " " + c2.caste.name + " hits " + c1.race.name + " " + c1.caste.name + " for " + c2.STR.value + " damage, leaving remaining HP at " + c1.HP.value);
+                else {
+                    System.out.println(c2.race.name + " " + c2.caste.name + " hits you for " + c2.STR.value + " damage, killing you");
+                    game.gameState = 10; // game over state
+                    break;
+                }
             } else System.out.println("The " + c2.race.name + " " + c2.caste.name + " missed you!");
-        }
-
-        if (c1.HP.value <= 0) {
-            c1.location.display = c2.myChar;
-            c1.location = null;
-        } else {
-            c2.location.display = c1.myChar;
-            c2.location = null;
         }
     }
 
     public String characterScreen(Player pc) {
         String ret = "";
-        ret += "-----------\n";
-
+        ret += "-----------\nLevel " + pc.level + " " + pc.race.name + " " + pc.caste.name + "\n----------\nAttributes: \n";
         for (int i = 0; i < pc.attributes.length; i++) {
             ret += i + ": " + pc.attributes[i].name + " - " + pc.attributes[i].value + "\n";
         }
-        ret += "-----------\n";
+        ret += "-----------\nSkills \n";
         for (int i = 0; i < Character.skills.size(); i++) {
             ret += i + ": " + Character.skills.get(i).name + " - " + Character.skills.get(i).value + "\n";
         }
