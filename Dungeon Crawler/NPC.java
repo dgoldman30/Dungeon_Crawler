@@ -10,7 +10,7 @@ public class NPC extends Character {
         this.race = race;
         this.caste = caste;
         this.hostile = hostile;
-        setSlots();
+        //setSlots();
 
         if(hostile) {myChar = 'E';} else myChar = 'N';
 

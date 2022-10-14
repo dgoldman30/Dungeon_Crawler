@@ -8,7 +8,8 @@ class Player extends Character {
         this.race = race;
         this.caste = caste;
         this.myChar = 'P';
-        setSlots();
+
+        //setSlots();
         // increment aptitude for favorite caste and race skills
         for (int i = 0; i < this.race.favoredSkills.size(); i++) {
             skills.get(skills.indexOf(this.race.favoredSkills.get(i))).aptitude++;
@@ -58,13 +59,13 @@ class Player extends Character {
                 } else ret += "You are at the map edge. You cannot move up.";
                 break;
             case "d":
-                if (currLoc.y < map.length) {
+                if (currLoc.y < map.length - 1) {
                     newLoc = map[currLoc.x][currLoc.y + 1];
                     ret += "You moved to the right."; // move right
                 } else ret += "You are at the map edge. You cannot move right.";
                 break;
             case "s":
-                if (currLoc.x < map.length) {
+                if (currLoc.x < map.length - 1) {
                     newLoc = map[currLoc.x + 1][currLoc.y];
                     ret += "You moved down."; // move down
                 } else ret += "You are at the map edge. You cannot move down.";

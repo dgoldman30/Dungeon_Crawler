@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class  TextUI {
@@ -13,39 +14,69 @@ public class  TextUI {
     }
     public Race pickRace() {
         Race race;
-        System.out.println("Each race has different set of favored Skills \n Please Select a Race from the list below");
-        for (int i = 0; i < Game.races.length; i++) {
+        while (true) {
+            int input;
+            System.out.println("Each race has different set of favored Skills \n Please Select a Race from the list below");
+            for (int i = 0; i < Game.races.length; i++) {
 
-            System.out.println(i + ": " + Game.races[i].name);
+                System.out.println(i + ": " + Game.races[i].name);
+            }
+            Scanner scanner = new Scanner(System.in);
+            if (scanner.hasNextInt()) {
+                input = scanner.nextInt();
+            }
+            else input = -1;
+
+            if (input >= 0 && input < Game.races.length) {
+                race =  Game.races[input];
+                System.out.println("You have selected Race: " + race.name);
+                return race;
+            }
+            else
+                System.out.println("Invalid input, Please try again");
         }
-        Scanner scanner = new Scanner(System.in);
-        race =  Game.races[scanner.nextInt()];
-        System.out.println("You have selected Race: " + race.name);
-        return race;
+
+
     }
     public Caste pickCaste() {
         Caste caste;
-        System.out.println("Each caste favored skills and a set of starting equipment \n Please select a caste from the list below");
+        while (true) {
+            int input;
+            System.out.println("Each caste favored skills and a set of starting equipment \n Please select a caste from the list below");
 
-        for (int i = 0; i < Game.castes.length; i++) {
-            System.out.println(i + ": " + Game.castes[i].name);
+            for (int i = 0; i < Game.castes.length; i++) {
+                System.out.println(i + ": " + Game.castes[i].name);
+            }
+
+            Scanner scanner = new Scanner(System.in);
+            if (scanner.hasNextInt()) {
+                input = scanner.nextInt();
+            } else input = -1;
+            if (input >= 0 && input < Game.castes.length) {
+                caste = Game.castes[input];
+                System.out.println("You have selected " + caste.name);
+                return caste;
+            }
+            else System.out.println("Invalid input, Please try again");
+
         }
-        Scanner scanner = new Scanner(System.in);
-        caste = Game.castes[scanner.nextInt()];
-        System.out.println("You have selected " + caste.name);
-        return caste;
     }
     public int[] pickAtt() {
         int[] points = new int[5];
-        System.out.println("You get to assign 4 additional attribute points to your character \n " +
-                "Select 1 for STR, 2 for DEX, 3 for INT, and 4 for WILL");
-        Scanner scanner = new Scanner(System.in);
-        for (int i = 0; i < 4; i++) {
-            int ref = scanner.nextInt()-1;
-            points[ref] += 1;
-            System.out.println("You have increased your attribute");
-        }
-        return points;
+        int ref;
+            while (true) {
+                Scanner scanner = new Scanner(System.in);
+                System.out.println("You get to assign 4 additional attribute points to your character \n " +
+                        "Select 1 for STR, 2 for DEX, 3 for INT, and 4 for WILL");
+                if (scanner.hasNextInt()) {
+                    ref = scanner.nextInt() - 1;
+                    points[ref] += 1;
+                    System.out.println("You have increased your attribute");
+                    if (Arrays.stream(points).sum() == 4) {
+                        return points;
+                    }
+                } else System.out.println("Invalid, input try again");
+            }
     }
 
     public String displayMap(Tile[][] map) {
@@ -65,9 +96,9 @@ public class  TextUI {
 
     public void moving(Game game) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter an action: WASD to move/attack - X to open character sheet");
+        System.out.println("Enter an action: \n - W, A, S, D to move/attack \n - X to open character sheet \n - \"exit\" to exit game");
         System.out.print(displayMap(game.map));
-        String input = scanner.next();
+        String input = scanner.next().toLowerCase();
 
         switch (input) {
             case "exit":
@@ -84,8 +115,8 @@ public class  TextUI {
             case "a":
             case "s":
             case "d":
-                System.out.print(game.pc.move(game, input));
-                System.out.println(game.enemy.move(game.map));
+                System.out.println(game.pc.move(game, input));
+                game.enemy.move(game.map);
                 break;
         }
 
