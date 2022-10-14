@@ -1,12 +1,20 @@
-import java.util.ArrayList;
+import java.util.*;
 import java.awt.event.KeyEvent;
+
 abstract class Character {
 
     int level;
     Race race;
     Caste caste;
     char myChar;
+    Tile location;
+    Spell attunedSpell;
+    int dodgeValue;
+    int armorValue;
+    int mental;
+    Hashtable<String, Item> equipment = new Hashtable<String, Item>(7);
 
+    ArrayList<Item> inventory = new ArrayList<Item>();
     Attribute STR = new Attribute("strength");
     Attribute DEX = new Attribute("dexterity");
     Attribute INT = new Attribute("intelligence");
@@ -15,14 +23,7 @@ abstract class Character {
     public Attribute[] attributes = {STR, DEX, INT, WILL, HP};
 
     public static ArrayList<Skill> skills = new ArrayList<Skill>(Game.skills);
-    ArrayList<Item> equipment = new ArrayList<Item>();
-    ArrayList<Item> inventory = new ArrayList<Item>();
-    Tile location;
-    Spell attunedSpell;
 
-    int dodgeValue;
-    int armorValue;
-    int mental;
 
 
     Character(){}
@@ -63,13 +64,13 @@ abstract class Character {
         this.location = tile;
         this.location.display();
     }
-    public void attack(Character target) {
-        this.location.display = 'F';
-        if (((Math.random() * 10) + attributes[0].value)  > target.armorValue) {
-            attributes[4].value -= attributes[0].value;
-            System.out.println("Damage: " + attributes[4].value);
-        }
-    }
+//    public void attack(Character target) {
+//        this.location.display = 'F';
+//        if (((Math.random() * 10) + attributes[0].value)  > target.armorValue) {
+//            attributes[4].value -= attributes[0].value;
+//            System.out.println("Damage: " + attributes[4].value);
+//        }
+//    }
 
     public void executeMove(Tile tile) {
         if (tile.available) {
@@ -79,4 +80,18 @@ abstract class Character {
         }
     }
 
+    public void setSlots() {
+        equipment.put("head", null);
+        equipment.put("body", null);
+        equipment.put("hands", null);
+        equipment.put("feet", null);
+        equipment.put("neck", null);
+        equipment.put("left", null);
+        equipment.put("right", null);
+    }
+
+    public void autoEquip() {
+        Iterator<Item> itr = inventory.iterator();
+
+    }
 }

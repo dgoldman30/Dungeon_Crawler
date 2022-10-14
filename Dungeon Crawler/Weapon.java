@@ -3,13 +3,14 @@ class Weapon extends Item {
     double damage;
     double accuracy;
     boolean twoHanded;
+    String slot;
 
-    public Weapon(String name, String description, double dam, double acc, boolean two) {
+    public Weapon(String name, String description, double dam, double acc, String slot) {
         this.name = name;
         this.description = description;
         this.damage = dam;
         this.accuracy = acc;
-        this.twoHanded = two;
+        this.slot = slot;
     }
     @Override
     public Item drop() {

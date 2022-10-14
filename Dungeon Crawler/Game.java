@@ -5,70 +5,67 @@ public class Game {
     int gameState; // default state
     Tile[][] map;
     static Player pc;
-    Character enemy;
+    NPC enemy;
     public Game(int size) {
         createSkills();
         createCastes();
         createRaces();
         createWeapons();
         createPotions();
-        NPC enemy = new NPC(races[0], castes[0], true);
-        this.enemy = enemy;
-        createMap(size); // create map
-        enemy.setTarget(pc); // set the pc as the target of enemy
-        enemy.occupy(map[(int) (Math.random() * 10)][(int) (Math.random() * 10)]); // place the enemy in a random square
+        createMap(size);
     }
 
     public static void main(String[] args) {
         Game game = new Game(10);
         TextUI ui = new TextUI(game);
 
+        // create and place the pc
         game.pc = ui.characterCreation();
-        game.pc.occupy(game.map[0][0]); // place the pc
+        game.pc.occupy(game.map[0][0]);
+
+        // create an enemy and place them on a random square
+        game.enemy = new NPC(races[0], castes[0], true);
+        game.enemy.occupy(game.map[(int) (Math.random() * game.map.length)][(int) (Math.random() * game.map.length)]);
+
+        game.enemy.setTarget(game.pc);
+
         game.gameState++; // set game state to 1 - moving state
 
         while (true) {
             switch (game.gameState) {
                 case 1:
-                    if (game.checkAdjacent(game.pc)) {
-                        game.gameState++;
-                        break;
-                    }
                     ui.displayMap(game.map);
-                    ui.moving(game);
+                    if (game.checkAdjacent()) { // if the enemy is in any adjacent tiles
+                        game.gameState++; // set game state to 2 - combat state
+                        break;
+                    } else { ui.moving(game); }
                     break;
                 case 2:
+                    ui.displayMap(game.map);
                     ui.combat(game.pc, game.enemy);
-
+                    break;
+                case 3:
+                    game.enemy = new NPC(races[0], castes[0], true);
+                    game.enemy.occupy(game.map[(int) (Math.random() * game.map.length)][(int) (Math.random() * game.map.length)]);
+                    game.enemy.setTarget(game.pc);
+                    game.gameState = 1;
+                    ui.displayMap(game.map);
+                    break;
+                case 10:
+                    System.exit(0);
             }
         }
 
     }
 
-    public boolean checkAdjacent(Character player) {
-        boolean ret = false;
-        int x = player.location.x;
-        int y = player.location.y;
-
-        if (x > 0 && x < map.length-1 && y > 0 && y < map.length-1) { // no edges
-            return (!(map[x][y-1].available && map[x-1][y].available && map[x][y+1].available && map[x+1][y].available));
-        } else if (y == 0 && x > 0) { // left edge
-            return (!(map[x-1][y].available && map[x][y+1].available && map[x+1][y].available));
-        } else if (y == 0 && x == 0) { // top left
-            return (!(map[x][y+1].available && map[x+1][y].available));
-        } else if (x == 0 && y > 0) { // top edge
-            return (!(map[x][y-1].available && map[x][y+1].available && map[x+1][y].available));
-        } else if (x == 0 && y == map.length-1) { // top right
-            return (!(map[x][y-1].available && map[x+1][y].available));
-        } else if (y == map.length && x > 0) { // right edge
-            return (!(map[x-1][y].available && map[x][y-1].available && map[x+1][y].available));
-        } else if (x == map.length && y > 0) { // bottom edge
-            return (!(map[x-1][y].available && map[x][y+1].available && map[x][y-1].available));
-        } else if (x == map.length-1 && y == map.length-1) { // bottom right
-            return (!(map[x-1][y].available && map[x][y-1].available));
-        }
-
-        return ret;
+    public boolean checkAdjacent() {
+        int x = this.pc.location.x;
+        int y = this.pc.location.y;
+        int ex = this.enemy.location.x;
+        int ey = this.enemy.location.y;
+        if (Math.abs(x - ex) <= 1 && Math.abs(y - ey) <= 1) {
+            return true;
+        } else return false;
     }
 
 
@@ -113,15 +110,15 @@ public class Game {
     //WEAPONS
     public static Weapon[] weapons = new Weapon[9];
     public void createWeapons() {
-        Weapon knife = new Weapon("Knife", "High-grade damascus blade perfect for slicing enemies!", 0.4, 0.9, false);
-        Weapon sword = new Weapon("Sword", "Basic lightweight sword", 0.7, 0.9, false);
-        Weapon hammer = new Weapon("Hammer", "Perfectly weighted Hammer, best for heavy attacks", 0.8, 0.7, true);
-        Weapon ballAndChain = new Weapon("Ball and Chain", "The ole' ball and chain", 0.7, 0.8, true);
-        Weapon club = new Weapon("Club", "Heavy club", 0.9, 0.6, true);
-        Weapon dagger = new Weapon("Dagger", "Lightweight Dagger for quick attacks", 0.3, 1.0, false);
-        Weapon sabre = new Weapon("Sabre", "Fence your enemy to the death!", 0.7, 0.9, false);
-        Weapon harpoon = new Weapon("Harpoon", "Are you trying to kill a whale?", 0.9, 0.8, true);
-        Weapon brassKnuckles = new Weapon("Brass Knuckles", "Wearable Brass Knuckles for critical attacks", 0.7, 0.9, true);
+        Weapon knife = new Weapon("Knife", "High-grade damascus blade perfect for slicing enemies!", 0.4, 0.9, "hand1");
+        Weapon sword = new Weapon("Sword", "Basic lightweight sword", 0.7, 0.9, "hand1");
+        Weapon hammer = new Weapon("Hammer", "Perfectly weighted Hammer, best for heavy attacks", 0.8, 0.7, "hand1hand2");
+        Weapon ballAndChain = new Weapon("Ball and Chain", "The ole' ball and chain", 0.7, 0.8, "hand1hand2");
+        Weapon club = new Weapon("Club", "Heavy club", 0.9, 0.6, "hand1");
+        Weapon dagger = new Weapon("Dagger", "Lightweight Dagger for quick attacks", 0.3, 1.0, "hand1");
+        Weapon sabre = new Weapon("Sabre", "Fence your enemy to the death!", 0.7, 0.9, "hand1");
+        Weapon harpoon = new Weapon("Harpoon", "Are you trying to kill a whale?", 0.9, 0.8, "hand1hand2");
+        Weapon brassKnuckles = new Weapon("Brass Knuckles", "Wearable Brass Knuckles for critical attacks", 0.7, 0.9, "hand1hand2");
         weapons[0] = knife;//0
         weapons[1] = sword;//1
         weapons[2] = hammer;//2

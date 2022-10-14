@@ -8,8 +8,7 @@ class Player extends Character {
         this.race = race;
         this.caste = caste;
         this.myChar = 'P';
-
-
+        setSlots();
         // increment aptitude for favorite caste and race skills
         for (int i = 0; i < this.race.favoredSkills.size(); i++) {
             skills.get(skills.indexOf(this.race.favoredSkills.get(i))).aptitude++;
@@ -33,10 +32,10 @@ class Player extends Character {
         }
 
     }
-    public void dropItem(Item item) {
-        item.drop();
-        inventory.remove(item);
-    }
+//    public void dropItem(Item item) {
+//        item.drop();
+//        inventory.remove(item);
+//    }
 
 
     public String move(Game game, String input) {

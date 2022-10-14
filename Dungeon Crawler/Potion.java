@@ -1,6 +1,5 @@
 class Potion extends Item {
-    String description;
-
+    int attributeMulti;
     public Potion(String name, String description) {
         this.name = name;
         this.description = description;
