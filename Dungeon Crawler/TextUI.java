@@ -70,10 +70,12 @@ public class  TextUI {
                         "Select 1 for STR, 2 for DEX, 3 for INT, and 4 for WILL");
                 if (scanner.hasNextInt()) {
                     ref = scanner.nextInt() - 1;
-                    points[ref] += 1;
-                    System.out.println("You have increased your attribute");
-                    if (Arrays.stream(points).sum() == 4) {
-                        return points;
+                    if (ref < 4) {
+                        points[ref] += 1;
+                        System.out.println("You have increased your attribute");
+                        if (Arrays.stream(points).sum() == 4) {
+                            return points;
+                        }
                     }
                 } else System.out.println("Invalid, input try again");
             }
