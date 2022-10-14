@@ -33,10 +33,10 @@ class Player extends Character {
         }
 
     }
-    public void dropItem(Item item) {
-        item.drop();
-        inventory.remove(item);
-    }
+//    public void dropItem(Item item) {
+//        item.drop();
+//        inventory.remove(item);
+//    }
 
 
     public String move(Game game, String input) {

@@ -174,35 +174,39 @@ hide footbox
 
 'classes
 abstract class Character {
-    level : Int
+    level : int
     race : Race
-    class : Class
+    caste : Caste
+    myChar : char
+    location : Tile
+    dodgeValue : int
+    armorValue : int 
+    mental : int
     attributes : Attribute[]
-    skills : Skill[]
+    skills : ArrayList<Skill>
     items : Item[]
     inventory : Tile[]
-    location : Tile
     attunedSpell : Spell
     --
-    public void moveTo(tile : Tile)
-    public void attack(dir : String)
-    public void selectRace()
-    public void selectCaste()
+    public Tile[][] move(map : Tile[][])
+    public void occupy(tile : Tile)
+    public void executeMove(tile : Tile)
 }
 
 class  NPC {
     target : Character
-    disposition : Int
+    hostile : boolean
     --
-    public Move[] pathfind()
+    public void setTarget(target : Character)
+    public Tile[][] move(map : Tile[][])
+    public void occupy(tile : Tile)
 }
 
 class Player {
-    experience : Int
+    experience : int
     --
-    public void equip(item : Item)
-    public void attune(spell : Spell)
-    public void levelUp()
+    
+    public String move(game : Game, input : String)
 }
 
 Character <|-- NPC
@@ -210,34 +214,39 @@ Character <|-- Player
 
 
 class Race {
-    favoredSkills : Skills[]
-    baseAttributes : Attributes[]
+    favoredSkills : ArrayList<Skill>
+    attributeAdjustments : int[]
+    name : String
+    description : String
 }
 
 class Caste {
-    favoredSkills : Skills[]
-    startingEquipment : Item[]
+    favoredSkills : ArrayList<Skill>
+    startingEquipment : ArrayList<Item>
+    description : String
+    name : String
 }
 
-interface Item {
-    description
+abstract Item {
+    description : String
+    name : String
     --
-    public void drop()
-    public void use()
+    abstract Item drop()
 }
 
 class Attribute {
     value : int
-    name
+    name : String
+    description : String
     --
-    public void increment()
 }
 
 class Skill {
     value : float
     name : String
     description : String
-    toggled : Boolean
+    toggled : boolean
+    aptitude : int
     --
     public void increment()
     public void toggle()
@@ -245,21 +254,28 @@ class Skill {
 class Weapon {
 damage : int 
 accuracy : int 
+twoHanded : boolean
+
 }
 class Potion {
 attributeMulti : int 
 usageTime : int 
 }
-class Armor {
-healthMulti : int 
-}
-Item <|-- Weapon
-Item <|-- Potion
-Item <|-- Armor
 
 class Tile {
-available : boolean
+    available : boolean
+    occupant : Character
+    display : character 
+    x : int 
+    y : int 
+    public char display()
+
 }
+
+Item <|-- Weapon
+Item <|-- Potion
+
+
 
 'Here we're going to need to add associations between classes and specify now. We can do this while coding.
 'Association between Game and Player

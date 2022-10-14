@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class TextUI {
+public class  TextUI {
     Game game;
 
     TextUI(Game game) { this.game = game; }
