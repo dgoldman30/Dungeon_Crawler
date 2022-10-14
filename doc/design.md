@@ -201,9 +201,11 @@ class  NPC {
     public Tile[][] move(map : Tile[][])
     public void occupy(tile : Tile)
 }
+class  Enemy {  
+}
+
 
 class Player {
-    experience : int
     --
     
     public String move(game : Game, input : String)
@@ -211,6 +213,7 @@ class Player {
 
 Character <|-- NPC
 Character <|-- Player
+NPC <|-- Enemy
 
 
 class Race {
@@ -327,12 +330,27 @@ enemy : Character
 {static} orcAtt : int[]
 {static} kSkills : ArrayList<Skill>
 {static} kAtt : int[]
-
-
-
 --
-public Game updateGame()
-public String toString()
+public boolean checkAdjacent(player : Character)
+public void createMap(size : int)
+public void createSkills()
+public void createWeapons()
+private void createPotions()
+public void createCastes()
+public static Caste Gladiator()
+public static Caste Urchin()
+public static Caste Woodsman()
+public static Caste Fisherman()
+public static Caste Apprentice()
+public static Caste Clergyman()
+public void createRaces()
+public static Race Human()
+public static Race Minotaur()
+public static Race Dwarf()
+public static Race Spriggan()
+public static Race Nymph()
+public static Race Orc()
+public static Race Kenku()
 }
 
 
