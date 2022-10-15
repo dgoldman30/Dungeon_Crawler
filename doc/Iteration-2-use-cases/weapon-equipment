@@ -1,0 +1,46 @@
+# Use Case Name
+weapon-equipment
+
+# Scope
+The Game
+
+# Level
+User goal
+
+# Primary actor
+The user
+
+# Stakeholders and interest
+User wants to be able to equip weapon to more effectively attack enemies
+
+# Preconditions
+- There must be an enemy in sight of the character
+- There must be a fight engaged
+- Character must be able to move to enemy
+
+# Postconditions
+User attacks enemy and inflicts a more damage than.
+
+# Main success scenario
+1. The user taps on an adjacent enemy (or a further enemy if their character wields a ranged weapon)
+2. Both the character and the enemy perform their attack(s) on each other
+3. The weapon overcomes enemy and destroys him
+
+# Extensions
+- If the enemy is out of range
+- If the character takes lethal damage they die and receive a game over
+- If the enemy takes lethal damage they die and drop loot and the character receives exp for the kill
+
+# Special Requirements
+- Functioning touch screen UI
+- The user must have started the game
+
+# Technology and data variations list
+- graphical presentation of damage infliction
+- Enemy health
+- Player stamina
+
+# Frequency of occurrence
+Occurs frequently throughout a playthrough.
+
+# Miscellaneous

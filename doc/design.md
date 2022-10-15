@@ -85,85 +85,96 @@ Character "1" --- "1" Attack : \tExecutes\t
 
 ```
 # Sequence Diagrams
-start-game
+pickRace()
 ```plantuml
 
 @startuml
 hide footbox
 
 actor User
-participant "c1 : Character" as character
+participant "ui : TextUI" as ui
 participant "race : Race" as race
-participant "caste : Caste" as caste
-participant "game : Game" as game
-participant "attributes[i] : Attribute" as attribute
 
-User --> character : createCharacter()
-character --> race : race = pickRace()
-character --> caste : caste = pickCaste()
-character -> game : game = createGame()
-character -> attribute : attribute[i] = setAttribute()
+User --> ui : CharacterCreation()
+ui --> race : race = pickRace()
+@enduml
+```
+pickCaste()
+```plantuml
+
+@startuml
+hide footbox
+
+actor User
+participant "ui : TextUI" as ui
+participant "caste : Caste" as caste
+
+User --> ui : CharacterCreation()
+ui --> caste : caste = pickCaste()
+@enduml
+```
+pickAtt()
+```plantuml
+
+@startuml
+hide footbox
+
+actor User
+participant "ui : TextUI" as ui
+participant "points : int[]" as points
+
+User --> ui : CharacterCreation()
+ui --> points : points = pickAtt()
 @enduml
 ```
 
-move
+moving()
 ```plantuml
 @startuml
 
 hide footbox
 
 actor User
-participant "location : Tile" as loc
-participant "c1 : Character" as char
+participant "ui : TextUI" as ui
+participant "input : String" as input
+participant "pc : Character" as pc
+participant "enemy : NPC" as enemy
 
-User -> loc : selectTile()
-char -> loc : moveTo()
-
-
-
+loop [untilValidInput]
+alt validIntput
+User -> ui : moving(game)
+ui -> input : input = selectASWD()
+input -> pc : move(input, game)
+ui -> enemy : move(game.map)
+else !validInput
+input o-> ui : inputError()
+end
+end
 @enduml
 ```
-
-updateGame
+void combat(Character c1, Character c2)
 ```plantuml
 @startuml
 
 hide footbox
 
-actor System
-participant "g1 : Game" as Game
-System -> Game : updateGame()
+actor User
+participant "ui : TextUI" as ui
+participant "pc : Character" as pc
+participant "enemy : Character" as enemy
+participant "gameState : int" as gameState
+User -> ui : combat(Character c1, Character c2)
+ui -> pc : c1 = pc
+ui -> enemy : c2 = enemy
+alt winner
+pc -> gameState : gameState = 3
+else 
+enemy -> GameState : gameState = 10
+end
 @enduml
 ```
 
-cast-spell
-```plantuml
-@startuml
 
-hide footbox
-
-actor Character
-participant "s1 : Spell" as spell
-participant "t[i][j] : Tile" as target
-
-Character -> spell : castSpell()
-spell -> target : target = selectTile()
-
-@enduml
-```
-
-attack
-```plantuml
-@startuml
-
-hide footbox
-
-actor Character
-participant "e1 : Character" as enemy
-
-Character -> enemy : attack()
-@enduml
-```
 
 # Class Diagram
 
@@ -290,10 +301,6 @@ class TextUI {
 Item <|-- Weapon
 Item <|-- Potion
 
-
-
-'Here we're going to need to add associations between classes and specify now. We can do this while coding.
-'Association between Game and Player
 class Game {
 int gameState
 map : Tile[][]
@@ -352,6 +359,17 @@ public static Race Nymph()
 public static Race Orc()
 public static Race Kenku()
 }
+'associations
+Game "1" - "1" Player : \tHas()\t
+Game "1" - "1" NPC : \tHas()\t
+Game "1" - "11" Skill : \tContainsListof()\t
+Game "1" - "5" Caste : \tContainsListof()\t
+Game "1" - "6" Race : \tContainsListof()\t
+Game "1" - "8" Weapon : \tContainsListof()\t
+Game "1" - "4" Potion : \tContainsListof()\t
+TextUI "1" - "1" Game : \tHas()\t
+Game "1" - "100" Tile : \tcontainsMapOf()\t
+
 
 
 

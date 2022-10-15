@@ -1,0 +1,41 @@
+# Use Case Name
+Generate Dungeon
+
+# Scope
+The Game
+
+# Level
+User goal
+
+# Primary actor
+The user
+
+# Stakeholders and interest
+User wants to explore further and doesn't want to be bound to a 10x10 map.
+
+# Preconditions
+- The character must be made and started exploring map
+
+# Postconditions
+User is able to explore different areas with randomly generated items and enemies.
+
+# Main success scenario
+1) The user is able to move freely and explore more areas
+
+# Extensions
+- the character hits a wall
+- a nonenterable dungeon is created and the user must turn around
+
+# Special Requirements
+- Functioning touch screen UI
+- The user must have started the game
+
+# Technology and data variations list
+- graphical presentation on Android
+- Enemy health
+- Player stamina
+
+# Frequency of occurrence
+Occurs frequently throughout a playthrough.
+
+# Miscellaneous
