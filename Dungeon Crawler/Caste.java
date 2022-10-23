@@ -2,7 +2,8 @@ import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 final class Caste {
     ArrayList<Skill> favoredSkills;
-    ArrayList<Item> startingItems;
+
+    ArrayList<Item> startingItems = new ArrayList<>();
     String description;
     String name;
 

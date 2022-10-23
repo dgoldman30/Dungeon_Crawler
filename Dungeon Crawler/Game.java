@@ -110,15 +110,15 @@ public class Game {
     //WEAPONS
     public static Weapon[] weapons = new Weapon[9];
     public void createWeapons() {
-        Weapon knife = new Weapon("Knife", "High-grade damascus blade perfect for slicing enemies!", 0.4, 0.9, "hand1");
-        Weapon sword = new Weapon("Sword", "Basic lightweight sword", 0.7, 0.9, "hand1");
-        Weapon hammer = new Weapon("Hammer", "Perfectly weighted Hammer, best for heavy attacks", 0.8, 0.7, "hand1hand2");
-        Weapon ballAndChain = new Weapon("Ball and Chain", "The ole' ball and chain", 0.7, 0.8, "hand1hand2");
-        Weapon club = new Weapon("Club", "Heavy club", 0.9, 0.6, "hand1");
-        Weapon dagger = new Weapon("Dagger", "Lightweight Dagger for quick attacks", 0.3, 1.0, "hand1");
-        Weapon sabre = new Weapon("Sabre", "Fence your enemy to the death!", 0.7, 0.9, "hand1");
-        Weapon harpoon = new Weapon("Harpoon", "Are you trying to kill a whale?", 0.9, 0.8, "hand1hand2");
-        Weapon brassKnuckles = new Weapon("Brass Knuckles", "Wearable Brass Knuckles for critical attacks", 0.7, 0.9, "hand1hand2");
+        Weapon knife = new Weapon("Knife", "High-grade damascus blade perfect for slicing enemies!", 0.4, 0.9,0.2, false);
+        Weapon sword = new Weapon("Sword", "Basic lightweight sword", 0.7, 0.9, 0.1, false);
+        Weapon hammer = new Weapon("Hammer", "Perfectly weighted Hammer, best for heavy attacks", 1, 0.7, 0.05,  true);
+        Weapon ballAndChain = new Weapon("Ball and Chain", "The ole' ball and chain", 0.7, 0.8, 0.15, true);
+        Weapon club = new Weapon("Club", "Heavy club", 0.9, 0.8, 0.02, false);
+        Weapon dagger = new Weapon("Dagger", "Lightweight Dagger for quick attacks", 0.3, 1.0, 0.4, false);
+        Weapon sabre = new Weapon("Sabre", "Fence your enemy to the death!", 0.7, 0.85, 0.2, false);
+        Weapon harpoon = new Weapon("Harpoon", "Are you trying to kill a whale?", 0.7, 0.8, 0.3, true);
+        Weapon brassKnuckles = new Weapon("Brass Knuckles", "Wearable Brass Knuckles for critical attacks", 0.5, 0.9, 0.5, true);
         weapons[0] = knife;//0
         weapons[1] = sword;//1
         weapons[2] = hammer;//2
@@ -133,11 +133,11 @@ public class Game {
     // POTIONS
     public static Potion[] potions = new Potion[5];
     private void createPotions() {
-        Potion healPo = new Potion("Healing Potion", "Heals most wounds and recovers HP ");
-        Potion dexPo = new Potion("Dexerity Potion", "Increases Dexterity");
-        Potion strPo = new Potion("Strength Potion", "Increases Strength");
-        Potion intPo = new Potion("Intelligence Potion", "Increases brainpower and knowledge");
-        Potion willPo = new Potion("Willpower Potion", "Increases Willpower");
+        Potion healPo = new Potion("Healing Potion", "Heals most wounds and recovers HP ", 10, 4);
+        Potion dexPo = new Potion("Dexerity Potion", "Increases Dexterity", 1, 1);
+        Potion strPo = new Potion("Strength Potion", "Increases Strength", 1, 0);
+        Potion intPo = new Potion("Intelligence Potion", "Increases brainpower and knowledge", 1, 2);
+        Potion willPo = new Potion("Willpower Potion", "Increases Willpower", 1, 3);
         potions[0] = healPo;
         potions[1] = dexPo;
         potions[2] = strPo;

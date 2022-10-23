@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -80,5 +81,15 @@ class Player extends Character {
     public void setAttunedSpell(Spell spell) {
         this.attunedSpell = spell;
     }
+
+    public void equip(Weapon weapon) {
+    }
+
+    public ArrayList<Item> search() {
+        ArrayList<Item> items = new ArrayList<>(this.location.contents);
+        return items;
+    }
+
+
 
 }

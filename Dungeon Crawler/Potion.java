@@ -1,18 +1,22 @@
 class Potion extends Item {
-    int attributeMulti;
-    public Potion(String name, String description) {
+    int factor;
+    int target;
+
+    public Potion(String name, String description, int factor, int target) {
         this.name = name;
         this.description = description;
+        this.factor = factor;
+        this.target = target;
     }
-    //Effect effect;
 
     public Item drop() {
         System.out.println("You have dropped " + name + " Potion");
         return this;
     }
 
-    public Character drink(Character target) {
-        //this.effect.apply(target);
-        return target;
+    public void drink(Character target) {
+        target.attributes[this.target].value += this.factor;
     }
+
+    public void use() {};
 }

@@ -1,5 +1,4 @@
 abstract class Item {
-    String description = "";
-    String name = "";
+    String description = "", name = "";
     abstract Item drop();
 }
