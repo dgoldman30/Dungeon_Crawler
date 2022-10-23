@@ -9,10 +9,15 @@ abstract class Character {
     char myChar;
     Tile location;
     Spell attunedSpell;
-    int dodgeValue;
-    int armorValue;
-    int mental;
-    Hashtable<String, Item> equipment = new Hashtable<String, Item>(7);
+
+    //equipment
+    Item leftHand;
+    Item rightHand;
+    Item head;
+    Item hands;
+    Item body;
+    Item neck;
+    Item feet;
 
     ArrayList<Item> inventory = new ArrayList<>();
     Attribute STR = new Attribute("strength");
@@ -53,7 +58,9 @@ abstract class Character {
         this.attributes[7].value += (attributes[3].value + (attributes[2].value * 2) + skills.get(2).value) / 3;
 
         for (int i = 0; i < this.caste.startingItems.size(); i++) {
-            this.inventory.add(this.caste.startingItems.get(i));
+            if (this.caste.startingItems.get(i).getClass() == Weapon.class) {
+                this.equipWeapon((Weapon) this.caste.startingItems.get(i));
+            } else this.inventory.add(this.caste.startingItems.get(i));
         }
     }
 
@@ -66,13 +73,6 @@ abstract class Character {
         this.location = tile;
         this.location.display();
     }
-//    public void attack(Character target) {
-//        this.location.display = 'F';
-//        if (((Math.random() * 10) + attributes[0].value)  > target.armorValue) {
-//            attributes[4].value -= attributes[0].value;
-//            System.out.println("Damage: " + attributes[4].value);
-//        }
-//    }
 
     public void executeMove(Tile tile) {
         if (tile.available) {
@@ -82,27 +82,21 @@ abstract class Character {
         }
     }
 
-    public void setSlots() {
-        equipment.put("head", null);
-        equipment.put("body", null);
-        equipment.put("hands", null);
-        equipment.put("feet", null);
-        equipment.put("neck", null);
-        equipment.put("left", null);
-        equipment.put("right", null);
-    }
-
-    public void autoEquip() {
-        Iterator<Item> itr = inventory.iterator();
-
-    }
-
     public void equipWeapon(Weapon weapon) {
         if (weapon.large) {
-            equipment.put("left", weapon);
-            equipment.put("right", weapon);
-        } else if (equipment.get("left") == null) { equipment.put("left", weapon); }
-        else equipment.put("right", weapon);
+            if (leftHand != null) inventory.add(leftHand);
+            if (rightHand != null) inventory.add(rightHand);
+            leftHand = weapon;
+            rightHand = weapon;
+        } else if (leftHand == null) {
+            leftHand = weapon;
+        }
+        else if (rightHand == null) {
+            rightHand = weapon;
+        } else {
+            inventory.add(leftHand);
+            leftHand = weapon;
+        }
     }
 
     public void drinkPotion(Potion pot) {

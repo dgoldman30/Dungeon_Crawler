@@ -5,7 +5,7 @@ public class Weapon extends Item {
     double crit;
 
 
-    public Weapon() {}
+    public Weapon(){}
     public Weapon(String name, String description, double dam, double acc, double crit, boolean large) {
         this.name = name;
         this.description = description;
@@ -22,8 +22,8 @@ public class Weapon extends Item {
     public double strike(Character user, Character target) {
         double damage;
         if ((Math.random() *  (target.DEX.value / 10)) < (crit * (user.DEX.value / 10) * Math.random())) {
-            damage = (this.damage * 10) * (this.crit * 10) + user.STR.value - target.armorValue;
-        } else damage = (this.damage * 10) + user.STR.value - target.armorValue;
+            damage = (this.damage * 10) * (this.crit * 10) + user.STR.value - target.AV.value;
+        } else damage = (this.damage * 10) + user.STR.value - target.AV.value;
         target.HP.value -=  damage;
         return damage;
     }

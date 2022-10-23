@@ -133,7 +133,7 @@ public class  TextUI {
         while (c1.HP.value > 0 && c2.HP.value > 0) {
             scanner.next();
             // player attacks NPC
-            if ((((Math.random() * 10) + c1.DEX.value) >= c2.dodgeValue && (((Math.random() * 10) + c1.STR.value) > c2.armorValue))) { // if attack beats dodge and armor deal damage
+            if ((((Math.random() * 10) + c1.DEX.value) >= c2.DV.value && (((Math.random() * 10) + c1.STR.value) > c2.DV.value))) { // if attack beats dodge and armor deal damage
                 c2.HP.value -= c1.STR.value;
                 if (c2.HP.value > 0) System.out.println(c1.race.name + " " + c1.caste.name + " hits " + c2.race.name + " " + c2.caste.name + " for " + c1.STR.value + " damage, leaving remaining HP at " + c2.HP.value);
                 else {
@@ -147,7 +147,7 @@ public class  TextUI {
             } else System.out.println("Your attack missed the " + c2.race.name + " " + c2.caste.name);
 
             // NPC attacks player
-            if ((((Math.random() * 10) + c2.DEX.value) >= c1.dodgeValue && (((Math.random() * 10) + c2.STR.value) > c1.armorValue))) { // if attack beats dodge and armor deal damage
+            if ((((Math.random() * 10) + c2.DEX.value) >= c1.DV.value && (((Math.random() * 10) + c2.STR.value) > c1.DV.value))) { // if attack beats dodge and armor deal damage
                 c1.HP.value -= c2.STR.value;
                 if (c1.HP.value > 0) System.out.println(c2.race.name + " " + c2.caste.name + " hits " + c1.race.name + " " + c1.caste.name + " for " + c2.STR.value + " damage, leaving remaining HP at " + c1.HP.value);
                 else {

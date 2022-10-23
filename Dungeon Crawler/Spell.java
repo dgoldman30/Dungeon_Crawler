@@ -17,6 +17,6 @@ class Spell {
     }
 
     public void resolve(Character user) {
-        target.attributes[attribute].value -= this.factor * user.MV.value; 
+        target.attributes[attribute].value -= this.factor * user.MV.value;
     }
 }
