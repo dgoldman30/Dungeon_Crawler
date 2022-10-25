@@ -81,7 +81,7 @@ public class Game {
 
     // change to a map indexed by name. Also move to an enum in Skills class
     public static Map<String, Skill> skills = new Hashtable<>();
-    public void createSkills() {
+    public static void createSkills() {
         Skill melee = new Skill("Melee", "Effects the character's accuracy and damage with melee weapons");
         Skill ranged = new Skill("Ranged", "Effects the character's accuracy and damage with ranged weapons");
         Skill spellcasting = new Skill("Spellcasting", "Effects the character's success rate with magical effects");
