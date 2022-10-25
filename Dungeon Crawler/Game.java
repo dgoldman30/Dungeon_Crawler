@@ -79,6 +79,8 @@ public class Game {
     }
 
     // SKILLS
+
+    // change to a map indexed by name. Also move to an enum in Skills class
     public static ArrayList<Skill> skills = new ArrayList<Skill>(11);
     public void createSkills() {
         Skill melee = new Skill("Melee", "Effects the character's accuracy and damage with melee weapons");
@@ -108,6 +110,7 @@ public class Game {
     }
 
     //WEAPONS
+    // move to enum in Weapon class
     public static Weapon[] weapons = new Weapon[9];
     public void createWeapons() {
         Weapon knife = new Weapon("Knife", "High-grade damascus blade perfect for slicing enemies!", 0.4, 0.9,0.2, false);
@@ -131,6 +134,7 @@ public class Game {
     }
 
     // POTIONS
+    // change to Enum in Potion class
     public static Potion[] potions = new Potion[5];
     private void createPotions() {
         Potion healPo = new Potion("Healing Potion", "Heals most wounds and recovers HP ", 10, 4);
@@ -146,6 +150,7 @@ public class Game {
     }
 
     // CASTES
+    // change to Enum in Caste class
     public static Caste[] castes = new Caste[6];
     public void createCastes() {
         castes[0] = Gladiator();
@@ -276,6 +281,7 @@ public class Game {
     }
 
     // RACE
+    // change to enum in Race class
     public static Race[] races = new Race[7];
     public void createRaces() {
         races[0] = Human();
