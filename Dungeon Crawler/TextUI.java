@@ -45,16 +45,19 @@ public class  TextUI {
             int input;
             System.out.println("Each caste favored skills and a set of starting equipment \n Please select a caste from the list below");
 
-            for (int i = 0; i < Game.castes.length; i++) {
-                System.out.println(i + ": " + Game.castes[i].name);
+            int itr = 1;
+            for (Caste c : Caste.values()) {
+                System.out.println(itr + ": " + c.name);
+                itr++;
             }
+
 
             Scanner scanner = new Scanner(System.in);
             if (scanner.hasNextInt()) {
                 input = scanner.nextInt();
             } else input = -1;
-            if (input >= 0 && input < Game.castes.length) {
-                caste = Game.castes[input];
+            if (input >= 0 && input < Caste.values().length) {
+                caste = Caste.values()[input];
                 System.out.println("You have selected " + caste.name);
                 return caste;
             }

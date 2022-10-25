@@ -10,9 +10,7 @@ public class Game {
         createSkills();
         createWeapons();
         createPotions();
-        createCastes();
         createRaces();
-
         createMap(size);
     }
 
@@ -25,7 +23,7 @@ public class Game {
         game.pc.occupy(game.map[0][0]);
 
         // create an enemy and place them on a random square
-        game.enemy = new NPC(races[0], castes[0], true);
+        game.enemy = new NPC(races[0], Caste.GLADIATOR, true);
         game.enemy.occupy(game.map[(int) (Math.random() * game.map.length)][(int) (Math.random() * game.map.length)]);
 
         game.enemy.setTarget(game.pc);
@@ -46,7 +44,7 @@ public class Game {
                     ui.combat(game.pc, game.enemy);
                     break;
                 case 3:
-                    game.enemy = new NPC(races[0], castes[0], true);
+                    game.enemy = new NPC(races[0], Caste.GLADIATOR, true);
                     game.enemy.occupy(game.map[(int) (Math.random() * game.map.length)][(int) (Math.random() * game.map.length)]);
                     game.enemy.setTarget(game.pc);
                     game.gameState = 1;
@@ -151,136 +149,43 @@ public class Game {
     }
 
     // CASTES
-    // change to Enum in Caste class
-    public static Caste[] castes = new Caste[6];
-    public void createCastes() {
-        castes[0] = Gladiator();
-        castes[1] = Urchin();
-        castes[2] = Woodsman();
-        castes[3] = Fisherman();
-        castes[4] = Apprentice();
-        castes[5] = Clergyman();
-    }
-
     // Gladiator
-    static List<Skill> gladSkills = new ArrayList<>();
-    static List<Item> gladItems = new ArrayList<Item>();
-    public static Caste Gladiator() {
-        //add skills
-        gladSkills.add(skills.get("Melee")); //melee
-        gladSkills.add(skills.get("Shield")); //shield
-        gladSkills.add(skills.get("Dodge")); //dodge
-        gladSkills.add(skills.get("Armor")); //armor
-        //starting equipment
-        gladItems.add(weapons[1]);
-        gladItems.add(potions[0]);
-        gladItems.add(potions[2]);
+    public static Skill[] gladSkills = {Game.skills.get("Melee"), Game.skills.get("Shield"), Game.skills.get("Dodge"), Game.skills.get("Armor")};
+    public static Item[] gladItems = {Game.weapons[1], Game.potions[0], Game.potions[2]};
 
-        Caste gladiator = new Caste(gladSkills, gladItems, "Gladiator",
-                "The gladiator is a perennial warrior, never wandering far from their weapon.");
-        return gladiator;
-    }
 
     // Urchin
-    static List<Skill> urSkills = new ArrayList<Skill>(4);
-    static List<Item> urItems = new ArrayList<Item>();
-    public static Caste Urchin() {
-        urSkills.add(skills.get("Melee")); //melee
-        urSkills.add(skills.get("Ranged")); //ranged
-        urSkills.add(skills.get("Dodge")); //dodge
-        urSkills.add(skills.get("Invocation")); //invocation
-        //starting equipment
-        urItems.add(weapons[0]);
-        urItems.add(potions[1]);
-        // add rags
-        // add sling
+    static Skill[] urSkills = {Game.skills.get("Melee"), Game.skills.get("Ranged"), Game.skills.get("Dodge"), Game.skills.get("Invocation")};
+    static Item[] urItems = {Game.weapons[0], Game.potions[1]}; // sling and rags
 
-        Caste urchin = new Caste(urSkills, urItems, "Urchin",
-                "An urchin lives life on the streets, clinging to shadows and surviving by sheer luck.");
-        return urchin;
-    }
 
     // Woodsman
-    static List<Skill> woodSkills = new ArrayList<Skill>(4);
-    static List<Item> woodItems = new ArrayList<Item>();
-    public static Caste Woodsman() {
-        woodSkills.add(skills.get("Ranged")); //ranged
-        woodSkills.add(skills.get("Dodge")); //dodge
-        woodSkills.add(skills.get("Faith")); //faith
-        woodSkills.add(skills.get("Earth Magic")); //earthMagic
-        //starting equipment
-        woodItems.add(weapons[0]);
-        woodItems.add(potions[0]);
-        woodItems.add(potions[1]);
-        // add bow
-        // add leather armor
-
-        Caste woodsman = new Caste(woodSkills, woodItems, "Woodsman",
-                "A woodsman lives by hunting and foraging in the forest.");
-        return woodsman;
-    }
+    static Skill[] woodSkills = {Game.skills.get("Ranged"), Game.skills.get("Dodge"), Game.skills.get("Faith"), Game.skills.get("Earth Magic")};
+    static Item[] woodItems = {Game.weapons[0], Game.potions[0], Game.potions[1]};
+    // add bow
+    // add leather armor
 
     // Fisherman
-    static List<Skill> fishSkills = new ArrayList<Skill>(4);
-    static List<Item> fishItems = new ArrayList<Item>();
-    public static Caste Fisherman() {
-        fishSkills.add(skills.get("Melee")); //melee
-        fishSkills.add(skills.get("Spellcasting")); //spellcasting
-        fishSkills.add(skills.get("Air Magic")); //airMagic
-        fishSkills.add(skills.get("Water Magic")); //waterMagic
-        //starting equipment
-        fishItems.add(weapons[7]);
-        fishItems.add(potions[3]);
-        // air spell
-        // water spell
-        // clothes
-
-        Caste fisherman = new Caste(fishSkills, fishItems, "Fisherman",
-                "A fisherman spends their whole life at sea, becoming one with the winds and waters around them");
-        return fisherman;
-    }
+    static Skill[] fishSkills = {Game.skills.get("Melee"), Game.skills.get("Spellcasting"), Game.skills.get("Air Magic"), Game.skills.get("Water Magic")};
+    static Item[] fishItems = {Game.weapons[7], Game.potions[3]};
+    // air spell
+    // water spell
+    // clothes
 
     // Apprentice
-    static List<Skill> appSkills = new ArrayList<Skill>(4);
-    static List<Item> appItems = new ArrayList<Item>();
-    public static Caste Apprentice() {
-        appSkills.add(skills.get("Spellcasting")); //spellcasting
-        appSkills.add(skills.get("Fire Magic")); //fireMagic
-        appSkills.add(skills.get("Air Magic")); //airMagic
-        appSkills.add(skills.get("Invocation")); //invocation
-        //starting equipment
-        appItems.add(weapons[0]); // knife
-        appItems.add(potions[3]); // magic potion
-        // robes
-        // fire spell
-        // air spell
-
-
-        Caste apprentice = new Caste(appSkills, appItems, "Apprentice",
-                "An apprentice of a wizened wizard setting out on their own.");
-        return apprentice;
-    }
+    static Skill[] appSkills = {Game.skills.get("Spellcasting"), Game.skills.get("Fire Magic"), Game.skills.get("Air Magic"), Game.skills.get("Invocation")};
+    static Item[] appItems = {Game.weapons[0], Game.potions[3]};
+    // robes
+    // fire spell
+    // air spell
 
     // Clergyman
-    static List<Skill> clerSkills = new ArrayList<Skill>(4);
-    static List<Item> clerItems = new ArrayList<Item>();
-    public static Caste Clergyman() {
-        clerSkills.add(skills.get("Armor")); //armor
-        clerSkills.add(skills.get("Shield")); //shield
-        clerSkills.add(skills.get("Faith")); //faith
-        clerSkills.add(skills.get("Water Magic")); //waterMagic
-        //starting equipment
-        clerItems.add(weapons[2]); // hammer
-        // metal armor
-        // shield
-        // religious symbol
-        // holy water scroll
-
-        Caste clergyman = new Caste(clerSkills, clerItems, "Clergyman",
-                "A clergyman set out on a holy pilgrimage.");
-        return clergyman;
-    }
-
+    static Skill[] clerSkills = {Game.skills.get("Armor"), Game.skills.get("Shield"), Game.skills.get("Faith"), Game.skills.get("Water Magic")};
+    static Item[] clerItems = {Game.weapons[2]};
+    // metal armor
+    // shield
+    // religious symbol
+    // holy water scroll
     // RACE
     // change to enum in Race class
     public static Race[] races = new Race[7];
