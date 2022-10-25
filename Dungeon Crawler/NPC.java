@@ -7,25 +7,9 @@ public class NPC extends Character {
 
     NPC() {}
     NPC(Race race, Caste caste, boolean hostile) {
-        this.race = race;
-        this.caste = caste;
+        super(race, caste);
         this.hostile = hostile;
-        //setSlots();
-
         if(hostile) {myChar = 'E';} else myChar = 'N';
-
-        // increment aptitude for favorite caste and race skills
-        for (int i = 0; i < this.race.favoredSkills.size(); i++) {
-            skills.get(skills.indexOf(this.race.favoredSkills.get(i))).aptitude++;
-        }
-        for (int i = 0; i < this.caste.favoredSkills.size(); i++) {
-            skills.get(skills.indexOf(this.caste.favoredSkills.get(i))).aptitude++;
-        }
-
-        for (int i = 0; i < this.attributes.length; i++) {
-            this.attributes[i].value += race.attributeAdjustments[i];
-        }
-
 
     }
     public void setTarget(Character target) { this.target = target; }

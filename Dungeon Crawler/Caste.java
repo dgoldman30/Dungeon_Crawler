@@ -3,20 +3,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 final class Caste {
-    ArrayList<Skill> favoredSkills;
+
+    List<Skill> favoredSkills;
 
     List<Item> startingItems;
     String description;
     String name;
 
-    Caste(ArrayList<Skill> favoredSkills, ArrayList<Item> startingItems, String name, String description) {
+    Caste(List<Skill> favoredSkills, List<Item> startingItems, String name, String description) {
         this.favoredSkills = favoredSkills;
         this.startingItems = new ArrayList<>(startingItems);
         this.name = name;
         this.description = description;
     }
 
-    enum Classes {
+    enum Castes {
 
     }
 

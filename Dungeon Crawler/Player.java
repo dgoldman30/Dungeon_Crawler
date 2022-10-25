@@ -6,35 +6,14 @@ class Player extends Character {
 
 
     Player(Race race, Caste caste, int[] attPoints) {
-        this.race = race;
-        this.caste = caste;
+
+        super(race, caste);
         this.myChar = 'P';
 
-        //setSlots();
-        // increment aptitude for favorite caste and race skills
-        for (int i = 0; i < this.race.favoredSkills.size(); i++) {
-            skills.get(skills.indexOf(this.race.favoredSkills.get(i))).aptitude++;
+        // add character creation attributes
+        for (int i = 0; i < attPoints.length; i++) {
+            this.attributes[i].value += attPoints[i];
         }
-        for (int i = 0; i < this.caste.favoredSkills.size(); i++) {
-            skills.get(skills.indexOf(this.caste.favoredSkills.get(i))).aptitude++;
-        }
-
-        // race attributes
-        for (int i = 0; i < 5; i++) {
-            attributes[i].value += race.attributeAdjustments[i];
-        }
-        // dodge value, armor value, mental value
-        this.attributes[5].value += attributes[1].value + skills.get(4).value;
-        this.attributes[6].value += (int) ((attributes[3].value / 3) + skills.get(5).value);
-        this.attributes[7].value += (attributes[3].value + (attributes[2].value * 2) + skills.get(2).value) / 3;
-
-        // caste items; equip any weapons
-        for (int i = 0; i < this.caste.startingItems.size(); i++) {
-            if (this.caste.startingItems.get(i).getClass() == Weapon.class) {
-                this.equipWeapon((Weapon) this.caste.startingItems.get(i));
-            } else this.inventory.add(this.caste.startingItems.get(i));
-        }
-
     }
 
     public String move(Game game, String input) {

@@ -11,6 +11,10 @@ public class Skill {
         this.description = description;
     }
 
+    public enum Skills {
+
+    }
+
     private void increment() {
         if (this.toggled) {
             this.value += (aptitude);

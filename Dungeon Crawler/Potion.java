@@ -7,6 +7,7 @@ class Potion extends Item {
         this.description = description;
         this.factor = factor;
         this.target = target;
+        this.equipable = false;
     }
 
     public Item drop() {

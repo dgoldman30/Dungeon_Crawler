@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class  TextUI {
@@ -113,7 +114,9 @@ public class  TextUI {
                 break;
             // case "m" -> open magic screen and allow for attuning spell
             // case "e" -> open equip screen and allow gear to be equipped
-            // case "i" -> open inventory screen and allow for items to be used/equipped
+            case "i":
+                System.out.print(inventoryScreen(game.pc));
+                break;
             case "w":
             case "a":
             case "s":
@@ -160,16 +163,29 @@ public class  TextUI {
     }
 
     public String characterScreen(Player pc) {
-        String ret = "";
-        ret += "-----------\nLevel " + pc.level + " " + pc.race.name + " " + pc.caste.name + "\n----------\nAttributes: \n";
+        final String[] ret = {""};
+        ret[0] += "-----------\nExperience: " + pc.experience + " " + pc.race.name + " " + pc.caste.name + "\n----------\nAttributes: \n";
         for (int i = 0; i < pc.attributes.length; i++) {
-            ret += i + ": " + pc.attributes[i].name + " - " + pc.attributes[i].value + "\n";
+            ret[0] += i + ": " + pc.attributes[i].name + " - " + pc.attributes[i].value + "\n";
         }
-        ret += "-----------\nSkills \n";
-        for (int i = 0; i < Character.skills.size(); i++) {
-            ret += i + ": " + Character.skills.get(i).name + " - " + Character.skills.get(i).value + "\n";
+        ret[0] += "-----------\nSkills \n";
+
+        pc.skills.forEach((k,v) -> ret[0] += k + " - " + pc.skills.get(k).value + "\n");
+
+        ret[0] += "-----------\n";
+        return ret[0];
+    }
+
+    public String inventoryScreen(Player pc) {
+        final String[] ret = {"Inventory: \n"};
+        Iterator<Item> itr = pc.inventory.iterator();
+        ret[0] += "---------\n";
+
+        int index = 1;
+        while (itr.hasNext()) {
+            Item it = itr.next();
+            ret[0] += index + ": " + it.name + "\n\n";
         }
-        ret += "-----------\n";
-        return ret;
+        return ret[0];
     }
 }

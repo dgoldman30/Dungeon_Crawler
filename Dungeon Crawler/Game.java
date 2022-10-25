@@ -1,5 +1,5 @@
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.sql.Array;
+import java.util.*;
 
 public class Game {
     int gameState; // default state
@@ -8,10 +8,11 @@ public class Game {
     NPC enemy;
     public Game(int size) {
         createSkills();
-        createCastes();
-        createRaces();
         createWeapons();
         createPotions();
+        createCastes();
+        createRaces();
+
         createMap(size);
     }
 
@@ -81,7 +82,7 @@ public class Game {
     // SKILLS
 
     // change to a map indexed by name. Also move to an enum in Skills class
-    public static ArrayList<Skill> skills = new ArrayList<Skill>(11);
+    public static Map<String, Skill> skills = new Hashtable<>();
     public void createSkills() {
         Skill melee = new Skill("Melee", "Effects the character's accuracy and damage with melee weapons");
         Skill ranged = new Skill("Ranged", "Effects the character's accuracy and damage with ranged weapons");
@@ -95,18 +96,18 @@ public class Game {
         Skill earthMagic = new Skill("Earth Magic", "Effects the character's ability with earth magic");
         Skill airMagic = new Skill("Air Magic", "Effects the character's ability with air magic");
         Skill waterMagic = new Skill("Water Magic", "Effects the character's ability with water magic");
-        skills.add(0, melee);
-        skills.add(1, ranged);
-        skills.add(2, spellcasting);
-        skills.add(3, shield);
-        skills.add(4, dodge);
-        skills.add(5, armor);
-        skills.add(6, invocation);
-        skills.add(7, faith);
-        skills.add(8, fireMagic);
-        skills.add(9, earthMagic);
-        skills.add(10, airMagic);
-        skills.add(11, waterMagic);
+        skills.put(melee.name, melee);
+        skills.put(ranged.name, ranged);
+        skills.put(spellcasting.name, spellcasting);
+        skills.put(shield.name, shield);
+        skills.put(dodge.name, dodge);
+        skills.put(armor.name, armor);
+        skills.put(invocation.name, invocation);
+        skills.put(faith.name, faith);
+        skills.put(fireMagic.name, fireMagic);
+        skills.put(earthMagic.name, earthMagic);
+        skills.put(airMagic.name, airMagic);
+        skills.put(waterMagic.name, waterMagic);
     }
 
     //WEAPONS
@@ -162,14 +163,14 @@ public class Game {
     }
 
     // Gladiator
-    static ArrayList<Skill> gladSkills = new ArrayList<Skill>(4);
-    static ArrayList<Item> gladItems = new ArrayList<Item>();
+    static List<Skill> gladSkills = new ArrayList<>();
+    static List<Item> gladItems = new ArrayList<Item>();
     public static Caste Gladiator() {
         //add skills
-        gladSkills.add(skills.get(0)); //melee
-        gladSkills.add(skills.get(3)); //shield
-        gladSkills.add(skills.get(4)); //dodge
-        gladSkills.add(skills.get(5)); //armor
+        gladSkills.add(skills.get("Melee")); //melee
+        gladSkills.add(skills.get("Shield")); //shield
+        gladSkills.add(skills.get("Dodge")); //dodge
+        gladSkills.add(skills.get("Armor")); //armor
         //starting equipment
         gladItems.add(weapons[1]);
         gladItems.add(potions[0]);
@@ -181,13 +182,13 @@ public class Game {
     }
 
     // Urchin
-    static ArrayList<Skill> urSkills = new ArrayList<Skill>(4);
-    static ArrayList<Item> urItems = new ArrayList<Item>();
+    static List<Skill> urSkills = new ArrayList<Skill>(4);
+    static List<Item> urItems = new ArrayList<Item>();
     public static Caste Urchin() {
-        urSkills.add(skills.get(0)); //melee
-        urSkills.add(skills.get(1)); //ranged
-        urSkills.add(skills.get(4)); //dodge
-        urSkills.add(skills.get(6)); //invocation
+        urSkills.add(skills.get("Melee")); //melee
+        urSkills.add(skills.get("Ranged")); //ranged
+        urSkills.add(skills.get("Dodge")); //dodge
+        urSkills.add(skills.get("Invocation")); //invocation
         //starting equipment
         urItems.add(weapons[0]);
         urItems.add(potions[1]);
@@ -200,13 +201,13 @@ public class Game {
     }
 
     // Woodsman
-    static ArrayList<Skill> woodSkills = new ArrayList<Skill>(4);
-    static ArrayList<Item> woodItems = new ArrayList<Item>();
+    static List<Skill> woodSkills = new ArrayList<Skill>(4);
+    static List<Item> woodItems = new ArrayList<Item>();
     public static Caste Woodsman() {
-        woodSkills.add(skills.get(1)); //ranged
-        woodSkills.add(skills.get(4)); //dodge
-        woodSkills.add(skills.get(7)); //faith
-        woodSkills.add(skills.get(9)); //earthMagic
+        woodSkills.add(skills.get("Ranged")); //ranged
+        woodSkills.add(skills.get("Dodge")); //dodge
+        woodSkills.add(skills.get("Faith")); //faith
+        woodSkills.add(skills.get("Earth Magic")); //earthMagic
         //starting equipment
         woodItems.add(weapons[0]);
         woodItems.add(potions[0]);
@@ -220,13 +221,13 @@ public class Game {
     }
 
     // Fisherman
-    static ArrayList<Skill> fishSkills = new ArrayList<Skill>(4);
-    static ArrayList<Item> fishItems = new ArrayList<Item>();
+    static List<Skill> fishSkills = new ArrayList<Skill>(4);
+    static List<Item> fishItems = new ArrayList<Item>();
     public static Caste Fisherman() {
-        fishSkills.add(skills.get(0)); //melee
-        fishSkills.add(skills.get(2)); //spellcasting
-        fishSkills.add(skills.get(10)); //airMagic
-        fishSkills.add(skills.get(11)); //waterMagic
+        fishSkills.add(skills.get("Melee")); //melee
+        fishSkills.add(skills.get("Spellcasting")); //spellcasting
+        fishSkills.add(skills.get("Air Magic")); //airMagic
+        fishSkills.add(skills.get("Water Magic")); //waterMagic
         //starting equipment
         fishItems.add(weapons[7]);
         fishItems.add(potions[3]);
@@ -240,13 +241,13 @@ public class Game {
     }
 
     // Apprentice
-    static ArrayList<Skill> appSkills = new ArrayList<Skill>(4);
-    static ArrayList<Item> appItems = new ArrayList<Item>();
+    static List<Skill> appSkills = new ArrayList<Skill>(4);
+    static List<Item> appItems = new ArrayList<Item>();
     public static Caste Apprentice() {
-        appSkills.add(skills.get(2)); //spellcasting
-        appSkills.add(skills.get(8)); //fireMagic
-        appSkills.add(skills.get(10)); //airMagic
-        appSkills.add(skills.get(6)); //invocation
+        appSkills.add(skills.get("Spellcasting")); //spellcasting
+        appSkills.add(skills.get("Fire Magic")); //fireMagic
+        appSkills.add(skills.get("Air Magic")); //airMagic
+        appSkills.add(skills.get("Invocation")); //invocation
         //starting equipment
         appItems.add(weapons[0]); // knife
         appItems.add(potions[3]); // magic potion
@@ -261,13 +262,13 @@ public class Game {
     }
 
     // Clergyman
-    static ArrayList<Skill> clerSkills = new ArrayList<Skill>(4);
-    static ArrayList<Item> clerItems = new ArrayList<Item>();
+    static List<Skill> clerSkills = new ArrayList<Skill>(4);
+    static List<Item> clerItems = new ArrayList<Item>();
     public static Caste Clergyman() {
-        clerSkills.add(skills.get(5)); //armor
-        clerSkills.add(skills.get(3)); //shield
-        clerSkills.add(skills.get(7)); //faith
-        clerSkills.add(skills.get(11)); //waterMagic
+        clerSkills.add(skills.get("Armor")); //armor
+        clerSkills.add(skills.get("Shield")); //shield
+        clerSkills.add(skills.get("Faith")); //faith
+        clerSkills.add(skills.get("Water Magic")); //waterMagic
         //starting equipment
         clerItems.add(weapons[2]); // hammer
         // metal armor
@@ -293,14 +294,14 @@ public class Game {
         races[6] = Kenku();
     }
     // Human
-    static ArrayList<Skill> humSkills = new ArrayList<Skill>();
+    static List<Skill> humSkills = new ArrayList<Skill>();
     static int[] humAtt = {2,2,3,1,9};
 
     public static Race Human() {
-        humSkills.add(skills.get(1)); //ranged
-        humSkills.add(skills.get(7)); //faith
-        humSkills.add(skills.get(4)); //dodge
-        humSkills.add(skills.get(6)); //invocation
+        humSkills.add(skills.get("Ranged")); //ranged
+        humSkills.add(skills.get("Faith")); //faith
+        humSkills.add(skills.get("Dodge")); //dodge
+        humSkills.add(skills.get("Invocation")); //invocation
 
         Race human = new Race(humSkills, humAtt, "Human",
                 "Humans are unremarkable physically, however, they are rather intelligent despite their weak.");
@@ -308,14 +309,14 @@ public class Game {
     }
 
     // Minotaur
-    static ArrayList<Skill> minSkills = new ArrayList<Skill>();
+    static List<Skill> minSkills = new ArrayList<Skill>();
     static int[] minAtt = {4,2,1,1,10};
 
     public static Race Minotaur() {
-        minSkills.add(skills.get(0)); //melee
-        minSkills.add(skills.get(5)); //armor
-        minSkills.add(skills.get(3)); //shield
-        minSkills.add(skills.get(8)); //fireMagic
+        minSkills.add(skills.get("Melee")); //melee
+        minSkills.add(skills.get("Armor")); //armor
+        minSkills.add(skills.get("Shield")); //shield
+        minSkills.add(skills.get("Fire Magic")); //fireMagic
 
         Race minotaur = new Race(minSkills, minAtt, "Minotaur",
                 "Half-man, half-bull, minotaur are ferociously strong, though rather dull of mind");
@@ -323,14 +324,14 @@ public class Game {
     }
 
     // Dwarf
-    static ArrayList<Skill> dwSkills  = new ArrayList<Skill>();
+    static List<Skill> dwSkills  = new ArrayList<Skill>();
     static int[] dwAtt = {3,1,2,4,12};
 
     public static Race Dwarf() {
-        dwSkills.add(skills.get(5)); //armor
-        dwSkills.add(skills.get(7)); //faith
-        dwSkills.add(skills.get(6)); //invocation
-        dwSkills.add(skills.get(9)); //earthMagic
+        dwSkills.add(skills.get("Armor")); //armor
+        dwSkills.add(skills.get("Faith")); //faith
+        dwSkills.add(skills.get("Invocation")); //invocation
+        dwSkills.add(skills.get("Earth Magic")); //earthMagic
 
         Race dwarf = new Race(dwSkills, dwAtt, "Dwarf",
                 "Dwarves are stocky and possess remarkable fortitude of will along with commendable strength");
@@ -338,14 +339,14 @@ public class Game {
     }
 
     // Spriggan
-    static ArrayList<Skill> sprSkills = new ArrayList<Skill>();
+    static List<Skill> sprSkills = new ArrayList<Skill>();
     static int[] sprAtt = {1,4,3,2,7};
 
     public static Race Spriggan() {
-        sprSkills.add(skills.get(1)); //ranged
-        sprSkills.add(skills.get(2)); //spellcasting
-        sprSkills.add(skills.get(4)); //dodge
-        sprSkills.add(skills.get(9)); //earthMagic
+        sprSkills.add(skills.get("Ranged")); //ranged
+        sprSkills.add(skills.get("Spellcasting")); //spellcasting
+        sprSkills.add(skills.get("Dodge")); //dodge
+        sprSkills.add(skills.get("Earth Magic")); //earthMagic
 
         Race spriggan = new Race(sprSkills, sprAtt, "Spriggan",
                 "Spriggans are dexterous and nimble creatures that seem to be more plant than animal.");
@@ -353,14 +354,14 @@ public class Game {
     }
 
     // Nymph
-    static ArrayList<Skill> nySkills = new ArrayList<Skill>();
+    static List<Skill> nySkills = new ArrayList<Skill>();
     static int[] nyAtt = {1,3,4,2,6};
 
     public static Race Nymph() {
-        nySkills.add(skills.get(4)); //dodge
-        nySkills.add(skills.get(2)); //spellcasting
-        nySkills.add(skills.get(11)); //waterMagic
-        nySkills.add(skills.get(9)); //earthMagic
+        nySkills.add(skills.get("Dodge")); //dodge
+        nySkills.add(skills.get("Spellcasting")); //spellcasting
+        nySkills.add(skills.get("Water Magic")); //waterMagic
+        nySkills.add(skills.get("Earth Magic")); //earthMagic
 
         Race nymph = new Race(nySkills, nyAtt, "Nymph",
                 "Nymph's are furtive fae who specialize in the arcane.");
@@ -368,14 +369,14 @@ public class Game {
     }
 
     // Orc
-    static ArrayList<Skill> orcSkills = new ArrayList<Skill>();
+    static List<Skill> orcSkills = new ArrayList<Skill>();
     static int[] orcAtt = {4,2,1,3,9};
 
     public static Race Orc() {
-        orcSkills.add(skills.get(0)); //melee
-        orcSkills.add(skills.get(7)); //faith
-        orcSkills.add(skills.get(3)); //shield
-        orcSkills.add(skills.get(5)); //armor
+        orcSkills.add(skills.get("Melee")); //melee
+        orcSkills.add(skills.get("Faith")); //faith
+        orcSkills.add(skills.get("Shield")); //shield
+        orcSkills.add(skills.get("Armor")); //armor
 
         Race orc = new Race(orcSkills, orcAtt, "Orc",
                 "Orcs are incredibly strong, though not terribly hearty, and usual quite devout.");
@@ -383,14 +384,14 @@ public class Game {
     }
 
     // Kenku
-    static ArrayList<Skill> kSkills = new ArrayList<Skill>();
+    static List<Skill> kSkills = new ArrayList<Skill>();
     static int[] kAtt = {2,4,2,2,6};
 
     public static Race Kenku() {
-        kSkills.add(skills.get(1)); //ranged
-        kSkills.add(skills.get(4)); //dodge
-        kSkills.add(skills.get(6)); //invocation
-        kSkills.add(skills.get(10)); //airMagic
+        kSkills.add(skills.get("Ranged")); //ranged
+        kSkills.add(skills.get("Dodge")); //dodge
+        kSkills.add(skills.get("Invocation")); //invocation
+        kSkills.add(skills.get("Air Magic")); //airMagic
 
         Race kenku = new Race(kSkills, kAtt, "Kenku",
                 "Kenku resemble large crows and typically reside in the slums of large cities.");
