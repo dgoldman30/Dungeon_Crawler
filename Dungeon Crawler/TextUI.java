@@ -57,7 +57,7 @@ public class  TextUI {
                 input = scanner.nextInt();
             } else input = -1;
             if (input >= 0 && input < Caste.values().length) {
-                caste = Caste.values()[input];
+              caste = Caste.values()[input];
                 System.out.println("You have selected " + caste.name);
                 return caste;
             }

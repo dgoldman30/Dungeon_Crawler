@@ -1,5 +1,6 @@
 import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public enum Caste {
@@ -11,15 +12,15 @@ public enum Caste {
     CLERGYMAN(Game.clerSkills, Game.clerItems, "Clergyman", "");
 
 
-    public List<Skill> favoredSkills = new ArrayList<>();
-    public List<Item> startingItems = new ArrayList<>();
-    public String description;
-    public String name;
+    final List<Skill> favoredSkills = new ArrayList<>();
+    final List<Item> startingItems = new ArrayList<>();
+    final String description;
+    final String name;
 
 
     Caste(Skill[] favoredSkills, Item[] startingItems, String name, String description) {
-        for (int i = 0; i < favoredSkills.length; i++) this.favoredSkills.add(favoredSkills[i]);
-        for (int i = 0; i < startingItems.length; i++) this.startingItems.add(startingItems[i]);
+        this.favoredSkills.addAll(Arrays.asList(favoredSkills));
+        this.startingItems.addAll(Arrays.asList(startingItems));
         this.name = name;
         this.description = description;
     }
