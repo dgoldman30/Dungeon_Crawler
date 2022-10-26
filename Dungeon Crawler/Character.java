@@ -42,8 +42,8 @@ abstract class Character {
         for (int i = 0; i < this.race.favoredSkills.size(); i++) {
             skills.get(this.race.favoredSkills.get(i).name).aptitude++;
         }
-        for (int i = 0; i < this.caste.favoredSkills.size(); i++) {
-            skills.get(this.caste.favoredSkills.get(i).name).aptitude++;
+        for (int i = 0; i < this.caste.favoredSkills.length; i++) {
+            skills.get(this.caste.favoredSkills[i]).aptitude++;
         }
 
         // add the race attributes

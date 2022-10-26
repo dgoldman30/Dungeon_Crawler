@@ -11,9 +11,20 @@ public class Skill {
         this.description = description;
     }
 
-    public enum Skills {
-
-    }
+   /* public enum Skills {
+        MELEE("Melee", "Effects the character's accuracy and damage with melee weapons"),
+        RANGED(),
+        SPELLCASTING(),
+        SHIELD(),
+        DODGE(),
+        ARMOR(),
+        INVOCATION(),
+        FAITH(),
+        FIREMAGIC(),
+        EARTHMAGIC(),
+        AIRMAGIC(),
+        WATERMAGIC()
+    }*/
 
     private void increment() {
         if (this.toggled) {

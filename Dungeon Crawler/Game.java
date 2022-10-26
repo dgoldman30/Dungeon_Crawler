@@ -150,37 +150,37 @@ public class Game {
 
     // CASTES
     // Gladiator
-    public static Skill[] gladSkills = {Game.skills.get("Melee"), Game.skills.get("Shield"), Game.skills.get("Dodge"), Game.skills.get("Armor")};
+    public static String[] gladSkills = {"Melee", "Shield", "Dodge", "Armor"};
     public static Item[] gladItems = {Game.weapons[1], Game.potions[0], Game.potions[2]};
 
 
     // Urchin
-    static Skill[] urSkills = {Game.skills.get("Melee"), Game.skills.get("Ranged"), Game.skills.get("Dodge"), Game.skills.get("Invocation")};
+    static String[] urSkills = {"Melee", "Ranged", "Dodge", "Invocation"};
     static Item[] urItems = {Game.weapons[0], Game.potions[1]}; // sling and rags
 
 
     // Woodsman
-    static Skill[] woodSkills = {Game.skills.get("Ranged"), Game.skills.get("Dodge"), Game.skills.get("Faith"), Game.skills.get("Earth Magic")};
+    static String[] woodSkills = {"Ranged", "Dodge", "Faith", "Earth Magic"};
     static Item[] woodItems = {Game.weapons[0], Game.potions[0], Game.potions[1]};
     // add bow
     // add leather armor
 
     // Fisherman
-    static Skill[] fishSkills = {Game.skills.get("Melee"), Game.skills.get("Spellcasting"), Game.skills.get("Air Magic"), Game.skills.get("Water Magic")};
+    static String[] fishSkills = {"Melee", "Spellcasting", "Air Magic", "Water Magic"};
     static Item[] fishItems = {Game.weapons[7], Game.potions[3]};
     // air spell
     // water spell
     // clothes
 
     // Apprentice
-    static Skill[] appSkills = {Game.skills.get("Spellcasting"), Game.skills.get("Fire Magic"), Game.skills.get("Air Magic"), Game.skills.get("Invocation")};
+    static String[] appSkills = {"Spellcasting", "Fire Magic", "Air Magic", "Invocation"};
     static Item[] appItems = {Game.weapons[0], Game.potions[3]};
     // robes
     // fire spell
     // air spell
 
     // Clergyman
-    static Skill[] clerSkills = {Game.skills.get("Armor"), Game.skills.get("Shield"), Game.skills.get("Faith"), Game.skills.get("Water Magic")};
+    static String[] clerSkills = {"Armor", "Shield", "Faith", "Water Magic"};
     static Item[] clerItems = {Game.weapons[2]};
     // metal armor
     // shield

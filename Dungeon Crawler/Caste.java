@@ -12,14 +12,14 @@ public enum Caste {
     CLERGYMAN(Game.clerSkills, Game.clerItems, "Clergyman", "");
 
 
-    final List<Skill> favoredSkills = new ArrayList<>();
-    final List<Item> startingItems = new ArrayList<>();
-    final String description;
-    final String name;
+    String[] favoredSkills;
+    List<Item> startingItems = new ArrayList<>();
+    String description;
+    String name;
 
 
-    Caste(Skill[] favoredSkills, Item[] startingItems, String name, String description) {
-        this.favoredSkills.addAll(Arrays.asList(favoredSkills));
+    Caste(String[] favoredSkills, Item[] startingItems, String name, String description) {
+        this.favoredSkills = favoredSkills;
         this.startingItems.addAll(Arrays.asList(startingItems));
         this.name = name;
         this.description = description;
