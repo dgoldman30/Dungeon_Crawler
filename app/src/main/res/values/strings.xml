@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">Dungeon Crawler</string>
+    <string-array name="races">
+        <item>Human</item>
+        <item>Minotaur</item>
+        <item>Spriggan</item>
+        <item>Dwarf</item>
+        <item>Nymph</item>
+        <item>Orc</item>
+        <item>Kenku</item>
+    </string-array>
+    <string-array name="castes">
+        <item>Gladiator</item>
+        <item>Urchin</item>
+        <item>Woodsman</item>
+        <item>Fisherman</item>
+        <item>Apprentice</item>
+        <item>Clergyman</item>
+    </string-array>
 </resources>
