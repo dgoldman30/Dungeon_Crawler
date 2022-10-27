@@ -20,7 +20,7 @@ public class Game {
         game.pc.occupy(game.map[0][0]);
 
         // create an enemy and place them on a random square
-        game.enemy = new NPC(races[0], Caste.GLADIATOR, true);
+        game.enemy = new NPC(Race.values()[(int) Math.random()*7], Caste.GLADIATOR, true);
         game.enemy.occupy(game.map[(int) (Math.random() * game.map.length)][(int) (Math.random() * game.map.length)]);
 
         game.enemy.setTarget(game.pc);
@@ -41,7 +41,7 @@ public class Game {
                     ui.combat(game.pc, game.enemy);
                     break;
                 case 3:
-                    game.enemy = new NPC(races[0], Caste.GLADIATOR, true);
+                    game.enemy = new NPC(Race.values()[(int) Math.random()*7], Caste.GLADIATOR, true);
                     game.enemy.occupy(game.map[(int) (Math.random() * game.map.length)][(int) (Math.random() * game.map.length)]);
                     game.enemy.setTarget(game.pc);
                     game.gameState = 1;

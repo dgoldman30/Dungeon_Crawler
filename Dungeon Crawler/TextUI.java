@@ -17,10 +17,12 @@ public class  TextUI {
         Race race;
         while (true) {
             int input;
-            System.out.println("Each race has different set of favored Skills \n Please Select a Race from the list below");
-            for (int i = 0; i < Game.races.length; i++) {
 
-                System.out.println(i + ": " + Game.races[i].name);
+            int i = 0;
+            System.out.println("Each race has different set of favored Skills \n Please Select a Race from the list below");
+            for (Race r : Race.values()) {
+                System.out.println(i + ": " + r.name);
+                i++;
             }
             Scanner scanner = new Scanner(System.in);
             if (scanner.hasNextInt()) {
@@ -28,8 +30,8 @@ public class  TextUI {
             }
             else input = -1;
 
-            if (input >= 0 && input < Game.races.length) {
-                race =  Game.races[input];
+            if (input >= 0 && input < Race.values().length) {
+                race =  Race.values()[input];
                 System.out.println("You have selected Race: " + race.name);
                 return race;
             }
