@@ -8,8 +8,6 @@ public class Game {
     NPC enemy;
     public Game(int size) {
         createSkills();
-        createWeapons();
-        createPotions();
         createRaces();
         createMap(size);
     }
@@ -108,84 +106,45 @@ public class Game {
         skills.put(waterMagic.name, waterMagic);
     }
 
-    //WEAPONS
-    // move to enum in Weapon class
-    public static Weapon[] weapons = new Weapon[9];
-    public void createWeapons() {
-        Weapon knife = new Weapon("Knife", "High-grade damascus blade perfect for slicing enemies!", 0.4, 0.9,0.2, false);
-        Weapon sword = new Weapon("Sword", "Basic lightweight sword", 0.7, 0.9, 0.1, false);
-        Weapon hammer = new Weapon("Hammer", "Perfectly weighted Hammer, best for heavy attacks", 1, 0.7, 0.05,  true);
-        Weapon ballAndChain = new Weapon("Ball and Chain", "The ole' ball and chain", 0.7, 0.8, 0.15, true);
-        Weapon club = new Weapon("Club", "Heavy club", 0.9, 0.8, 0.02, false);
-        Weapon dagger = new Weapon("Dagger", "Lightweight Dagger for quick attacks", 0.3, 1.0, 0.4, false);
-        Weapon sabre = new Weapon("Sabre", "Fence your enemy to the death!", 0.7, 0.85, 0.2, false);
-        Weapon harpoon = new Weapon("Harpoon", "Are you trying to kill a whale?", 0.7, 0.8, 0.3, true);
-        Weapon brassKnuckles = new Weapon("Brass Knuckles", "Wearable Brass Knuckles for critical attacks", 0.5, 0.9, 0.5, true);
-        weapons[0] = knife;//0
-        weapons[1] = sword;//1
-        weapons[2] = hammer;//2
-        weapons[3] = ballAndChain;//3
-        weapons[4] = club;//4
-        weapons[5] = dagger;//5
-        weapons[6] = sabre;//6
-        weapons[7] = harpoon;//7
-        weapons[8] = brassKnuckles;//8
-    }
-
-    // POTIONS
-    // change to Enum in Potion class
-    public static Potion[] potions = new Potion[5];
-    private void createPotions() {
-        Potion healPo = new Potion("Healing Potion", "Heals most wounds and recovers HP ", 10, 4);
-        Potion dexPo = new Potion("Dexerity Potion", "Increases Dexterity", 1, 1);
-        Potion strPo = new Potion("Strength Potion", "Increases Strength", 1, 0);
-        Potion intPo = new Potion("Intelligence Potion", "Increases brainpower and knowledge", 1, 2);
-        Potion willPo = new Potion("Willpower Potion", "Increases Willpower", 1, 3);
-        potions[0] = healPo;
-        potions[1] = dexPo;
-        potions[2] = strPo;
-        potions[3] = intPo;
-        potions[4] = willPo;
-    }
 
     // CASTES
     // Gladiator
     public static String[] gladSkills = {"Melee", "Shield", "Dodge", "Armor"};
-    public static Item[] gladItems = {Game.weapons[1], Game.potions[0], Game.potions[2]};
+    public static Item[] gladItems = {Weapon.Weapons.BRASSKNUCKLES.wn, Potion.Potions.HEALTH.po, Potion.Potions.STR.po, Armor.Armors.CHAIN.armor};
 
 
     // Urchin
     static String[] urSkills = {"Melee", "Ranged", "Dodge", "Invocation"};
-    static Item[] urItems = {Game.weapons[0], Game.potions[1]}; // sling and rags
+    static Item[] urItems = {Weapon.Weapons.DAGGER.wn, Potion.Potions.DEX.po, Armor.Armors.RAGS.armor}; // sling and rags
 
 
     // Woodsman
     static String[] woodSkills = {"Ranged", "Dodge", "Faith", "Earth Magic"};
-    static Item[] woodItems = {Game.weapons[0], Game.potions[0], Game.potions[1]};
+    static Item[] woodItems = {Weapon.Weapons.SABRE.wn, Potion.Potions.DEX.po, Potion.Potions.HEALTH.po, Armor.Armors.LEATHER.armor};
     // add bow
     // add leather armor
 
     // Fisherman
     static String[] fishSkills = {"Melee", "Spellcasting", "Air Magic", "Water Magic"};
-    static Item[] fishItems = {Game.weapons[7], Game.potions[3]};
+    static Item[] fishItems = {Weapon.Weapons.HARPOON.wn, Potion.Potions.INT.po, Armor.Armors.CLOTHES.armor};
     // air spell
     // water spell
-    // clothes
 
     // Apprentice
     static String[] appSkills = {"Spellcasting", "Fire Magic", "Air Magic", "Invocation"};
-    static Item[] appItems = {Game.weapons[0], Game.potions[3]};
-    // robes
+    static Item[] appItems = {Weapon.Weapons.CLUB.wn, Potion.Potions.INT.po, Armor.Armors.ROBES.armor};
     // fire spell
     // air spell
 
     // Clergyman
     static String[] clerSkills = {"Armor", "Shield", "Faith", "Water Magic"};
-    static Item[] clerItems = {Game.weapons[2]};
+    static Item[] clerItems = {Weapon.Weapons.MACE.wn, Potion.Potions.WILL.po, Armor.Armors.PLATE.armor};
     // metal armor
     // shield
     // religious symbol
     // holy water scroll
+
+
     // RACE
     // change to enum in Race class
     public static Race[] races = new Race[7];

@@ -184,6 +184,10 @@ public class  TextUI {
         ret[0] += "---------\n";
 
         int index = 1;
+
+        for (Item i : pc.inventory) {
+            ret[0] += index + ": " + i.name + "\n\n";
+        }
         while (itr.hasNext()) {
             Item it = itr.next();
             ret[0] += index + ": " + it.name + "\n\n";
