@@ -60,6 +60,7 @@ abstract class Character {
             if (this.caste.startingItems.get(i).getClass() == Weapon.class) {
                 this.equipWeapon((Weapon) this.caste.startingItems.get(i));
             }
+            if (this.caste.startingItems.get(i).getClass() == Armor.class) this.body = this.caste.startingItems.get(i);
             else this.inventory.add(this.caste.startingItems.get(i));
         }
     }
