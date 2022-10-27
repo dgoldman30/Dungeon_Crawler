@@ -180,18 +180,14 @@ public class  TextUI {
 
     public String inventoryScreen(Player pc) {
         final String[] ret = {"Inventory: \n"};
-        Iterator<Item> itr = pc.inventory.iterator();
         ret[0] += "---------\n";
 
         int index = 1;
-
         for (Item i : pc.inventory) {
             ret[0] += index + ": " + i.name + "\n\n";
+            index++;
         }
-        while (itr.hasNext()) {
-            Item it = itr.next();
-            ret[0] += index + ": " + it.name + "\n\n";
-        }
+
         return ret[0];
     }
 }
