@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+package com.example.dungeoncrawler.model;
 
 public class NPC extends Character {
 

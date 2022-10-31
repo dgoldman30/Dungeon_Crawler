@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+package com.example.dungeoncrawler.model;
 
 class Attribute {
     int value = 0;

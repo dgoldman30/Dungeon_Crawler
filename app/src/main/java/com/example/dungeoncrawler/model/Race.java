@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.List;
+package com.example.dungeoncrawler.model;
 
 public enum Race {
     HUMAN(Game.humSkills, Game.humAtt, "Human", "Humans are unremarkable physically, however, they are rather intelligent despite their weak."),

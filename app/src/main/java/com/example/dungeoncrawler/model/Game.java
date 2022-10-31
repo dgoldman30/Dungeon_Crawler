@@ -1,5 +1,7 @@
-import java.sql.Array;
-import java.util.*;
+package com.example.dungeoncrawler.model;
+
+import java.util.Hashtable;
+import java.util.Map;
 
 public class Game {
     int gameState; // default state

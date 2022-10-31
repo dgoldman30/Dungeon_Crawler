@@ -1,3 +1,5 @@
+package com.example.dungeoncrawler.model;
+
 public class Weapon extends Item {
 
     double damage;

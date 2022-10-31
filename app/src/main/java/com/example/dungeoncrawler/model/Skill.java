@@ -1,4 +1,5 @@
-import java.util.ArrayList;
+package com.example.dungeoncrawler.model;
+
 public class Skill {
     float value = 0;
     String name;

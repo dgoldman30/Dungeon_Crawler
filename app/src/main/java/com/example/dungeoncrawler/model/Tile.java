@@ -1,4 +1,7 @@
+package com.example.dungeoncrawler.model;
+
 import java.util.ArrayList;
+
 public class Tile {
     boolean available = true;
     Character occupant;

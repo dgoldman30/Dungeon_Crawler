@@ -1,3 +1,5 @@
+package com.example.dungeoncrawler.model;
+
 class Potion extends Item {
     int factor;
     int target;

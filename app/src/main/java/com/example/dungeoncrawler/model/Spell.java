@@ -1,3 +1,5 @@
+package com.example.dungeoncrawler.model;
+
 class Spell {
     int range;
     String description;

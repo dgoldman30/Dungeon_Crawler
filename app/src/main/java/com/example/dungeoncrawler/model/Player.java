@@ -1,4 +1,5 @@
-import java.lang.reflect.Array;
+package com.example.dungeoncrawler.model;
+
 import java.util.ArrayList;
 
 
