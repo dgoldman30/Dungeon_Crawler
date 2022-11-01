@@ -17,7 +17,7 @@ public class CharCreationView implements ICharCreationView {
         this.binding = ActivityMainBinding.inflate(LayoutInflater.from(context));
         this.listener = listener;
 
-        
+
     }
 
     @Override
