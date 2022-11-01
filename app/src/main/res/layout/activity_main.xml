@@ -89,7 +89,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button12"
+                android:id="@+id/strButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -98,7 +98,7 @@
                 android:text="+STR" />
 
             <Button
-                android:id="@+id/button11"
+                android:id="@+id/dexButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -107,7 +107,7 @@
                 android:text="+DEX" />
 
             <Button
-                android:id="@+id/button10"
+                android:id="@+id/intButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -116,13 +116,14 @@
                 android:text="+INT" />
 
             <Button
-                android:id="@+id/button9"
+                android:id="@+id/willButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:insetLeft="4dp"
                 android:insetRight="4dp"
                 android:text="+WILL" />
+
         </LinearLayout>
 
     </LinearLayout>
