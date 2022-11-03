@@ -1,11 +1,14 @@
 package com.example.dungeoncrawler.view;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.dungeoncrawler.R;
 import com.example.dungeoncrawler.databinding.FragmentCharCreationBinding;
 import com.example.dungeoncrawler.model.*;
 
@@ -42,6 +45,13 @@ public class CharCreationFragment extends Fragment implements ICharCreationView 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
 
     }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_char_creation, container, false);
+    }
+
 
     @Override
     public View getRootView() { return this.binding.getRoot(); }
