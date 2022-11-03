@@ -8,4 +8,9 @@ import androidx.fragment.app.FragmentManager;
 
 
 public interface IMainView {
+
+    View getRootView();
+
+    void displayFragment(Fragment fragment, boolean allowBack, String name);
+
 }
