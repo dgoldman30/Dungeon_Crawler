@@ -8,17 +8,18 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.dungeoncrawler.ControllerActivity;
 import com.example.dungeoncrawler.R;
 import com.example.dungeoncrawler.databinding.FragmentCharCreationBinding;
 import com.example.dungeoncrawler.model.*;
 
 public class CharCreationFragment extends Fragment implements ICharCreationView {
 
-    FragmentCharCreationBinding binding;
+    FragmentCharCreationBinding binding ;
     Listener listener;
 
-    String race = binding.raceSpinner.getSelectedItem().toString();
-    String caste = binding.casteSpinner.getSelectedItem().toString();
+    String race;
+    String caste;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,23 +33,67 @@ public class CharCreationFragment extends Fragment implements ICharCreationView 
 
     public CharCreationFragment(Listener listener) { this.listener = listener; }
 
-    public CharCreationFragment newInstance(String param1, String param2) {
-        CharCreationFragment fragment = new CharCreationFragment(listener);
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        int[] attPoints = new int[4];
+        final int[] attCounter = {3};
+
+        //STR button
+        this.binding.STRbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                attPoints[0]++;
+                listener.onAttIncrease(attCounter[0], binding);
+                attCounter[0]--;
+
+            }
+        });
+        //DEX button
+        this.binding.DEXbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                attPoints[1]++;
+                listener.onAttIncrease(attCounter[0], binding);
+                attCounter[0]--;
+            }
+        });
+        //INT button
+        this.binding.INTbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                attPoints[2]++;
+                listener.onAttIncrease(attCounter[0], binding);
+                attCounter[0]--;
+            }
+        });
+        //WILL button
+        this.binding.WILLbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                attPoints[3]++;
+                listener.onAttIncrease(attCounter[0], binding);
+                attCounter[0]--;
+            }
+        });
+
+
+        this.binding.enterChoice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                race = (String) binding.raceSpinner.getSelectedItem();
+                caste = (String) binding.casteSpinner.getSelectedItem();
+
+                listener.onConfirm(race, caste, attPoints);
+            }
+        });
+
 
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        this.binding = FragmentCharCreationBinding.inflate(inflater);
         return inflater.inflate(R.layout.fragment_char_creation, container, false);
     }
 

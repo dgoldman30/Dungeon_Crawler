@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+>
+
+    <TextView
+        android:id="@+id/characterCreation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Character Creation"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="729dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="64dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/characterCreation">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/raceText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select race"
+                android:textAlignment="center"
+                android:textSize="20sp" />
+
+            <Spinner
+                android:id="@+id/raceSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:entries="@array/races" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/casteText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select caste"
+                android:textAlignment="center"
+                android:textSize="20sp" />
+
+            <Spinner
+                android:id="@+id/casteSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:entries="@array/castes" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/attText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Assign attribute points"
+                android:textAlignment="center"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/attPointsLeft"
+                android:layout_width="48dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp"
+                android:clickable="false"
+                android:ems="10"
+                android:inputType="number"
+                android:minHeight="48dp"
+                android:text="3"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/STRbutton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="+STR" />
+
+            <Button
+                android:id="@+id/DEXbutton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="+DEX" />
+
+            <Button
+                android:id="@+id/INTbutton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="+INT" />
+
+            <Button
+                android:id="@+id/WILLbutton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="+WILL" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/enterChoice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="289dp"
+        android:layout_marginEnd="289dp"
+        android:layout_marginBottom="16dp"
+        android:text="Enter Choices"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

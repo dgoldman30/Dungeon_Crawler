@@ -3,10 +3,10 @@ package com.example.dungeoncrawler.model;
 import java.util.ArrayList;
 
 
-class Player extends Character {
+public class Player extends Character {
 
 
-    Player(Race race, Caste caste, int[] attPoints) {
+    public Player(Race race, Caste caste, int[] attPoints) {
 
         super(race, caste);
         this.myChar = 'P';

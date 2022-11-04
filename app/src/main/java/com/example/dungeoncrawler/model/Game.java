@@ -6,7 +6,7 @@ import java.util.Map;
 public class Game {
     int gameState; // default state
     Tile[][] map;
-    static Player pc;
+    public static Player pc;
     NPC enemy;
     public Game(int size) {
         createSkills();
