@@ -23,11 +23,11 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_char_creation);
 
         CharCreationFragment charCreationFragment = new CharCreationFragment(this);
         this.mainView = new MainView(this);
         setContentView(mainView.getRootView());
+        mainView.displayFragment(charCreationFragment, false, "char creation");
     }
 
 
