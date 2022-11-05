@@ -3,6 +3,8 @@ package com.example.dungeoncrawler;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 
 import com.example.dungeoncrawler.databinding.FragmentCharCreationBinding;
@@ -23,7 +25,9 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getSupportActionBar().hide();
         CharCreationFragment charCreationFragment = new CharCreationFragment(this);
         this.mainView = new MainView(this);
         setContentView(mainView.getRootView());

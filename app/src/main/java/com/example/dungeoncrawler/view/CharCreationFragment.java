@@ -87,8 +87,6 @@ public class CharCreationFragment extends Fragment implements ICharCreationView 
                 listener.onConfirm(race, caste, attPoints);
             }
         });
-
-
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

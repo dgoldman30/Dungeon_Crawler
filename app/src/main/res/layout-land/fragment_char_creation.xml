@@ -96,7 +96,8 @@
                 android:layout_marginLeft="100dp"
                 android:clickable="false"
                 android:ems="10"
-                android:inputType="number"
+                android:inputType="none"
+                android:enabled="false"
                 android:minHeight="48dp"
                 android:text="3"
                 android:textAlignment="center" />
