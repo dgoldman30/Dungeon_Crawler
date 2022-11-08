@@ -47,7 +47,7 @@
             <Spinner
                 android:id="@+id/raceSpinner"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="239dp"
                 android:layout_weight="1"
                 android:entries="@array/races" />
         </LinearLayout>
@@ -69,7 +69,7 @@
             <Spinner
                 android:id="@+id/casteSpinner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="238dp"
                 android:layout_weight="1"
                 android:entries="@array/castes" />
 

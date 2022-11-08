@@ -17,7 +17,7 @@ import com.example.dungeoncrawler.view.ICharCreationView;
 import com.example.dungeoncrawler.view.IMainView;
 import com.example.dungeoncrawler.view.MainView;
 
-public class ControllerActivity extends AppCompatActivity implements ICharCreationView.Listener{
+public class ControllerActivity extends AppCompatActivity implements ICharCreationView.Listener {
 
     Game game = new Game(10);
     IMainView mainView;

@@ -89,8 +89,7 @@ public class CharCreationFragment extends Fragment implements ICharCreationView 
         });
     }
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.binding = FragmentCharCreationBinding.inflate(inflater);
         return inflater.inflate(R.layout.fragment_char_creation, container, false);
     }
