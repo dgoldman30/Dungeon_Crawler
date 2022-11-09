@@ -8,7 +8,6 @@ import com.example.dungeoncrawler.model.*;
 public interface ICharCreationView {
 
     interface Listener {
-        void onAttIncrease(int index, FragmentCharCreationBinding binding);
         void onConfirm(String race, String caste, int[] att);
     }
 

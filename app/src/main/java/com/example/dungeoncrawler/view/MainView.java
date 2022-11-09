@@ -32,6 +32,5 @@ public class MainView implements IMainView {
 
         ft.commit();
 
-
     }
 }

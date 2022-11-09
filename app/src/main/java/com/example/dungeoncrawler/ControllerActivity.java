@@ -1,5 +1,6 @@
 package com.example.dungeoncrawler;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -42,12 +43,6 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
                 map[i][j].setOnClickListener((View.OnClickListener) this);
             }
         }*/
-    }
-
-
-    @Override
-    public void onAttIncrease(int count, FragmentCharCreationBinding binding) {
-        binding.attText.setText(count--);
     }
 
     @Override
