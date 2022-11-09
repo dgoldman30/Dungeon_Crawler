@@ -83,7 +83,6 @@ public class CharCreationFragment extends Fragment implements ICharCreationView 
             public void onClick(View view) {
                 race = (String) binding.raceSpinner.getSelectedItem();
                 caste = (String) binding.casteSpinner.getSelectedItem();
-
                 listener.onConfirm(race, caste, attPoints);
             }
         });

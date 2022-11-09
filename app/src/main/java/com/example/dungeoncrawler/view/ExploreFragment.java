@@ -32,6 +32,7 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
     }
 
 

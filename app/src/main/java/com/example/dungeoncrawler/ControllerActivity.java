@@ -22,7 +22,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
 
     Game game = new Game(10);
     IMainView mainView;
-    //public Button[][] map = new Button[10][10];
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
