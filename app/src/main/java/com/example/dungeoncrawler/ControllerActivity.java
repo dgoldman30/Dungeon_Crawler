@@ -24,8 +24,6 @@ import com.example.dungeoncrawler.view.MainView;
 public class ControllerActivity extends AppCompatActivity implements ICharCreationView.Listener, IExploreFragment.Listener {
 
 
-
-    public static Game game = new Game(10);
     Game.GameStates gameState = Game.GameStates.START;
     IMainView mainView;
 
@@ -49,12 +47,13 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         for (Race r : Race.values()) { if (r.name() == race) pcRace = r; }
         for (Caste c : Caste.values()) { if (c.name() == race) pcCaste = c; }
 
+        Game game = new Game(10);
         game.pc = new Player(pcRace, pcCaste, att);
         gameState = Game.GameStates.EXPLORE;
 
-        ExploreFragment exploreFragment = new ExploreFragment(this);
+        ExploreFragment exploreFragment = new ExploreFragment(this, game);
 
-        mainView.displayFragment(exploreFragment, true, "explore");
+        this.mainView.displayFragment(exploreFragment, false, "explore");
     }
 
     @Override

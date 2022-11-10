@@ -112,8 +112,6 @@ public class CharCreationFragment extends Fragment implements ICharCreationView 
         });
     }
 
-
-
     @Override
     public View getRootView() { return this.binding.getRoot(); }
 

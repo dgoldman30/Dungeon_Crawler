@@ -25,8 +25,12 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
 
     FragmentExploreBinding binding;
     Listener listener;
+    Game game;
 
-    public ExploreFragment(Listener listener) { this.listener = listener; }
+    public ExploreFragment(Listener listener, Game game) {
+        this.listener = listener;
+        this.game = game;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,7 +43,7 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         super.onViewCreated(view, savedInstanceState);
 
         TextView mapView = this.binding.mapView;
-        mapView.setText(printMap(ControllerActivity.game));
+        mapView.setText(printMap(game));
 
         mapView.setOnTouchListener(new View.OnTouchListener() {
             @Override
