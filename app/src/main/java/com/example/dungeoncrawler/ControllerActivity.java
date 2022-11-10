@@ -15,13 +15,18 @@ import com.example.dungeoncrawler.model.Game;
 import com.example.dungeoncrawler.model.Player;
 import com.example.dungeoncrawler.model.Race;
 import com.example.dungeoncrawler.view.CharCreationFragment;
+import com.example.dungeoncrawler.view.ExploreFragment;
 import com.example.dungeoncrawler.view.ICharCreationView;
+import com.example.dungeoncrawler.view.IExploreFragment;
 import com.example.dungeoncrawler.view.IMainView;
 import com.example.dungeoncrawler.view.MainView;
 
-public class ControllerActivity extends AppCompatActivity implements ICharCreationView.Listener {
+public class ControllerActivity extends AppCompatActivity implements ICharCreationView.Listener, IExploreFragment.Listener {
 
-    Game game = new Game(10);
+
+
+    public static Game game = new Game(10);
+    Game.GameStates gameState = Game.GameStates.START;
     IMainView mainView;
 
 
@@ -35,14 +40,6 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         this.mainView = new MainView(this);
         setContentView(mainView.getRootView());
         mainView.displayFragment(charCreationFragment, false, "char creation");
-        /*for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map[i].length; j++) {
-                String buttonID = "button_" + i + j;
-                int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
-                map[i][j] = findViewById(resID);
-                map[i][j].setOnClickListener((View.OnClickListener) this);
-            }
-        }*/
     }
 
     @Override
@@ -53,5 +50,25 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         for (Caste c : Caste.values()) { if (c.name() == race) pcCaste = c; }
 
         game.pc = new Player(pcRace, pcCaste, att);
+        gameState = Game.GameStates.EXPLORE;
+
+        ExploreFragment exploreFragment = new ExploreFragment(this);
+
+        mainView.displayFragment(exploreFragment, true, "explore");
+    }
+
+    @Override
+    public void onInventory() {
+
+    }
+
+    @Override
+    public void onCharSheet() {
+
+    }
+
+    @Override
+    public void onEquipment() {
+
     }
 }

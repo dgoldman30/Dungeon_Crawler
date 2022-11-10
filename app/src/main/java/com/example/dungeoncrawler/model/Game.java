@@ -5,7 +5,13 @@ import java.util.Map;
 
 public class Game {
     int gameState; // default state
-    Tile[][] map;
+
+    public enum GameStates {
+        START,
+        EXPLORE,
+        COMBAT
+    }
+    public Tile[][] map;
     public static Player pc;
     NPC enemy;
     public Game(int size) {
@@ -15,7 +21,6 @@ public class Game {
 
     public static void main(String[] args) {
         Game game = new Game(10);
-        //TextUI ui = new TextUI(game);
 
         // create and place the pc
         //game.pc = ui.characterCreation();
