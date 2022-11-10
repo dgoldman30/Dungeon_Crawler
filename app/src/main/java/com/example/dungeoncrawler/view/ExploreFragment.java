@@ -1,5 +1,6 @@
 package com.example.dungeoncrawler.view;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -33,9 +34,10 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.binding = FragmentExploreBinding.inflate(inflater);
-        return inflater.inflate(R.layout.fragment_char_creation, container, false);
+//        return inflater.inflate(R.layout.fragment_explore, container, false);
+        return this.binding.getRoot();
     }
 
     @Override
