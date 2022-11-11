@@ -41,6 +41,7 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         String level = "Level " + game.pc.level + " ";
         this.binding.nameField.setText(name);
         this.binding.levelField.setText(level);
+        this.binding.mapView.setText(printMap(game));
 
         return this.binding.getRoot();
     }
@@ -50,16 +51,39 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         super.onViewCreated(view, savedInstanceState);
 
         TextView mapView = this.binding.mapView;
-        mapView.setText(printMap(game));
 
-        mapView.setOnTouchListener(new View.OnTouchListener() {
+
+        this.binding.upButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                float x = motionEvent.getX();
-                float y = motionEvent.getY();
+            public void onClick(View view) {
+                game.pc.move(game, "w");
+                game.enemy.move(game.map);
+                mapView.setText(printMap(game));
+            }
+        });
 
-
-                return false;
+        this.binding.leftButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                game.pc.move(game, "a");
+                game.enemy.move(game.map);
+                mapView.setText(printMap(game));
+            }
+        });
+        this.binding.rightButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                game.pc.move(game, "d");
+                game.enemy.move(game.map);
+                mapView.setText(printMap(game));
+            }
+        });
+        this.binding.downButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                game.pc.move(game, "s");
+                game.enemy.move(game.map);
+                mapView.setText(printMap(game));
             }
         });
     }

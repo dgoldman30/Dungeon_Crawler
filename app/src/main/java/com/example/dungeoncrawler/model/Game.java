@@ -13,7 +13,7 @@ public class Game {
     }
     public Tile[][] map;
     public static Player pc;
-    NPC enemy;
+    public NPC enemy;
     public Game(int size) {
         createSkills();
         createMap(size);

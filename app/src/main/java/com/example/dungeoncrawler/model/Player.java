@@ -1,5 +1,7 @@
 package com.example.dungeoncrawler.model;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 
@@ -17,7 +19,7 @@ public class Player extends Character {
         }
     }
 
-    public String move(Game game, String input) {
+    public void move(Game game, String input) {
         String ret = "";
         Tile[][] map = game.map;
         Tile currLoc = this.location;
@@ -51,8 +53,7 @@ public class Player extends Character {
         }
 
         this.executeMove(newLoc);
-
-        return ret;
+        Log.d("Dungeon Crawler", ret);
     }
 
     public void setAttunedSpell(Spell spell) {

@@ -1,200 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+        <Button
+            android:id="@+id/upButton"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="56dp"
+            android:layout_marginBottom="8dp"
+            android:text="U"
+            app:layout_constraintBottom_toTopOf="@+id/rightButton"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-            <TextView
-                android:id="@+id/nameField"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:text="CharName" />
+        <TextView
+            android:id="@+id/mapView"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:text="TextView"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/levelField"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Level 1:"
-                android:textAlignment="textEnd" />
+        <Button
+            android:id="@+id/inventoryButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="100dp"
+            android:text="I"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <ProgressBar
-                android:id="@+id/xpBar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="8" />
+        <Button
+            android:id="@+id/characterButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="33dp"
+            android:layout_marginBottom="33dp"
+            android:text="CS"
+            app:layout_constraintBottom_toTopOf="@+id/equipmentButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/inventoryButton" />
 
-            <TextView
-                android:id="@+id/locationField"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:text="CurrLocation"
-                android:textAlignment="textEnd" />
-        </LinearLayout>
+        <Button
+            android:id="@+id/equipmentButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="100dp"
+            android:text="E"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="8"
-            android:orientation="horizontal">
+        <Button
+            android:id="@+id/leftButton"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="L"
+            app:layout_constraintBottom_toTopOf="@+id/downButton"
+            app:layout_constraintEnd_toStartOf="@+id/rightButton" />
 
-            <LinearLayout
-                android:id="@+id/menuButtons"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
+        <Button
+            android:id="@+id/rightButton"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="R"
+            app:layout_constraintBottom_toTopOf="@+id/downButton"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
+        <Button
+            android:id="@+id/downButton"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="56dp"
+            android:layout_marginBottom="16dp"
+            android:text="D"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-                <Button
-                    android:id="@+id/inventoryButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_weight="2"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:text="I" />
+        <TextView
+            android:id="@+id/nameField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="TextView"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
+        <TextView
+            android:id="@+id/levelField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="TextView"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/progressBar"
+            app:layout_constraintStart_toEndOf="@+id/nameField"
+            app:layout_constraintTop_toTopOf="parent" />
 
-                <Button
-                    android:id="@+id/charSheetButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_weight="2"
-                    android:text="CS" />
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="453dp"
+            android:layout_height="26dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-            </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/mapView"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:textAlignment="center"
-                android:textSize="24sp" />
-
-            <LinearLayout
-                android:id="@+id/actionButtons"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:orientation="vertical">
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp" />
-
-                <TableLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <Space
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <Button
-                            android:id="@+id/upButton"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:text="UP" />
-
-                        <Space
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <Button
-                            android:id="@+id/leftButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="LEFT" />
-
-                        <Space
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <Button
-                            android:id="@+id/rightButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="RIGHT" />
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <Space
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <Button
-                            android:id="@+id/downButton"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:text="DOWN" />
-
-                        <Space
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-                    </TableRow>
-
-                </TableLayout>
-
-            </LinearLayout>
-
-            <Space
-                android:layout_width="5dp"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
