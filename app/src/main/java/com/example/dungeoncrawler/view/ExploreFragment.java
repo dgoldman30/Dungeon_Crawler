@@ -2,6 +2,8 @@ package com.example.dungeoncrawler.view;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,9 +19,11 @@ import com.example.dungeoncrawler.ControllerActivity;
 import com.example.dungeoncrawler.R;
 import com.example.dungeoncrawler.databinding.FragmentCharCreationBinding;
 import com.example.dungeoncrawler.databinding.FragmentExploreBinding;
+import com.example.dungeoncrawler.model.Attribute;
 import com.example.dungeoncrawler.model.Game;
 import com.example.dungeoncrawler.model.Tile;
 
+import java.util.Collections;
 import java.util.List;
 
 public class ExploreFragment extends Fragment implements IExploreFragment {
@@ -39,6 +43,7 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
 
         String name = game.pc.race.name() + " " + game.pc.caste.name();
         String level = "Level " + game.pc.level + " ";
+        this.binding.fightButton.setEnabled(false);
         this.binding.nameField.setText(name);
         this.binding.levelField.setText(level);
         this.binding.mapView.setText(printMap(game));
@@ -59,6 +64,9 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
                 game.pc.move(game, "w");
                 game.enemy.move(game.map);
                 mapView.setText(printMap(game));
+                if (game.checkAdjacent()) {
+                    onCombat();
+                }
             }
         });
 
@@ -68,6 +76,9 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
                 game.pc.move(game, "a");
                 game.enemy.move(game.map);
                 mapView.setText(printMap(game));
+                if (game.checkAdjacent()) {
+                    onCombat();
+                }
             }
         });
         this.binding.rightButton.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +87,9 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
                 game.pc.move(game, "d");
                 game.enemy.move(game.map);
                 mapView.setText(printMap(game));
+                if (game.checkAdjacent()) {
+                    onCombat();
+                }
             }
         });
         this.binding.downButton.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +98,9 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
                 game.pc.move(game, "s");
                 game.enemy.move(game.map);
                 mapView.setText(printMap(game));
+                if (game.checkAdjacent()) {
+                    onCombat();
+                }
             }
         });
     }
@@ -107,6 +124,45 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
 
     public void move(float x, float y, Game game) {
 
+    }
+    public void onCombat() {
+        this.binding.upButton.setEnabled(false);
+        this.binding.downButton.setEnabled(false);
+        this.binding.leftButton.setEnabled(false);
+        this.binding.rightButton.setEnabled(false);
+        this.binding.fightButton.setEnabled(true);
+        this.binding.combatView.setText("You have entered combat. Spam the combat button!");
+        int countdown = 10000;
+        new CountDownTimer(countdown, 1000) {
+            int counter;
+            public void onTick(long millisUntilFinished) {
+                binding.combatView.setText("seconds remaining: " + millisUntilFinished / 1000);
+                binding.combatView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        counter++;
+                        Log.d("Dungeon Crawler", String.valueOf(counter));
+                    }
+                });
+            }
+            public void onFinish() {
+                int pcPoints = 0;
+                int enemyPoints = 0;
+                for (Attribute a : game.pc.attributes) {pcPoints += a.value;}
+                for (Attribute a : game.enemy.attributes) {enemyPoints +=a.value;}
+                pcPoints *= counter;
+                enemyPoints *= 15;
+                Log.d("Dungeon Crawler",  "pc: " +pcPoints);
+                Log.d("Dungeon Crawler",  "enemy: " +enemyPoints);
+
+                if (pcPoints > enemyPoints) {
+                    binding.combatView.setText("You have defeated the enemy, but a new one has appeared!");
+                }
+                else
+                    binding.combatView.setText("You died!");
+
+            }
+        }.start();
     }
 
 
