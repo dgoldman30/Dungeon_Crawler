@@ -17,19 +17,6 @@ public class CharCreationFragment extends Fragment implements ICharCreationView 
     FragmentCharCreationBinding binding ;
     Listener listener;
 
-    String race;
-    String caste;
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-
     public CharCreationFragment(Listener listener) { this.listener = listener; }
 
     @Override
@@ -104,8 +91,8 @@ public class CharCreationFragment extends Fragment implements ICharCreationView 
         this.binding.enterChoice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                race = (String) binding.raceSpinner.getSelectedItem();
-                caste = (String) binding.casteSpinner.getSelectedItem();
+                String race = (String) binding.raceSpinner.getSelectedItem();
+                String caste = (String) binding.casteSpinner.getSelectedItem();
                 listener.onConfirm(race, caste, attPoints);
                 Log.d("Dungeon Crawler", "enter");
             }

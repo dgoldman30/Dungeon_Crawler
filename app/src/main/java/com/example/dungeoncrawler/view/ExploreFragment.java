@@ -36,7 +36,12 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.binding = FragmentExploreBinding.inflate(inflater);
-//        return inflater.inflate(R.layout.fragment_explore, container, false);
+
+        String name = game.pc.race.name() + " " + game.pc.caste.name();
+        String level = "Level " + game.pc.level + " ";
+        this.binding.nameField.setText(name);
+        this.binding.levelField.setText(level);
+
         return this.binding.getRoot();
     }
 
@@ -52,6 +57,7 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 float x = motionEvent.getX();
                 float y = motionEvent.getY();
+
 
                 return false;
             }

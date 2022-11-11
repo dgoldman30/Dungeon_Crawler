@@ -5,11 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-abstract class Character {
+public abstract class Character {
 
+    public int level;
     int experience;
-    Race race;
-    Caste caste;
+    public Race race;
+    public Caste caste;
     char myChar;
     Tile location;
     Spell attunedSpell;

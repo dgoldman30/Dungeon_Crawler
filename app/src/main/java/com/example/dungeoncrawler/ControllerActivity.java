@@ -21,6 +21,8 @@ import com.example.dungeoncrawler.view.IExploreFragment;
 import com.example.dungeoncrawler.view.IMainView;
 import com.example.dungeoncrawler.view.MainView;
 
+import java.util.Locale;
+
 public class ControllerActivity extends AppCompatActivity implements ICharCreationView.Listener, IExploreFragment.Listener {
 
 
@@ -44,8 +46,8 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
     public void onConfirm(String race, String caste, int[] att) {
         Race pcRace = Race.HUMAN;
         Caste pcCaste = Caste.GLADIATOR;
-        for (Race r : Race.values()) { if (r.name() == race) pcRace = r; }
-        for (Caste c : Caste.values()) { if (c.name() == race) pcCaste = c; }
+        for (Race r : Race.values()) { if (r.name().equals(race.toUpperCase())) pcRace = r; }
+        for (Caste c : Caste.values()) { if (c.name().equals(caste.toUpperCase()))  pcCaste = c;  }
 
         Game game = new Game(10);
         game.pc = new Player(pcRace, pcCaste, att);
