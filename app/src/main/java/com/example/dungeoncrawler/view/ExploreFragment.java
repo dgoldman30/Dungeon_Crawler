@@ -137,11 +137,11 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
             int counter;
             public void onTick(long millisUntilFinished) {
                 binding.combatView.setText("seconds remaining: " + millisUntilFinished / 1000);
-                binding.combatView.setOnClickListener(new View.OnClickListener() {
+                binding.fightButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         counter++;
-                        Log.d("Dungeon Crawler", String.valueOf(counter));
+                        Log.d("Dungeon Crawler", "counter:" + String.valueOf(counter));
                     }
                 });
             }
@@ -151,7 +151,7 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
                 for (Attribute a : game.pc.attributes) {pcPoints += a.value;}
                 for (Attribute a : game.enemy.attributes) {enemyPoints +=a.value;}
                 pcPoints *= counter;
-                enemyPoints *= 15;
+                enemyPoints *= 30;
                 Log.d("Dungeon Crawler",  "pc: " +pcPoints);
                 Log.d("Dungeon Crawler",  "enemy: " +enemyPoints);
 
