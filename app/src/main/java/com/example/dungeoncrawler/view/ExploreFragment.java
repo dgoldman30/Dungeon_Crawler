@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
@@ -132,13 +133,46 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
     }
 
     public void onCombat() {
+        TextView enterCombat = new TextView(this.getContext());
+        enterCombat.setText("You have entered combat.");
+
+        LinearLayout combatLayout = new LinearLayout(this.getContext());
+
         this.binding.upButton.setEnabled(false);
         this.binding.downButton.setEnabled(false);
         this.binding.leftButton.setEnabled(false);
         this.binding.rightButton.setEnabled(false);
         this.binding.fightButton.setEnabled(true);
-        this.binding.combatView.setText("You have entered combat. Spam the combat button!");
-        int countdown = 10000;
+
+
+        this.binding.fightButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                double pcToHit = (game.pc.DEX.value + (game.pc.INT.value/2)) * Math.random() * 10;
+                double enemyToHit = (game.enemy.DEX.value + (game.enemy.INT.value/2)) * Math.random() * 10;
+                TextView combatRound = new TextView(binding.getRoot().getContext());
+                String combatText = "";
+                if (pcToHit >= game.enemy.DV.value && (game.pc.STR.value * Math.random()) >= game.enemy.AV.value) {
+                    combatText += "You hit the enemy for " + game.pc.weapon.strike(game.pc, game.enemy) + " damage.";
+                } else combatText += "You missed the enemy.";
+                if (enemyToHit >= game.pc.DV.value && (game.enemy.STR.value * Math.random()) >= game.pc.AV.value) {
+                    combatText += "\n" + "The enemy hit you for " + game.enemy.weapon.strike(game.enemy, game.pc) + " damage.";
+                } else combatText += "\n The enemy missed you.";
+
+                if (game.enemy.HP.value <= 0) {
+                    game.pc.experience += game.enemy.level * 10;
+                    game.enemy.location.display = 'X';
+                    game.enemy.location.occupant = null;
+                    combatText += "\n You killed the enemy and recieved " + (game.enemy.level * 10) + "experience points.";
+
+                }
+                combatRound.setText(combatText);
+                combatLayout.addView(combatRound);
+                binding.combatLog.addView(combatLayout);
+            }
+        });
+
+        /*int countdown = 10000;
         new CountDownTimer(countdown, 1000) {
             int counter;
             public void onTick(long millisUntilFinished) {
@@ -154,25 +188,34 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
             public void onFinish() {
                 int pcPoints = 0;
                 int enemyPoints = 0;
-                for (Attribute a : game.pc.attributes) {pcPoints += a.value;}
-                for (Attribute a : game.enemy.attributes) {enemyPoints +=a.value;}
+                for (Attribute a : game.pc.attributes) {
+                    pcPoints += a.value;
+                }
+                for (Attribute a : game.enemy.attributes) {
+                    enemyPoints += a.value;
+                }
                 pcPoints *= counter;
                 enemyPoints *= Math.random() * 20 * game.enemy.level;
-                Log.d("Dungeon Crawler",  "pc: " +pcPoints);
-                Log.d("Dungeon Crawler",  "enemy: " +enemyPoints);
+                Log.d("Dungeon Crawler", "pc: " + pcPoints);
+                Log.d("Dungeon Crawler", "enemy: " + enemyPoints);
 
                 if (pcPoints > enemyPoints) {
                     binding.combatView.setText("You have defeated the enemy, but a new one has appeared!");
                     game.pc.experience += game.enemy.level * 10;
-                    if (checkLevelUp()) { levelUp(); }
+                    game.enemy.location.occupant = null;
+                    game.enemy.location.display();
 
-                }
-                else
+                    if (checkLevelUp()) {
+                        levelUp();
+                    }
+
+                } else {
                     binding.combatView.setText("You died!");
                     System.exit(10);
+                }
 
             }
-        }.start();
+        }.start();*/
         spawnEnemy();
 
         setXpBar();

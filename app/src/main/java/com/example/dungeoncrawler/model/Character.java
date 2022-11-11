@@ -11,12 +11,11 @@ public abstract class Character {
     public Race race;
     public Caste caste;
     char myChar;
-    Tile location;
+    public Tile location;
     Spell attunedSpell;
 
     //equipment
-    Item leftHand;
-    Item rightHand;
+    public Weapon weapon;
     Item head;
     Item hands;
     Item body;
@@ -24,13 +23,13 @@ public abstract class Character {
     Item feet;
 
     List<Item> inventory = new ArrayList<>();
-    Attribute STR = new Attribute("strength");
-    Attribute DEX = new Attribute("dexterity");
-    Attribute INT = new Attribute("intelligence");
+    public Attribute STR = new Attribute("strength");
+    public Attribute DEX = new Attribute("dexterity");
+    public Attribute INT = new Attribute("intelligence");
     Attribute WILL = new Attribute("willpower");
-    Attribute HP = new Attribute("hitpoints");
-    Attribute DV = new Attribute("dodge-value");
-    Attribute AV = new Attribute("armor-value");
+    public Attribute HP = new Attribute("hitpoints");
+    public Attribute DV = new Attribute("dodge-value");
+    public Attribute AV = new Attribute("armor-value");
     Attribute MV = new Attribute("mental-value");
     public Attribute[] attributes = {STR, DEX, INT, WILL, HP, DV, AV, MV};
 
@@ -88,20 +87,10 @@ public abstract class Character {
     }
 
     public void equipWeapon(Weapon weapon) {
-        if (weapon.large) {
-            if (leftHand != null) inventory.add(leftHand);
-            if (rightHand != null) inventory.add(rightHand);
-            leftHand = weapon;
-            rightHand = weapon;
-        } else if (leftHand == null) {
-            leftHand = weapon;
-        }
-        else if (rightHand == null) {
-            rightHand = weapon;
-        } else {
-            inventory.add(leftHand);
-            leftHand = weapon;
-        }
+        if (this.weapon != null) {
+            inventory.add(this.weapon);
+            this.weapon = weapon;
+        } else this.weapon = weapon;
     }
 
     public void drinkPotion(Potion pot) {

@@ -11,8 +11,8 @@ import java.util.ArrayList;
 public class Tile
 {
     boolean available = true;
-    Character occupant;
-    char display = 'X';
+    public Character occupant;
+    public char display = 'X';
     int x;
     int y;
     //char display = occupant.sprite; //display the occupants sprite
