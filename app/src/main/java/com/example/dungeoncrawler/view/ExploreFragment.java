@@ -54,10 +54,31 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setMove();
+        View xp = this.binding.xpBar;
 
+
+    }
+
+    private String printMap(Game game) {
+        String ret = "";
+        Tile[][] map = game.map;
+        char[][] charMap = new char[map.length][map.length];
+
+        for(int i = 0; i < map.length; ++i) {
+            for(int j = 0; j < map.length; ++j) {
+                charMap[i][j] = map[i][j].display();
+                ret = ret + charMap[i][j] + " ";
+                if (j == map.length - 1) {
+                    ret = ret + "\n";
+                }
+            }
+        }
+        return ret;
+    }
+
+    private void setMove() {
         TextView mapView = this.binding.mapView;
-
-
         this.binding.upButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,26 +126,6 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         });
     }
 
-    private String printMap(Game game) {
-        String ret = "";
-        Tile[][] map = game.map;
-        char[][] charMap = new char[map.length][map.length];
-
-        for(int i = 0; i < map.length; ++i) {
-            for(int j = 0; j < map.length; ++j) {
-                charMap[i][j] = map[i][j].display();
-                ret = ret + charMap[i][j] + " ";
-                if (j == map.length - 1) {
-                    ret = ret + "\n";
-                }
-            }
-        }
-        return ret;
-    }
-
-    public void move(float x, float y, Game game) {
-
-    }
     public void onCombat() {
         this.binding.upButton.setEnabled(false);
         this.binding.downButton.setEnabled(false);
@@ -151,20 +152,32 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
                 for (Attribute a : game.pc.attributes) {pcPoints += a.value;}
                 for (Attribute a : game.enemy.attributes) {enemyPoints +=a.value;}
                 pcPoints *= counter;
-                enemyPoints *= 30;
+                enemyPoints *= Math.random() * 20 * game.enemy.level;
                 Log.d("Dungeon Crawler",  "pc: " +pcPoints);
                 Log.d("Dungeon Crawler",  "enemy: " +enemyPoints);
 
                 if (pcPoints > enemyPoints) {
                     binding.combatView.setText("You have defeated the enemy, but a new one has appeared!");
+                    game.pc.experience += game.enemy.level * 10;
                 }
                 else
                     binding.combatView.setText("You died!");
 
             }
         }.start();
+
+        setXpBar();
     }
 
+    private void setXpBar() {
+        double curLevel = game.pc.level;
+        int xpBase = 10;
+        double scale = 20;
+        int xpToLevel = (int) (Math.pow((curLevel * scale), 1.5)) * xpBase;
+
+        this.binding.xpBar.setMax(xpToLevel);
+        this.binding.xpBar.setProgress(game.pc.experience);
+    }
 
 
     @Override

@@ -8,7 +8,7 @@ import java.util.Map;
 public abstract class Character {
 
     public int level;
-    int experience;
+    public int experience;
     public Race race;
     public Caste caste;
     char myChar;

@@ -116,12 +116,12 @@
             android:layout_marginEnd="8dp"
             android:text="TextView"
             android:textSize="20sp"
-            app:layout_constraintEnd_toStartOf="@+id/progressBar"
+            app:layout_constraintEnd_toStartOf="@+id/xpBar"
             app:layout_constraintStart_toEndOf="@+id/nameField"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ProgressBar
-            android:id="@+id/progressBar"
+            android:id="@+id/xpBar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="453dp"
             android:layout_height="26dp"
@@ -132,12 +132,14 @@
 
         <TextView
             android:id="@+id/combatView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="38dp"
-            android:layout_marginEnd="75dp"
+            android:layout_width="159dp"
+            android:layout_height="19dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="32dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+            app:layout_constraintStart_toEndOf="@+id/mapView"
+            app:layout_constraintTop_toBottomOf="@+id/xpBar" />
 
         <Button
             android:id="@+id/fightButton"
@@ -147,7 +149,7 @@
             android:layout_marginEnd="42dp"
             android:text="FIGHT"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+            app:layout_constraintTop_toBottomOf="@+id/xpBar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
