@@ -133,10 +133,11 @@
         <TextView
             android:id="@+id/combatView"
             android:layout_width="159dp"
-            android:layout_height="19dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="32dp"
+            android:textAlignment="textStart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/mapView"
             app:layout_constraintTop_toBottomOf="@+id/xpBar" />

@@ -20,7 +20,10 @@ import com.example.dungeoncrawler.R;
 import com.example.dungeoncrawler.databinding.FragmentCharCreationBinding;
 import com.example.dungeoncrawler.databinding.FragmentExploreBinding;
 import com.example.dungeoncrawler.model.Attribute;
+import com.example.dungeoncrawler.model.Caste;
 import com.example.dungeoncrawler.model.Game;
+import com.example.dungeoncrawler.model.NPC;
+import com.example.dungeoncrawler.model.Race;
 import com.example.dungeoncrawler.model.Tile;
 
 import java.util.Collections;
@@ -31,6 +34,8 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
     FragmentExploreBinding binding;
     Listener listener;
     Game game;
+
+    int depth = 0;
 
     public ExploreFragment(Listener listener, Game game) {
         this.listener = listener;
@@ -159,26 +164,45 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
                 if (pcPoints > enemyPoints) {
                     binding.combatView.setText("You have defeated the enemy, but a new one has appeared!");
                     game.pc.experience += game.enemy.level * 10;
+                    if (checkLevelUp()) { levelUp(); }
+
                 }
                 else
                     binding.combatView.setText("You died!");
+                    System.exit(10);
 
             }
         }.start();
+        spawnEnemy();
 
         setXpBar();
     }
 
     private void setXpBar() {
-        double curLevel = game.pc.level;
-        int xpBase = 10;
-        double scale = 20;
-        int xpToLevel = (int) (Math.pow((curLevel * scale), 1.5)) * xpBase;
-
-        this.binding.xpBar.setMax(xpToLevel);
+        this.binding.xpBar.setMax(game.pc.xpToLevel);
         this.binding.xpBar.setProgress(game.pc.experience);
     }
 
+    private boolean checkLevelUp() {
+        if (game.pc.experience >= game.pc.xpToLevel) {
+            return true;
+        } else return false;
+    }
+
+    private void levelUp() {
+        game.pc.level++;
+        game.pc.experience = 0;
+        game.pc.setXpToLevel();
+        setXpBar();
+        for (Attribute a : game.pc.attributes) {
+            a.value++;
+            if (a.name.equals("hitpoints")) { a.value += game.pc.level * 4; }
+        }
+    }
+
+    private void spawnEnemy() {
+        game.enemy = new NPC(Race.values()[(int) Math.random()*7], Caste.values()[(int) Math.random()*6], true, depth);
+    }
 
     @Override
     public View getRootView() { return this.binding.getRoot(); }

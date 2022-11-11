@@ -53,7 +53,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         game.pc = new Player(pcRace, pcCaste, att);
         game.pc.occupy(game.map[0][0]);
 
-        game.enemy = new NPC(Race.HUMAN, Caste.GLADIATOR, true);
+        game.enemy = new NPC(Race.HUMAN, Caste.GLADIATOR, true, 1);
         game.enemy.occupy(game.map[(int) (Math.random() * game.map.length)][(int) (Math.random() * game.map.length)]);
         game.enemy.setTarget(game.pc);
 

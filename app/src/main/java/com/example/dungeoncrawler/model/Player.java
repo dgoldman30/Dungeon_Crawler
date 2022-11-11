@@ -7,6 +7,13 @@ import java.util.ArrayList;
 
 public class Player extends Character {
 
+    public int experience;
+
+    int xpBase = 10;
+    double scale = 20;
+    public int xpToLevel = (int) (Math.pow((this.level * scale), 1.5)) * xpBase;
+
+    public void setXpToLevel() { xpToLevel = (int) (Math.pow((this.level * scale), 1.5)) * xpBase;}
 
     public Player(Race race, Caste caste, int[] attPoints) {
 

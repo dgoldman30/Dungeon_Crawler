@@ -6,10 +6,11 @@ public class NPC extends Character {
     boolean hostile;
 
     NPC() {}
-    public NPC(Race race, Caste caste, boolean hostile) {
+    public NPC(Race race, Caste caste, boolean hostile, int level) {
         super(race, caste);
         this.hostile = hostile;
         if(hostile) {myChar = 'E';} else myChar = 'N';
+        this.level = level;
 
     }
     public void setTarget(Character target) { this.target = target; }
