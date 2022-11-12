@@ -56,6 +56,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="100dp"
             android:text="I"
+            android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -67,6 +68,7 @@
             android:layout_marginTop="33dp"
             android:layout_marginBottom="33dp"
             android:text="CS"
+            android:visibility="invisible"
             app:layout_constraintBottom_toTopOf="@+id/equipmentButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/inventoryButton" />
@@ -78,6 +80,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginBottom="100dp"
             android:text="E"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
