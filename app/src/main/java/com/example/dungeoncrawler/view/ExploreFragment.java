@@ -37,6 +37,8 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
     Listener listener;
     Game game;
 
+    LinearLayout combatLayout;
+
     int depth = 1;
 
     public ExploreFragment(Listener listener, Game game) {
@@ -47,6 +49,8 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.binding = FragmentExploreBinding.inflate(inflater);
+        this.combatLayout = new LinearLayout(this.getContext());
+        combatLayout.setOrientation(LinearLayout.VERTICAL);
 
         String name = game.pc.race.name() + " " + game.pc.caste.name();
         String level = "Level " + game.pc.level + " ";
@@ -54,6 +58,8 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         this.binding.nameField.setText(name);
         this.binding.levelField.setText(level);
         this.binding.mapView.setText(printMap(game));
+
+        createLog();
 
         return this.binding.getRoot();
     }
@@ -85,14 +91,17 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
     }
 
     private void setMove() {
-        this.binding.combatLog.removeAllViews();
-        this.binding.combatLog.removeAllViewsInLayout();
         TextView mapView = this.binding.mapView;
+        TextView log = new TextView(this.getRootView().getContext());
+
         this.binding.upButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 game.pc.move(game, "w");
                 game.enemy.move(game.map);
+                log.setText("You moved up.");
+                clearLog();
+                addToLog(log);
                 mapView.setText(printMap(game));
                 if (game.checkAdjacent()) {
                     onCombat();
@@ -105,6 +114,9 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
             public void onClick(View view) {
                 game.pc.move(game, "a");
                 game.enemy.move(game.map);
+                log.setText("You moved left.");
+                clearLog();
+                addToLog(log);
                 mapView.setText(printMap(game));
                 if (game.checkAdjacent()) {
                     onCombat();
@@ -116,6 +128,9 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
             public void onClick(View view) {
                 game.pc.move(game, "d");
                 game.enemy.move(game.map);
+                log.setText("You moved right.");
+                clearLog();
+                addToLog(log);
                 mapView.setText(printMap(game));
                 if (game.checkAdjacent()) {
                     onCombat();
@@ -127,9 +142,13 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
             public void onClick(View view) {
                 game.pc.move(game, "s");
                 game.enemy.move(game.map);
+                log.setText("You moved down.");
+                clearLog();
+                addToLog(log);
                 mapView.setText(printMap(game));
                 if (game.checkAdjacent()) {
                     onCombat();
+
                 }
             }
         });
@@ -142,11 +161,28 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         binding.levelField.setText(ret);
     }
 
-    public void onCombat() {
-        TextView enterCombat = new TextView(this.getContext());
-        enterCombat.setText("You have entered combat.");
+    private void createLog() {
+        binding.combatLog.addView(combatLayout);
+    }
 
-        LinearLayout combatLayout = new LinearLayout(this.getContext());
+    private void addToLog(TextView view) {
+        combatLayout.addView(view);
+        binding.combatLog.post(new Runnable() {
+            @Override
+            public void run() {
+                binding.combatLog.fullScroll(View.FOCUS_DOWN);
+            }
+        });
+    }
+
+    private void clearLog() {
+        combatLayout.removeAllViews();
+     }
+
+    public void onCombat() {
+        TextView enterCombat = new TextView(this.getRootView().getContext());
+        enterCombat.setText("You have entered combat.");
+        combatLayout.addView(enterCombat);
 
 
         this.binding.upButton.setEnabled(false);
@@ -175,29 +211,27 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
                 if (game.enemy.HP.value <= 0) {
                     Log.d("Experience gained", "" + (game.enemy.level * 10));
                     game.pc.experience += (game.enemy.level) * 10;
-                   for (int i = 0; i < game.map.length; i++) {
-                       for (int j = 0; j < game.map.length; j++) {
-                           if (game.map[i][j].occupant instanceof NPC) {
-                               game.map[i][j].occupant = null;
-                           }
-                       }
-                    }
+                    replaceEnemy();
+
                     binding.fightButton.setEnabled(false);
                     binding.upButton.setEnabled(true);
                     binding.downButton.setEnabled(true);
                     binding.leftButton.setEnabled(true);
                     binding.rightButton.setEnabled(true);
                     combatText += "\n You killed the enemy and recieved " + (game.enemy.level * 10) + "experience points.";
-                    setXpProgress();
-                    spawnEnemy();
 
-                } else { combatText += "You died!"; }
+                    setXpProgress();
+                }
+
+                if (game.pc.HP.value <= 0) {
+                    combatText += "\n You were killed by the " + game.enemy.race.name() + " " + game.enemy.caste.name();
+                    youDied();
+                }
 
                 combatRound.setText(combatText);
-                binding.combatLayout.addView(combatRound);
+                addToLog(combatRound);
             }
         });
-
         /*int countdown = 10000;
         new CountDownTimer(countdown, 1000) {
             int counter;
@@ -242,8 +276,26 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
 
             }
         }.start();*/
-        spawnEnemy();
+    }
 
+    private void youDied() {
+        binding.exploreConstraint.setVisibility(Button.GONE);
+        binding.restartButton.setVisibility(Button.VISIBLE);
+
+        binding.restartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onRestart();
+            }
+        });
+    }
+
+    private void replaceEnemy() {
+        for (int i = 0; i < game.map.length; i++) {
+            for (int j = 0; j < game.map.length; j++) {
+                if (game.map[i][j].occupant instanceof NPC) { game.map[i][j].occupant = null; } } }
+        spawnEnemy();
+        binding.mapView.setText(printMap(game));
     }
 
 

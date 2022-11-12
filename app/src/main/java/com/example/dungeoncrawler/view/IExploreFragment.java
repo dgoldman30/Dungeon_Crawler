@@ -8,6 +8,7 @@ public interface IExploreFragment {
         void onInventory();
         void onCharSheet();
         void onEquipment();
+        void onRestart();
     }
 
     View getRootView();

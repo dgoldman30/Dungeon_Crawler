@@ -13,8 +13,8 @@ public class Tile
     boolean available = true;
     public Character occupant;
     public char display = 'X';
-    int x;
-    int y;
+    public int x;
+    public int y;
     //char display = occupant.sprite; //display the occupants sprite
     ArrayList<Item> contents = new ArrayList<>();
     Button button;
@@ -27,8 +27,6 @@ public class Tile
     public char display() {
         if (occupant == null) {
             display = 'X';
-        }
-
-        return this.display;
+        } return this.display;
     }
 }

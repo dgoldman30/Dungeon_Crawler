@@ -14,6 +14,9 @@ public abstract class Character {
     public Tile location;
     Spell attunedSpell;
 
+    public int x;
+    public int y;
+
     //equipment
     public Weapon weapon;
     Item head;
@@ -77,6 +80,9 @@ public abstract class Character {
         tile.available = false;
         this.location = tile;
         this.location.display();
+
+        this.x = tile.x;
+        this.y = tile.y;
     }
 
     public void executeMove(Tile tile) {
@@ -85,6 +91,13 @@ public abstract class Character {
             this.location.available = true;
             this.occupy(tile);
         }
+    }
+
+    public void remove(Tile tile) {
+        tile.occupant = null;
+        tile.available = true;
+        tile.display();
+        this.location = null;
     }
 
     public void equipWeapon(Weapon weapon) {

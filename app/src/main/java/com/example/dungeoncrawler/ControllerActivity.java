@@ -25,7 +25,6 @@ import java.util.Locale;
 
 public class ControllerActivity extends AppCompatActivity implements ICharCreationView.Listener, IExploreFragment.Listener {
 
-
     Game.GameStates gameState = Game.GameStates.START;
     IMainView mainView;
 
@@ -53,6 +52,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         game.pc = new Player(pcRace, pcCaste, att);
         game.pc.occupy(game.map[0][0]);
 
+
         game.enemy = new NPC(Race.HUMAN, Caste.GLADIATOR, true, 1);
         game.enemy.occupy(game.map[(int) (Math.random() * game.map.length)][(int) (Math.random() * game.map.length)]);
         game.enemy.setTarget(game.pc);
@@ -77,5 +77,12 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
     @Override
     public void onEquipment() {
 
+    }
+
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        CharCreationFragment charCreationFragment = new CharCreationFragment(this);
+        mainView.displayFragment(charCreationFragment, false, "char creation");
     }
 }
