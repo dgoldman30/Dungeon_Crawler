@@ -27,6 +27,8 @@ import com.example.dungeoncrawler.model.NPC;
 import com.example.dungeoncrawler.model.Race;
 import com.example.dungeoncrawler.model.Tile;
 
+import org.w3c.dom.Text;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -90,6 +92,15 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         return ret;
     }
 
+    private String regen() {
+        int regen = (int) (game.pc.WILL.value / 2) + 1;
+        game.pc.HP.value += regen;
+        updateHP();
+
+        String log = " and regenerate " + regen + " HP.";
+        return log;
+    }
+
     private void setMove() {
         TextView mapView = this.binding.mapView;
         TextView log = new TextView(this.getRootView().getContext());
@@ -99,7 +110,7 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
             public void onClick(View view) {
                 game.pc.move(game, "w");
                 game.enemy.move(game.map);
-                log.setText("You moved up.");
+                log.setText("You moved up" + regen());
                 clearLog();
                 addToLog(log);
                 mapView.setText(printMap(game));
@@ -114,7 +125,7 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
             public void onClick(View view) {
                 game.pc.move(game, "a");
                 game.enemy.move(game.map);
-                log.setText("You moved left.");
+                log.setText("You moved left" + regen());
                 clearLog();
                 addToLog(log);
                 mapView.setText(printMap(game));
@@ -128,7 +139,7 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
             public void onClick(View view) {
                 game.pc.move(game, "d");
                 game.enemy.move(game.map);
-                log.setText("You moved right.");
+                log.setText("You moved right" + regen());
                 clearLog();
                 addToLog(log);
                 mapView.setText(printMap(game));
@@ -142,7 +153,7 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
             public void onClick(View view) {
                 game.pc.move(game, "s");
                 game.enemy.move(game.map);
-                log.setText("You moved down.");
+                log.setText("You moved down" + regen());
                 clearLog();
                 addToLog(log);
                 mapView.setText(printMap(game));
@@ -177,13 +188,27 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
 
     private void clearLog() {
         combatLayout.removeAllViews();
-     }
+    }
+
+    private void updateHP() {
+        binding.hpLayout.setVisibility(LinearLayout.VISIBLE);
+        binding.pcHP.setText("" + game.pc.HP.value);
+        binding.pcHPBar.setMax(game.pc.maxHP);
+        binding.pcHPBar.setProgress(game.pc.HP.value);
+
+        binding.enemyHP.setVisibility(LinearLayout.VISIBLE);
+        binding.enemyHPBar.setVisibility(LinearLayout.VISIBLE);
+        binding.enemyHP.setText("" + game.enemy.HP.value);
+        binding.enemyHPBar.setMax(game.enemy.maxHP);
+        binding.enemyHPBar.setProgress(game.enemy.HP.value);
+    }
 
     public void onCombat() {
         TextView enterCombat = new TextView(this.getRootView().getContext());
         enterCombat.setText("You have entered combat.");
         combatLayout.addView(enterCombat);
 
+        updateHP();
 
         this.binding.upButton.setEnabled(false);
         this.binding.downButton.setEnabled(false);
@@ -201,12 +226,15 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
                 TextView combatRound = new TextView(getRootView().getContext());
                 String combatText = "";
 
+
                 if (pcToHit >= game.enemy.DV.value && (game.pc.STR.value * Math.random()) >= game.enemy.AV.value) {
                     combatText += "You hit the enemy for " + game.pc.weapon.strike(game.pc, game.enemy) + " damage.";
                 } else combatText += "You missed the enemy.";
                 if (enemyToHit >= game.pc.DV.value && (game.enemy.STR.value * Math.random()) >= game.pc.AV.value) {
                     combatText += "\n" + "The enemy hit you for " + game.enemy.weapon.strike(game.enemy, game.pc) + " damage.";
                 } else combatText += "\n The enemy missed you.";
+
+                updateHP();
 
                 if (game.enemy.HP.value <= 0) {
                     Log.d("Experience gained", "" + (game.enemy.level * 10));
@@ -221,6 +249,9 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
                     combatText += "\n You killed the enemy and recieved " + (game.enemy.level * 10) + "experience points.";
 
                     setXpProgress();
+                    binding.enemyHP.setVisibility(LinearLayout.INVISIBLE);
+                    binding.enemyHPBar.setVisibility(LinearLayout.INVISIBLE);
+
                 }
 
                 if (game.pc.HP.value <= 0) {
@@ -232,50 +263,6 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
                 addToLog(combatRound);
             }
         });
-        /*int countdown = 10000;
-        new CountDownTimer(countdown, 1000) {
-            int counter;
-            public void onTick(long millisUntilFinished) {
-                binding.combatView.setText("seconds remaining: " + millisUntilFinished / 1000);
-                binding.fightButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        counter++;
-                        Log.d("Dungeon Crawler", "counter:" + String.valueOf(counter));
-                    }
-                });
-            }
-            public void onFinish() {
-                int pcPoints = 0;
-                int enemyPoints = 0;
-                for (Attribute a : game.pc.attributes) {
-                    pcPoints += a.value;
-                }
-                for (Attribute a : game.enemy.attributes) {
-                    enemyPoints += a.value;
-                }
-                pcPoints *= counter;
-                enemyPoints *= Math.random() * 20 * game.enemy.level;
-                Log.d("Dungeon Crawler", "pc: " + pcPoints);
-                Log.d("Dungeon Crawler", "enemy: " + enemyPoints);
-
-                if (pcPoints > enemyPoints) {
-                    binding.combatView.setText("You have defeated the enemy, but a new one has appeared!");
-                    game.pc.experience += game.enemy.level * 10;
-                    game.enemy.location.occupant = null;
-                    game.enemy.location.display();
-
-                    if (checkLevelUp()) {
-                        levelUp();
-                    }
-
-                } else {
-                    binding.combatView.setText("You died!");
-                    System.exit(10);
-                }
-
-            }
-        }.start();*/
     }
 
     private void youDied() {
