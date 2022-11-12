@@ -154,6 +154,55 @@
             app:layout_constraintTop_toBottomOf="@+id/levelField"
             tools:ignore="SpeakableTextPresentCheck" />
 
+        <LinearLayout
+            android:id="@+id/hpLayout"
+            android:layout_width="481dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/downButton"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/pcHP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView" />
+
+            <ProgressBar
+                android:id="@+id/pcHPBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:progressTint="#4CAF50" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ProgressBar
+                android:id="@+id/enemyHPBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:progressTint="#B32323" />
+
+            <TextView
+                android:id="@+id/enemyHP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView" />
+        </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

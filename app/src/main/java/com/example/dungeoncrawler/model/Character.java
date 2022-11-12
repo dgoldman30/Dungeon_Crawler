@@ -14,6 +14,8 @@ public abstract class Character {
     public Tile location;
     Spell attunedSpell;
 
+    public int maxHP;
+
     public int x;
     public int y;
 
@@ -29,7 +31,7 @@ public abstract class Character {
     public Attribute STR = new Attribute("strength");
     public Attribute DEX = new Attribute("dexterity");
     public Attribute INT = new Attribute("intelligence");
-    Attribute WILL = new Attribute("willpower");
+    public Attribute WILL = new Attribute("willpower");
     public Attribute HP = new Attribute("hitpoints");
     public Attribute DV = new Attribute("dodge-value");
     public Attribute AV = new Attribute("armor-value");
@@ -57,6 +59,8 @@ public abstract class Character {
         for (int i = 0; i < 5; i++) {
             attributes[i].value += race.attributeAdjustments[i];
         }
+
+        maxHP = attributes[4].value;
 
         // dodge value, armor value, mental value
         this.attributes[5].value += attributes[1].value + skills.get("Dodge").value;
