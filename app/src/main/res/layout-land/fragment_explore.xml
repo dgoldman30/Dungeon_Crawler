@@ -111,22 +111,11 @@
             android:id="@+id/levelField"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="16dp"
             android:text="TextView"
+            android:textAlignment="textEnd"
             android:textSize="20sp"
-            app:layout_constraintEnd_toStartOf="@+id/xpBar"
-            app:layout_constraintStart_toEndOf="@+id/nameField"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ProgressBar
-            android:id="@+id/xpBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="453dp"
-            android:layout_height="26dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -134,11 +123,10 @@
             android:id="@+id/fightButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="134dp"
             android:layout_marginEnd="42dp"
             android:text="FIGHT"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/xpBar" />
+            app:layout_constraintBottom_toTopOf="@+id/upButton"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <ScrollView
             android:id="@+id/combatLog"
@@ -148,8 +136,16 @@
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/mapView"
-            app:layout_constraintTop_toBottomOf="@+id/xpBar"
-            tools:ignore="SpeakableTextPresentCheck" />
+            app:layout_constraintTop_toBottomOf="@+id/levelField"
+            tools:ignore="SpeakableTextPresentCheck">
+
+            <LinearLayout
+                android:id="@+id/combatLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:visibility="visible"></LinearLayout>
+        </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

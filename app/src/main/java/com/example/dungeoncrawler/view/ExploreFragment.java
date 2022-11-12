@@ -37,7 +37,7 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
     Listener listener;
     Game game;
 
-    int depth = 0;
+    int depth = 1;
 
     public ExploreFragment(Listener listener, Game game) {
         this.listener = listener;
@@ -62,8 +62,8 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setMove();
-        View xp = this.binding.xpBar;
-
+        String strLevel = "Level " + game.pc.level + ": ";
+        binding.levelField.setText(strLevel);
 
     }
 
@@ -135,11 +135,19 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         });
     }
 
+    private void setXpProgress() {
+        String xp = "" + game.pc.experience + " / " + game.pc.xpToLevel;
+        String levelText = (String) binding.levelField.getText().subSequence(0, 9);
+        String ret = levelText + xp;
+        binding.levelField.setText(ret);
+    }
+
     public void onCombat() {
         TextView enterCombat = new TextView(this.getContext());
         enterCombat.setText("You have entered combat.");
 
         LinearLayout combatLayout = new LinearLayout(this.getContext());
+
 
         this.binding.upButton.setEnabled(false);
         this.binding.downButton.setEnabled(false);
@@ -153,8 +161,10 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
             public void onClick(View view) {
                 double pcToHit = (game.pc.DEX.value + (game.pc.INT.value / 2)) * Math.random() * 10;
                 double enemyToHit = (game.enemy.DEX.value + (game.enemy.INT.value / 2)) * Math.random() * 10;
-                TextView combatRound = new TextView(binding.getRoot().getContext());
+
+                TextView combatRound = new TextView(getRootView().getContext());
                 String combatText = "";
+
                 if (pcToHit >= game.enemy.DV.value && (game.pc.STR.value * Math.random()) >= game.enemy.AV.value) {
                     combatText += "You hit the enemy for " + game.pc.weapon.strike(game.pc, game.enemy) + " damage.";
                 } else combatText += "You missed the enemy.";
@@ -163,7 +173,8 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
                 } else combatText += "\n The enemy missed you.";
 
                 if (game.enemy.HP.value <= 0) {
-                    game.pc.experience += (game.enemy.level + 1) * 10;
+                    Log.d("Experience gained", "" + (game.enemy.level * 10));
+                    game.pc.experience += (game.enemy.level) * 10;
                    for (int i = 0; i < game.map.length; i++) {
                        for (int j = 0; j < game.map.length; j++) {
                            if (game.map[i][j].occupant instanceof NPC) {
@@ -171,21 +182,19 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
                            }
                        }
                     }
-                   binding.fightButton.setEnabled(false);
-                   binding.upButton.setEnabled(true);
+                    binding.fightButton.setEnabled(false);
+                    binding.upButton.setEnabled(true);
                     binding.downButton.setEnabled(true);
                     binding.leftButton.setEnabled(true);
                     binding.rightButton.setEnabled(true);
                     combatText += "\n You killed the enemy and recieved " + (game.enemy.level * 10) + "experience points.";
+                    setXpProgress();
                     spawnEnemy();
 
-                }
-                else
-                {combatText += "You died!";}
+                } else { combatText += "You died!"; }
 
                 combatRound.setText(combatText);
-                combatLayout.addView(combatRound);
-                binding.combatLog.addView(combatLayout);
+                binding.combatLayout.addView(combatRound);
             }
         });
 
@@ -235,13 +244,8 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         }.start();*/
         spawnEnemy();
 
-        setXpBar();
     }
 
-    private void setXpBar() {
-        this.binding.xpBar.setMax(game.pc.xpToLevel);
-        this.binding.xpBar.setProgress(game.pc.experience);
-    }
 
     private boolean checkLevelUp() {
         if (game.pc.experience >= game.pc.xpToLevel) {
@@ -253,7 +257,6 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         game.pc.level++;
         game.pc.experience = 0;
         game.pc.setXpToLevel();
-        setXpBar();
         for (Attribute a : game.pc.attributes) {
             a.value++;
             if (a.name.equals("hitpoints")) { a.value += game.pc.level * 4; }

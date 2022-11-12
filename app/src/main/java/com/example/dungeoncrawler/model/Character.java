@@ -7,7 +7,7 @@ import java.util.Map;
 
 public abstract class Character {
 
-    public int level;
+    public int level = 1;
     public Race race;
     public Caste caste;
     char myChar;
@@ -40,6 +40,7 @@ public abstract class Character {
     Character(Race race, Caste caste) {
         this.race = race;
         this.caste = caste;
+        this.level = 1;
 
         // increment aptitude for favorite caste and race skills
         for (int i = 0; i < this.race.favoredSkills.length; i++) {
