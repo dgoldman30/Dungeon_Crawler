@@ -27,6 +27,7 @@ import com.example.dungeoncrawler.model.NPC;
 import com.example.dungeoncrawler.model.Race;
 import com.example.dungeoncrawler.model.Tile;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -71,8 +72,8 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         Tile[][] map = game.map;
         char[][] charMap = new char[map.length][map.length];
 
-        for(int i = 0; i < map.length; ++i) {
-            for(int j = 0; j < map.length; ++j) {
+        for(int i = 0; i < map.length; i++) {
+            for(int j = 0; j < map.length; j++) {
                 charMap[i][j] = map[i][j].display();
                 ret = ret + charMap[i][j] + " ";
                 if (j == map.length - 1) {
@@ -84,6 +85,8 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
     }
 
     private void setMove() {
+        this.binding.combatLog.removeAllViews();
+        this.binding.combatLog.removeAllViewsInLayout();
         TextView mapView = this.binding.mapView;
         this.binding.upButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,8 +151,8 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         this.binding.fightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                double pcToHit = (game.pc.DEX.value + (game.pc.INT.value/2)) * Math.random() * 10;
-                double enemyToHit = (game.enemy.DEX.value + (game.enemy.INT.value/2)) * Math.random() * 10;
+                double pcToHit = (game.pc.DEX.value + (game.pc.INT.value / 2)) * Math.random() * 10;
+                double enemyToHit = (game.enemy.DEX.value + (game.enemy.INT.value / 2)) * Math.random() * 10;
                 TextView combatRound = new TextView(binding.getRoot().getContext());
                 String combatText = "";
                 if (pcToHit >= game.enemy.DV.value && (game.pc.STR.value * Math.random()) >= game.enemy.AV.value) {
@@ -160,12 +163,26 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
                 } else combatText += "\n The enemy missed you.";
 
                 if (game.enemy.HP.value <= 0) {
-                    game.pc.experience += game.enemy.level * 10;
-                    game.enemy.location.display = 'X';
-                    game.enemy.location.occupant = null;
+                    game.pc.experience += (game.enemy.level + 1) * 10;
+                   for (int i = 0; i < game.map.length; i++) {
+                       for (int j = 0; j < game.map.length; j++) {
+                           if (game.map[i][j].occupant instanceof NPC) {
+                               game.map[i][j].occupant = null;
+                           }
+                       }
+                    }
+                   binding.fightButton.setEnabled(false);
+                   binding.upButton.setEnabled(true);
+                    binding.downButton.setEnabled(true);
+                    binding.leftButton.setEnabled(true);
+                    binding.rightButton.setEnabled(true);
                     combatText += "\n You killed the enemy and recieved " + (game.enemy.level * 10) + "experience points.";
+                    spawnEnemy();
 
                 }
+                else
+                {combatText += "You died!";}
+
                 combatRound.setText(combatText);
                 combatLayout.addView(combatRound);
                 binding.combatLog.addView(combatLayout);
@@ -245,6 +262,8 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
 
     private void spawnEnemy() {
         game.enemy = new NPC(Race.values()[(int) Math.random()*7], Caste.values()[(int) Math.random()*6], true, depth);
+        game.enemy.occupy(game.map[(int) (Math.random() * game.map.length)][(int) (Math.random() * game.map.length)]);
+        game.enemy.setTarget(game.pc);
     }
 
     @Override
