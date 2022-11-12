@@ -1,13 +1,10 @@
 # Functionality
-* For this prototype, we designed a text-based Rouge-like game. In this game, you are able to explore a 10 x 10 map with a customized character. To customize your character, you will be prompted to enter a race, caste and favored attributes. Enemies will move towards you as you explore the map.  When an enemy is in proximity, you engage in automated combat. If you defeat an enemy, another one will randomly spawn, and you can keep engaging in combat until you die or quit.
-* Limitations: We have limited combat to one player and one non-playable enemy. Another limitation is the exploration of the map. Right now, you can only explore 100 possible tiles. In the future, we would like to automatically generate map space, and make it larger.
-* Assumptions: We assume that the user is able to interact with a text-based UI and scanner to move around the map.
+* In this iteration, we created a prototype android app. You can select a character in our Character Creation fragment, assign attribute points and explore our 10x10 map. If within proximity of an enemy, you enter can enter combat and gain XP. You can repeatedly play the game as many times as you'd like.
+* Limitations: We are going to create a better way to interact with the map. In future iterations, we will have a clickable map instead of buttons. We intend to implement a player's inventory, character sheet and equipment slots in future implementations. Their buttons currently are not interactive and invisible. 
 # Usage Instructions
-* The class containing the main() method is Game.java
-1) Select a Race from the presented list, by inputing the value associated with each Race and hitting enter.
-2) Select a Caste from the presented list, by inputing the value associated with each Caste and hitting enter.
-3) Apply 4 additional attribute points from the presented list, by inputing the value associated with each attribute and hitting enter after each input. 
-4) Use characters a,s,w,d to explore the map, "exit" to quit the game, and "x" to open inventory. 'P' is the character on the map indicating where the player is. 'E' is the character indicating enemy. 
-5) If you are engaged in combat, your character will attack and then your enemy will attack. 
-6) There are two ways to exit the game: Input "exit" while exploring the map, or your character must die. 
+1) Select a Caste and Race in our Character Creation Fragment
+2) Assign 4 attribute points and hit "ENTER CHOICES" button to continue to explore fragment.
+3) In the explore fragment, you are able to move around on the map and regenerate health with the 4 directional buttons (U(p), D(own), L(eft), R(ight)).
+4) When you encounter an enemy, click the "FIGHT" button 
+5) you have now entered combat. if you die, you are able to restart the game. Otherwise you can continue to explore the map and fight enenmies.
 
