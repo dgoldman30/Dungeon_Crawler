@@ -6,5 +6,6 @@
 2) Assign 4 attribute points and hit "ENTER CHOICES" button to continue to explore fragment.
 3) In the explore fragment, you are able to move around on the map and regenerate health with the 4 directional buttons (U(p), D(own), L(eft), R(ight)).
 4) When you encounter an enemy, click the "FIGHT" button 
-5) you have now entered combat. if you die, you are able to restart the game. Otherwise you can continue to explore the map and fight enenmies.
-
+5) you have now entered combat. if you die, you are able to restart the game. Otherwise you can continue to explore the map and fight enemies.
+# Testing
+Tests were run using the Pixel 5 API 30 emulator.
