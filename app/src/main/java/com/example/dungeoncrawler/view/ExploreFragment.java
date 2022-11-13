@@ -92,7 +92,7 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         return ret;
     }
 
-    private String regen() {
+    public String regen() {
         int regen = (int) (game.pc.WILL.value / 2) + 1;
         game.pc.HP.value += regen;
         updateHP();

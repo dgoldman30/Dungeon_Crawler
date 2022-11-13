@@ -10,8 +10,8 @@ public enum Race {
     KENKU(Game.kSkills, Game.kAtt, "Kenku", "Kenku resemble large crows and typically reside in the slums of large cities.");
 
 
-    String[] favoredSkills;
-    int[] attributeAdjustments;
+    public String[] favoredSkills;
+    public int[] attributeAdjustments;
     String name;
     String description;
     Race(String[] favoredSkills, int[] attributeAdjustments, String name, String description) {

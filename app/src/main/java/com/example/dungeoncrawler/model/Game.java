@@ -11,12 +11,19 @@ public class Game {
         EXPLORE,
         COMBAT
     }
+
     public Tile[][] map;
-    public static Player pc;
+    public Player pc;
     public NPC enemy;
+
     public Game(int size) {
         createSkills();
         createMap(size);
+    }
+
+    public void setCharacters(Player pc, NPC enemy) {
+        this.pc = pc;
+        this.enemy = enemy;
     }
 
     public static void main(String[] args) {
@@ -167,7 +174,7 @@ public class Game {
     static int[] sprAtt = {1,4,3,2,7};
 
     // Dwarf
-    static String[] dwSkills  = {"Armor", "Faith", "Invocation", "Earth  Magic"};
+    static String[] dwSkills  = {"Armor", "Faith", "Invocation", "Earth Magic"};
     static int[] dwAtt = {3,1,2,4,12};
 
     // Nymph

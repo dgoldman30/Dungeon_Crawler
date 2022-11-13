@@ -14,7 +14,7 @@ public enum Caste {
 
 
     String[] favoredSkills;
-    List<Item> startingItems = new ArrayList<>();
+    public List<Item> startingItems = new ArrayList<>();
     String description;
     String name;
 
