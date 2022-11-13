@@ -1,91 +1,3 @@
-# Domain Model
-```plantuml
-@startuml
-
-hide circle
-hide empty methods
-
-'classes
-class Character {
-    race
-    caste
-    attributes
-    skills
-    items
-    inventory
-    location
-}
-
-class Caste {
-    favoredSkills
-    baseAttributes
-}
-
-class Item {
-    description
-}
-
-class Attribute {
-    value
-    name
-}
-
-class Skill {
-    value
-    description
-    toggled
-}
-
-class Weapon {
-    damage
-    accuracy
-    description
-}
-
-class Spell {
-    range
-    description
-    effect
-}
-
-class Attack {
-    hit?
-    damage
-    range
-}
-
-class Game {
-    map[TileR][TileC]
-}
-
-class Tile {
-    contents
-}
-
-
-
-'associations
-Character "1" - "1" Item : \tEquips-item\t
-Character "1" - "*" Item : \tHas-in-inventory\t\t
-
-Character "1" --- "5" Attribute : \tContains\t\t
-
-Character "1" -left- "1" Spell : \tMemorized\t
-Character "1" -left- "*" Spell : \tLearned\t
-
-Character "1" --- "*" Skill : \tTrained\t
-Character "1" --- "*" Skill : \tToggled\t
-
-Character "1" --- "1,2" Weapon : \tHas-equipped\t
-
-Character "1" --- "1" Attack : \tExecutes\t
-
-
-@enduml
-
-```
-
-
 # Sequence Diagrams
 
 onCombat()
@@ -96,12 +8,31 @@ hide footbox
 actor System
 participant "explore : ExploreFragment" as exploreFragment
 participant "logLayout : LinearLayout" as logLayout
-participant "combat : TextView" as enterCombat
-participant "enemyHP : TextView" as enemyHP
-participant "enemyHPBar : ProgressBar" as enemyHPBar
+participant "pc : Player" as pc
+participant "enemy : NPC" as enemy
 
-System -> explore: onCombat()
-explore -> logLayout: addView(enterCombat)
+System -> exploreFragment: onCombat()
+exploreFragment -> logLayout: addView(enterCombat)
+
+alt pcToHit >= enemy.DV.value && (pc.STR.value * Math.random()) >= enemy.AV.value
+exploreFragment -> pc: pc.weapon.strike(pc, enemy)
+end
+
+alt enemyToHit >= pc.DV.value && (enemy.STR.value * Math.random()) >= pc.AV.value
+exploreFragment -> enemy: enemy.weapon.strike(enemy, pc)
+end
+
+
+alt enemy.HP.value <= 0
+exploreFragment -> pc: pc.experience += enemy.level * 10
+exploreFragment -> exploreFragment: replaceEnemy(), setXpProgress()
+end
+
+alt pc.HP.value <= 0
+exploreFragment -> exploreFragment: youDied()
+end
+
+exploreFragment -> logLayout: addView(combatRound)
 
 @enduml
 ```
@@ -162,29 +93,6 @@ exploreFragment -> logLayout: clearAllViews()
 @enduml
 enduml```
 
-updateHp()
-```plantuml
-@startuml
-
-hide footbox
-
-actor System
-participant "binding : FragmentExploreBinding" as binding
-participant "pc : Character" as pc
-participant "enemy : Character" as enemy
-participant "gameState : int" as gameState
-System -> binding :
-ui -> pc : c1 = pc
-ui -> enemy : c2 = enemy
-alt winner
-pc -> gameState : gameState = 3
-else
-enemy -> GameState : gameState = 10
-end
-@enduml
-```
-
-
 
 # Class Diagram
 
@@ -200,18 +108,24 @@ abstract class Character {
     caste : Caste
     myChar : char
     location : Tile
+    x : int
+    y : int
+
     dodgeValue : int
     armorValue : int 
     mental : int
+
     attributes : Attribute[]
     skills : ArrayList<Skill>
     items : Item[]
     inventory : Tile[]
     attunedSpell : Spell
+
     --
     public Tile[][] move(map : Tile[][])
     public void occupy(tile : Tile)
     public void executeMove(tile : Tile)
+    public void equipWeapon(weapon : Weapon)
 }
 
 class  NPC {
@@ -222,14 +136,14 @@ class  NPC {
     public Tile[][] move(map : Tile[][])
     public void occupy(tile : Tile)
 }
-class  Enemy {  
-}
-
 
 class Player {
+    int xpBase
+    int scale
+    int xpToLevel
     --
-    
-    public String move(game : Game, inputf : String)
+    public void setXpToLevel()
+    public String move(game : Game, input : String)
 }
 
 Character <|-- NPC
@@ -275,15 +189,19 @@ class Skill {
     public void increment()
     public void toggle()
 }
+
 class Weapon {
-damage : int 
-accuracy : int 
+damage : double
+accuracy : double
+crit : double
 twoHanded : boolean
+enum Weapons
 
 }
 class Potion {
 attributeMulti : int 
-usageTime : int 
+usageTime : int
+enum Potions
 }
 
 class Tile {
@@ -304,11 +222,8 @@ class Game {
 int gameState
 map : Tile[][]
 enemy : Character 
-{static} pc : Player
-{static} skills : ArrayList<Skill> 
-{static} weapons : Weapon[]
-{static} potions : Potion[]
-{static} castes : Caste[]
+pc : Player
+{static} skills : ArrayList<Skill>
 {static} gladSkills : ArrayList<Skill>
 {static} gladItems : ArrayList<Item>
 {static} urSkills : ArrayList<Skill>
@@ -321,7 +236,6 @@ enemy : Character
 {static} appItems : ArrayList<Item>
 {static} clerSkills : ArrayList<Skill>
 {static} clerItems : ArrayList<Item>
-{static} races : Race[]
 {static} humSkills : ArrayList<Skill>
 {static} humAtt : int[]
 {static} minSkills : ArrayList<Skill>
@@ -340,9 +254,6 @@ enemy : Character
 public boolean checkAdjacent(player : Character)
 public void createMap(size : int)
 public void createSkills()
-public void createWeapons
-private void createPotions()
-public void createCastes()
 
 }
 
@@ -352,7 +263,7 @@ package View {
     void onConfirm(race : String, caste : String, att : int[])
     }
 
-    class CharCreationFragment {
+    class CharCreationFragment implements ICharCreationView {
     binding : FragmentCharCreation
     listener : Listener
     --
@@ -370,7 +281,7 @@ package View {
     View getRootView()
     }
 
-    class ExploreFragment {
+    class ExploreFragment implements IExploreFragment{
         binding : FragmentExploreBinding
         listener : Listener
         game : Game
@@ -399,7 +310,7 @@ package View {
     View getRootView()
     void displayFragment(Fragment fragment, boolean allowBack, String name);
     }
-    class MainView {
+    class MainView implements IMainView{
         fmanager : FragmentManager
         binding : MainBinding
         --
@@ -407,7 +318,7 @@ package View {
     }
 }
 
-class ControllerActivity {
+class ControllerActivity implements ICharCreationView.Listener, IExploreFragment.Listener{
     mainView : IMainView
     gameState : Game.GameState
     --
@@ -417,17 +328,13 @@ class ControllerActivity {
 }
 
 'associations
-Game "1" - "1" Player : \tHas()\t
-Game "1" - "1" NPC : \tHas()\t
-Game "1" - "11" Skill : \tContainsListof()\t
-Game "1" - "5" Caste : \tContainsListof()\t
-Game "1" - "6" Race : \tContainsListof()\t
-Game "1" - "8" Weapon : \tContainsListof()\t
-Game "1" - "4" Potion : \tContainsListof()\t
-TextUI "1" - "1" Game : \tHas()\t
-Game "1" - "100" Tile : \tcontainsMapOf()\t
-
-
+Game "1" -> "1" Player : \tHas()\t
+Game "1" -> "1" NPC : \tHas()\t
+Game "1" -> "11" Skill : \tcontainsListof()\t
+Caste "1" -> "1" Game : \tgetsCastePresets()\t
+Race "1" -> "1" Game : \tgetsRacePresets()\t
+Game "1" -> "100" Tile : \tcontainsMapOf()\t
+View "1" -> "1" Game : \tcontains()\t
 
 
 @enduml
