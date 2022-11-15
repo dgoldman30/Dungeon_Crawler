@@ -1,8 +1,8 @@
 package com.example.dungeoncrawler.model;
 
 public class Skill {
-    float value = 0;
-    String name;
+    public float value = 0;
+    public String name;
     String description;
     boolean toggled = false;
     public int aptitude = 0;

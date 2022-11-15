@@ -63,7 +63,7 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
 
         createLog();
 
-        return this.binding.getRoot();
+        return this.getRootView();
     }
 
     @Override
@@ -73,6 +73,17 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         String strLevel = "Level " + game.pc.level + ": ";
         binding.levelField.setText(strLevel);
 
+
+    }
+
+    private void menuButtons() {
+        this.binding.characterButton.setVisibility(View.VISIBLE);
+        this.binding.characterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onCharSheet();
+            }
+        });
     }
 
     private String printMap(Game game) {
@@ -210,12 +221,8 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
 
         updateHP();
 
-        this.binding.upButton.setEnabled(false);
-        this.binding.downButton.setEnabled(false);
-        this.binding.leftButton.setEnabled(false);
-        this.binding.rightButton.setEnabled(false);
-        this.binding.fightButton.setEnabled(true);
-
+        this.binding.moveButtons.setEnabled(false);
+        this.binding.combatButtons.setEnabled(true);
 
         this.binding.fightButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -241,11 +248,8 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
                     game.pc.experience += (game.enemy.level) * 10;
                     replaceEnemy();
 
-                    binding.fightButton.setEnabled(false);
-                    binding.upButton.setEnabled(true);
-                    binding.downButton.setEnabled(true);
-                    binding.leftButton.setEnabled(true);
-                    binding.rightButton.setEnabled(true);
+                    binding.moveButtons.setEnabled(true);
+                    binding.combatButtons.setEnabled(false);
                     combatText += "\n You killed the enemy and recieved " + (game.enemy.level * 10) + "experience points.";
 
                     setXpProgress();
@@ -258,7 +262,33 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
                     combatText += "\n You were killed by the " + game.enemy.race.name() + " " + game.enemy.caste.name();
                     youDied();
                 }
+                // push round to log
+                combatRound.setText(combatText);
+                addToLog(combatRound);
+            }
+        });
+        this.binding.blockButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                double pcBlockBonus = (game.pc.skills.get("Shield").value + game.pc.DEX.value + game.pc.WILL.value) / 3;
+                double enemyToHit = (game.enemy.DEX.value + (game.enemy.INT.value / 2)) * Math.random() * 10;
 
+                TextView combatRound = new TextView(getRootView().getContext());
+                String combatText = "";
+
+                // if block is greater than to hit, deflect the whole attack.
+                if (pcBlockBonus > enemyToHit) { combatText += "You deflected the " + game.enemy.race.name() + " " + game.enemy.caste.name() + "'s attack!";
+                } else if ((pcBlockBonus + game.pc.DV.value) <= enemyToHit && (game.enemy.STR.value * Math.random()) >= game.pc.AV.value) {
+                    combatText += "\n" + "The enemy hit you for " + game.enemy.weapon.strike(game.enemy, game.pc) + " damage.";
+                } else combatText += "\n The enemy missed you.";
+
+                updateHP();
+
+                if (game.pc.HP.value <= 0) {
+                    combatText += "\n You were killed by the " + game.enemy.race.name() + " " + game.enemy.caste.name();
+                    youDied();
+                }
+                // push round to log
                 combatRound.setText(combatText);
                 addToLog(combatRound);
             }

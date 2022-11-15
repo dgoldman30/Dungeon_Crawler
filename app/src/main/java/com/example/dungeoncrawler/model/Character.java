@@ -36,7 +36,7 @@ public abstract class Character {
     public Attribute HP = new Attribute("hitpoints");
     public Attribute DV = new Attribute("dodge-value");
     public Attribute AV = new Attribute("armor-value");
-    Attribute MV = new Attribute("mental-value");
+    public Attribute MV = new Attribute("mental-value");
     public Attribute[] attributes = {STR, DEX, INT, WILL, HP, DV, AV, MV};
 
     public static Map<String, Skill> skills = new HashMap(Game.skills);

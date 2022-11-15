@@ -15,18 +15,22 @@ import com.example.dungeoncrawler.model.Game;
 import com.example.dungeoncrawler.model.Player;
 import com.example.dungeoncrawler.model.Race;
 import com.example.dungeoncrawler.view.CharCreationFragment;
+import com.example.dungeoncrawler.view.CharacterSheetFragment;
 import com.example.dungeoncrawler.view.ExploreFragment;
 import com.example.dungeoncrawler.view.ICharCreationView;
+import com.example.dungeoncrawler.view.ICharacterSheetFragment;
 import com.example.dungeoncrawler.view.IExploreFragment;
 import com.example.dungeoncrawler.view.IMainView;
 import com.example.dungeoncrawler.view.MainView;
 
+import java.lang.Character;
 import java.util.Locale;
 
-public class ControllerActivity extends AppCompatActivity implements ICharCreationView.Listener, IExploreFragment.Listener {
+public class ControllerActivity extends AppCompatActivity implements ICharCreationView.Listener, IExploreFragment.Listener, ICharacterSheetFragment.Listener {
 
     Game.GameStates gameState = Game.GameStates.START;
     IMainView mainView;
+    Game game;
 
 
     @Override
@@ -41,6 +45,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         mainView.displayFragment(charCreationFragment, false, "char creation");
     }
 
+    // Char creation
     @Override
     public void onConfirm(String race, String caste, int[] att) {
         Race pcRace = Race.HUMAN;
@@ -48,7 +53,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         for (Race r : Race.values()) { if (r.name().equals(race.toUpperCase())) pcRace = r; }
         for (Caste c : Caste.values()) { if (c.name().equals(caste.toUpperCase()))  pcCaste = c;  }
 
-        Game game = new Game(10);
+        this.game = new Game(10);
         game.pc = new Player(pcRace, pcCaste, att);
         game.pc.occupy(game.map[0][0]);
 
@@ -64,6 +69,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         this.mainView.displayFragment(exploreFragment, false, "explore");
     }
 
+    // Explore Fragment
     @Override
     public void onInventory() {
 
@@ -71,7 +77,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
 
     @Override
     public void onCharSheet() {
-
+        CharacterSheetFragment charSheetFrag = new CharacterSheetFragment(this, game);
     }
 
     @Override
@@ -84,5 +90,22 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         super.onRestart();
         CharCreationFragment charCreationFragment = new CharCreationFragment(this);
         mainView.displayFragment(charCreationFragment, false, "char creation");
+    }
+
+
+    // Character Sheet
+    @Override
+    public void onLevelUp() {
+
+    }
+
+    @Override
+    public void onClose() {
+
+    }
+
+    @Override
+    public void onEquip() {
+
     }
 }
