@@ -30,6 +30,5 @@ public class MainView implements IMainView {
         if (allowBack) { ft.addToBackStack(name); }
 
         ft.commit();
-
     }
 }

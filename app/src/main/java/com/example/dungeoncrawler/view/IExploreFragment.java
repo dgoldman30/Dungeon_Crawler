@@ -20,7 +20,7 @@ public interface IExploreFragment {
         void updateHP();
         String printMap(Game game);
         void setBinding(FragmentExploreBinding binding);
-        void performLevelUp();
+        String performLevelUp();
     }
 
     View getRootView();

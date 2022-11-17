@@ -158,6 +158,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         binding.enemyHPBar.setProgress(game.enemy.HP.value);
     }
 
+    // private method to replace enemy on game map
     private void replaceEnemy() {
         for (int i = 0; i < game.map.length; i++) {
             for (int j = 0; j < game.map.length; j++) {
@@ -166,20 +167,26 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         binding.mapView.setText(printMap(game));
     }
 
+    // private method to create a new enemy in a random space on the map
     private void spawnEnemy() {
         game.enemy = new NPC(Race.values()[(int) Math.random()*7], Caste.values()[(int) Math.random()*6], true, game.depth);
         game.enemy.occupy(game.map[(int) (Math.random() * game.map.length)][(int) (Math.random() * game.map.length)]);
         game.enemy.setTarget(game.pc);
     }
 
+
     @Override
     public void setBinding(FragmentExploreBinding binding) {
         this.binding = binding;
     }
 
+
     @Override
-    public void performLevelUp() {
-        
+    public String performLevelUp() {
+        String log = "";
+        game.pc.levelUp();
+        log += "You increased your level to " + game.pc.level;
+        return log;
     }
 
     @Override

@@ -61,6 +61,14 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         setMove();
         String strLevel = "Level " + game.pc.level + ": ";
         binding.levelField.setText(strLevel);
+
+        // set log to scroll to bottom
+        binding.combatLog.post(new Runnable() {
+            @Override
+            public void run() {
+                binding.combatLog.fullScroll(View.FOCUS_DOWN);
+            }
+        });
     }
 
     private void menuButtons() {
@@ -154,12 +162,6 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
 
     private void addToLog(TextView view) {
         combatLayout.addView(view);
-        binding.combatLog.post(new Runnable() {
-            @Override
-            public void run() {
-                binding.combatLog.fullScroll(View.FOCUS_DOWN);
-            }
-        });
     }
 
     private void clearLog() {
@@ -187,7 +189,7 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
                     Log.d("Experience gained", "" + (game.enemy.level * 10));
                     setXpProgress();
                     if (checkLevelUp()) {
-
+                        combatText += "\n" + listener.performLevelUp();
                     }
                 }
 
