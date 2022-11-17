@@ -35,5 +35,5 @@ class Potion extends Item {
         target.attributes[this.target].value += this.factor;
     }
 
-    public void use() {};
+    public void use() {}
 }

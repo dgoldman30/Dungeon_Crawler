@@ -1,6 +1,6 @@
 # Sequence Diagrams
 
-onCombat()
+# onCombat()
 ```plantuml
 @startuml
 hide footbox
@@ -37,7 +37,7 @@ exploreFragment -> logLayout: addView(combatRound)
 @enduml
 ```
 
-youDied()
+# youDied()
 ```plantuml
 @startuml
 hide footbox
@@ -60,7 +60,7 @@ Controller -> mainView: .display(charCreationFragment)
 @enduml
 ```
 
-addToLog()
+# addToLog()
 ```plantuml
 @startuml
 hide footbox
@@ -78,7 +78,7 @@ exploreFragment -> logLayout: addView(entry)
 @enduml
 ```
 
-clearLog()
+# clearLog()
 ```plantuml
 @startuml
 hide footbox

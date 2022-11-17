@@ -1,47 +1,35 @@
 package com.example.dungeoncrawler.view;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.dungeoncrawler.ControllerActivity;
-import com.example.dungeoncrawler.R;
-import com.example.dungeoncrawler.databinding.FragmentCharCreationBinding;
 import com.example.dungeoncrawler.databinding.FragmentExploreBinding;
 import com.example.dungeoncrawler.model.Attribute;
 import com.example.dungeoncrawler.model.Caste;
+import com.example.dungeoncrawler.model.Character;
 import com.example.dungeoncrawler.model.Game;
 import com.example.dungeoncrawler.model.NPC;
 import com.example.dungeoncrawler.model.Race;
 import com.example.dungeoncrawler.model.Tile;
 
-import org.w3c.dom.Text;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 public class ExploreFragment extends Fragment implements IExploreFragment {
 
-    FragmentExploreBinding binding;
+    public FragmentExploreBinding binding;
     Listener listener;
     Game game;
 
-    LinearLayout combatLayout;
 
-    int depth = 1;
+    LinearLayout combatLayout;
 
     public ExploreFragment(Listener listener, Game game) {
         this.listener = listener;
@@ -56,12 +44,13 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
 
         String name = game.pc.race.name() + " " + game.pc.caste.name();
         String level = "Level " + game.pc.level + " ";
-        this.binding.fightButton.setEnabled(false);
+        this.binding.combatButtons.setVisibility(View.GONE);
         this.binding.nameField.setText(name);
         this.binding.levelField.setText(level);
-        this.binding.mapView.setText(printMap(game));
-
+        this.binding.mapView.setText(listener.printMap(game));
         createLog();
+
+        listener.setBinding(this.binding);
 
         return this.getRootView();
     }
@@ -72,8 +61,6 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         setMove();
         String strLevel = "Level " + game.pc.level + ": ";
         binding.levelField.setText(strLevel);
-
-
     }
 
     private void menuButtons() {
@@ -86,45 +73,27 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         });
     }
 
-    private String printMap(Game game) {
-        String ret = "";
-        Tile[][] map = game.map;
-        char[][] charMap = new char[map.length][map.length];
-
-        for(int i = 0; i < map.length; i++) {
-            for(int j = 0; j < map.length; j++) {
-                charMap[i][j] = map[i][j].display();
-                ret = ret + charMap[i][j] + " ";
-                if (j == map.length - 1) {
-                    ret = ret + "\n";
-                }
-            }
-        }
-        return ret;
-    }
 
     public String regen() {
         int regen = (int) (game.pc.WILL.value / 2) + 1;
         game.pc.HP.value += regen;
-        updateHP();
+        listener.updateHP();
 
         String log = " and regenerate " + regen + " HP.";
         return log;
     }
 
     private void setMove() {
-        TextView mapView = this.binding.mapView;
         TextView log = new TextView(this.getRootView().getContext());
 
         this.binding.upButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                game.pc.move(game, "w");
-                game.enemy.move(game.map);
+                listener.onMove(game, "w");
                 log.setText("You moved up" + regen());
                 clearLog();
                 addToLog(log);
-                mapView.setText(printMap(game));
+
                 if (game.checkAdjacent()) {
                     onCombat();
                 }
@@ -134,12 +103,11 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         this.binding.leftButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                game.pc.move(game, "a");
-                game.enemy.move(game.map);
+                listener.onMove(game, "a");
                 log.setText("You moved left" + regen());
                 clearLog();
                 addToLog(log);
-                mapView.setText(printMap(game));
+
                 if (game.checkAdjacent()) {
                     onCombat();
                 }
@@ -148,12 +116,11 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         this.binding.rightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                game.pc.move(game, "d");
-                game.enemy.move(game.map);
+                listener.onMove(game, "d");
                 log.setText("You moved right" + regen());
                 clearLog();
                 addToLog(log);
-                mapView.setText(printMap(game));
+
                 if (game.checkAdjacent()) {
                     onCombat();
                 }
@@ -162,22 +129,20 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         this.binding.downButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                game.pc.move(game, "s");
-                game.enemy.move(game.map);
+                listener.onMove(game, "s");
                 log.setText("You moved down" + regen());
                 clearLog();
                 addToLog(log);
-                mapView.setText(printMap(game));
+
                 if (game.checkAdjacent()) {
                     onCombat();
-
                 }
             }
         });
     }
 
     private void setXpProgress() {
-        String xp = "" + game.pc.experience + " / " + game.pc.xpToLevel;
+        String xp = "" + game.pc.experience + " / " + game.pc.xpToLevel();
         String levelText = (String) binding.levelField.getText().subSequence(0, 9);
         String ret = levelText + xp;
         binding.levelField.setText(ret);
@@ -201,61 +166,29 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         combatLayout.removeAllViews();
     }
 
-    private void updateHP() {
-        binding.hpLayout.setVisibility(LinearLayout.VISIBLE);
-        binding.pcHP.setText("" + game.pc.HP.value);
-        binding.pcHPBar.setMax(game.pc.maxHP);
-        binding.pcHPBar.setProgress(game.pc.HP.value);
-
-        binding.enemyHP.setVisibility(LinearLayout.VISIBLE);
-        binding.enemyHPBar.setVisibility(LinearLayout.VISIBLE);
-        binding.enemyHP.setText("" + game.enemy.HP.value);
-        binding.enemyHPBar.setMax(game.enemy.maxHP);
-        binding.enemyHPBar.setProgress(game.enemy.HP.value);
-    }
-
     public void onCombat() {
         TextView enterCombat = new TextView(this.getRootView().getContext());
         enterCombat.setText("You have entered combat.");
         combatLayout.addView(enterCombat);
 
-        updateHP();
+        listener.updateHP();
 
         this.binding.moveButtons.setEnabled(false);
-        this.binding.combatButtons.setEnabled(true);
+        this.binding.combatButtons.setVisibility(View.VISIBLE);
 
         this.binding.fightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                double pcToHit = (game.pc.DEX.value + (game.pc.INT.value / 2)) * Math.random() * 10;
-                double enemyToHit = (game.enemy.DEX.value + (game.enemy.INT.value / 2)) * Math.random() * 10;
-
                 TextView combatRound = new TextView(getRootView().getContext());
-                String combatText = "";
-
-
-                if (pcToHit >= game.enemy.DV.value && (game.pc.STR.value * Math.random()) >= game.enemy.AV.value) {
-                    combatText += "You hit the enemy for " + game.pc.weapon.strike(game.pc, game.enemy) + " damage.";
-                } else combatText += "You missed the enemy.";
-                if (enemyToHit >= game.pc.DV.value && (game.enemy.STR.value * Math.random()) >= game.pc.AV.value) {
-                    combatText += "\n" + "The enemy hit you for " + game.enemy.weapon.strike(game.enemy, game.pc) + " damage.";
-                } else combatText += "\n The enemy missed you.";
-
-                updateHP();
+                String combatText = listener.onCombat(game, "f");
 
                 if (game.enemy.HP.value <= 0) {
+                    listener.onEnemyDefeated(game);
                     Log.d("Experience gained", "" + (game.enemy.level * 10));
-                    game.pc.experience += (game.enemy.level) * 10;
-                    replaceEnemy();
-
-                    binding.moveButtons.setEnabled(true);
-                    binding.combatButtons.setEnabled(false);
-                    combatText += "\n You killed the enemy and recieved " + (game.enemy.level * 10) + "experience points.";
-
                     setXpProgress();
-                    binding.enemyHP.setVisibility(LinearLayout.INVISIBLE);
-                    binding.enemyHPBar.setVisibility(LinearLayout.INVISIBLE);
+                    if (checkLevelUp()) {
 
+                    }
                 }
 
                 if (game.pc.HP.value <= 0) {
@@ -270,19 +203,8 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         this.binding.blockButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                double pcBlockBonus = (game.pc.skills.get("Shield").value + game.pc.DEX.value + game.pc.WILL.value) / 3;
-                double enemyToHit = (game.enemy.DEX.value + (game.enemy.INT.value / 2)) * Math.random() * 10;
-
                 TextView combatRound = new TextView(getRootView().getContext());
-                String combatText = "";
-
-                // if block is greater than to hit, deflect the whole attack.
-                if (pcBlockBonus > enemyToHit) { combatText += "You deflected the " + game.enemy.race.name() + " " + game.enemy.caste.name() + "'s attack!";
-                } else if ((pcBlockBonus + game.pc.DV.value) <= enemyToHit && (game.enemy.STR.value * Math.random()) >= game.pc.AV.value) {
-                    combatText += "\n" + "The enemy hit you for " + game.enemy.weapon.strike(game.enemy, game.pc) + " damage.";
-                } else combatText += "\n The enemy missed you.";
-
-                updateHP();
+                String combatText = listener.onCombat(game, "b");
 
                 if (game.pc.HP.value <= 0) {
                     combatText += "\n You were killed by the " + game.enemy.race.name() + " " + game.enemy.caste.name();
@@ -307,37 +229,12 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         });
     }
 
-    private void replaceEnemy() {
-        for (int i = 0; i < game.map.length; i++) {
-            for (int j = 0; j < game.map.length; j++) {
-                if (game.map[i][j].occupant instanceof NPC) { game.map[i][j].occupant = null; } } }
-        spawnEnemy();
-        binding.mapView.setText(printMap(game));
-    }
-
-
     private boolean checkLevelUp() {
-        if (game.pc.experience >= game.pc.xpToLevel) {
+        if (game.pc.experience >= game.pc.xpToLevel()) {
+            game.pc.readyForLevel = true;
             return true;
         } else return false;
     }
 
-    private void levelUp() {
-        game.pc.level++;
-        game.pc.experience = 0;
-        game.pc.setXpToLevel();
-        for (Attribute a : game.pc.attributes) {
-            a.value++;
-            if (a.name.equals("hitpoints")) { a.value += game.pc.level * 4; }
-        }
-    }
-
-    private void spawnEnemy() {
-        game.enemy = new NPC(Race.values()[(int) Math.random()*7], Caste.values()[(int) Math.random()*6], true, depth);
-        game.enemy.occupy(game.map[(int) (Math.random() * game.map.length)][(int) (Math.random() * game.map.length)]);
-        game.enemy.setTarget(game.pc);
-    }
-
-    @Override
     public View getRootView() { return this.binding.getRoot(); }
 }

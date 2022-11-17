@@ -9,11 +9,13 @@ public class Player extends Character {
 
     public int experience;
 
-    int xpBase = 10;
-    double scale = 20;
-    public int xpToLevel = (int) (Math.pow((this.level * scale), 1.5)) * xpBase;
+    int xpBase = 3;
+    double scale = 10;
 
-    public void setXpToLevel() { xpToLevel = (int) (Math.pow((this.level * scale), 1.5)) * xpBase;}
+
+    public boolean readyForLevel;
+
+    public int xpToLevel() { return (int) (Math.pow((this.level * scale), 1.2)) * xpBase;}
 
     public Player(Race race, Caste caste, int[] attPoints) {
 
@@ -73,6 +75,18 @@ public class Player extends Character {
     public ArrayList<Item> search() {
         ArrayList<Item> items = new ArrayList<>(this.location.contents);
         return items;
+    }
+
+    public void levelUp() {
+        level++;
+        experience = 0;
+        for (Attribute a : attributes) {
+            a.value++;
+            if (a.name.equals("hitpoints")) { a.value += level * 4; }
+        }
+        for (Skill s : skills.values()) {
+            s.value += (INT.value / 3) * s.aptitude;
+        }
     }
 
 

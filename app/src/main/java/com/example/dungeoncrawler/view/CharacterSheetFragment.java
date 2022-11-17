@@ -11,10 +11,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.dungeoncrawler.databinding.FragmentCharacterSheetBinding;
+import com.example.dungeoncrawler.model.Character;
 import com.example.dungeoncrawler.model.Game;
 import com.example.dungeoncrawler.model.Skill;
-
-import org.w3c.dom.Text;
 
 public class CharacterSheetFragment extends Fragment implements ICharacterSheetFragment{
 
@@ -46,7 +45,7 @@ public class CharacterSheetFragment extends Fragment implements ICharacterSheetF
         this.binding.avButton.setText(game.pc.AV.value);
         this.binding.mvButton.setText(game.pc.MV.value);
 
-        for (Skill s : game.pc.skills.values()) {
+        for (Skill s : Character.skills.values()) {
             TextView skill = new TextView(this.getRootView().getContext());
             String skillText = "" + s.name + ": " + s.value;
             skill.setText(skillText);
@@ -65,6 +64,5 @@ public class CharacterSheetFragment extends Fragment implements ICharacterSheetF
 
     }
 
-    @Override
     public View getRootView() { return this.binding.getRoot(); }
 }

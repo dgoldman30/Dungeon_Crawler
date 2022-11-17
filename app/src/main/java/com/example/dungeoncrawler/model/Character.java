@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public abstract class Character {
 
@@ -50,10 +49,10 @@ public abstract class Character {
 
         // increment aptitude for favorite caste and race skills
         for (int i = 0; i < this.race.favoredSkills.length; i++) {
-            this.skills.get(this.race.favoredSkills[i]).aptitude++;
+            skills.get(this.race.favoredSkills[i]).aptitude++;
         }
         for (int i = 0; i < this.caste.favoredSkills.length; i++) {
-            this.skills.get(this.caste.favoredSkills[i]).aptitude++;
+            skills.get(this.caste.favoredSkills[i]).aptitude++;
         }
 
         // add the race attributes

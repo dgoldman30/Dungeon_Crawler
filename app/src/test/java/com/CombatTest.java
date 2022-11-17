@@ -1,11 +1,13 @@
-package com.tests;
+package com;
+import org.junit.Assert;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
-import com.example.dungeoncrawler.model.*;
 import com.example.dungeoncrawler.model.Game;
-import com.example.dungeoncrawler.view.ExploreFragment;
+import com.example.dungeoncrawler.model.Caste;
+import com.example.dungeoncrawler.model.NPC;
+import com.example.dungeoncrawler.model.Player;
+import com.example.dungeoncrawler.model.Race;
+import com.example.dungeoncrawler.model.Tile;
 
 public class CombatTest {
     Game game = new Game(10);
@@ -16,7 +18,7 @@ public class CombatTest {
         game.pc = new Player(Race.NYMPH, Caste.URCHIN, new int[]{2, 0, 0, 0});
         game.enemy = new NPC(Race.HUMAN, Caste.APPRENTICE, true, 1);
         double damage = game.pc.weapon.strike(game.pc, game.enemy);
-        assertEquals((int) damage, game.enemy.maxHP-game.enemy.HP.value);
+        Assert.assertEquals((int) damage, game.enemy.maxHP-game.enemy.HP.value);
     }
 
     @Test
@@ -25,7 +27,7 @@ public class CombatTest {
         Tile tile = game.map[5][5];
 
         game.pc.occupy(tile);
-        assertEquals(game.pc.location, tile);
+        Assert.assertEquals(game.pc.location, tile);
     }
 
 }

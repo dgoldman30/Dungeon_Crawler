@@ -5,7 +5,7 @@ public class Skill {
     public String name;
     String description;
     boolean toggled = false;
-    public int aptitude = 0;
+    public int aptitude = 1;
 
     public Skill(String name, String description) {
         this.name = name;

@@ -4,6 +4,7 @@ import java.util.Hashtable;
 import java.util.Map;
 
 public class Game {
+    public int depth;
     int gameState; // default state
 
     public enum GameStates {
@@ -19,6 +20,7 @@ public class Game {
     public Game(int size) {
         createSkills();
         createMap(size);
+        depth = 1;
     }
 
     public void setCharacters(Player pc, NPC enemy) {
@@ -73,9 +75,7 @@ public class Game {
         int y = this.pc.location.y;
         int ex = this.enemy.location.x;
         int ey = this.enemy.location.y;
-        if (Math.abs(x - ex) <= 1 && Math.abs(y - ey) <= 1) {
-            return true;
-        } else return false;
+        return Math.abs(x - ex) <= 1 && Math.abs(y - ey) <= 1;
     }
 
 

@@ -23,7 +23,6 @@ public class CharCreationFragment extends Fragment implements ICharCreationView 
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container, @Nullable Bundle savedInstanceState) {
         this.binding = FragmentCharCreationBinding.inflate(inflater);
         return this.binding.getRoot();
-        // return inflater.inflate(R.layout.fragment_char_creation, container, false);
     }
 
     public void onAttIncrease() {
@@ -93,13 +92,12 @@ public class CharCreationFragment extends Fragment implements ICharCreationView 
             public void onClick(View view) {
                 String race = (String) binding.raceSpinner.getSelectedItem();
                 String caste = (String) binding.casteSpinner.getSelectedItem();
-                listener.onConfirm(race, caste, attPoints);
+                listener.onConfirmCharacter(race, caste, attPoints);
                 Log.d("Dungeon Crawler", "enter");
             }
         });
     }
 
-    @Override
     public View getRootView() { return this.binding.getRoot(); }
 
 }

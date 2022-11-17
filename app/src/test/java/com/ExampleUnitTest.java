@@ -1,4 +1,4 @@
-package com.example.dungeoncrawler;
+package com;
 
 import org.junit.Test;
 

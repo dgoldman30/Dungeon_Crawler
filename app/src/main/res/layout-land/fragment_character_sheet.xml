@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:id="@+id/attribute Layout"
+        android:id="@+id/attributeLayout"
         android:layout_width="397dp"
         android:layout_height="345dp"
         android:layout_marginStart="8dp"
