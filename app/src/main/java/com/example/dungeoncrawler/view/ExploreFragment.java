@@ -46,6 +46,8 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        game.gameState = Game.GameStates.EXPLORE;
+
         populate();
         setMove();
         menuButtons();
@@ -59,10 +61,7 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         });
     }
 
-    private void populate() {
-        this.combatLayout = new LinearLayout(this.getContext());
-        combatLayout.setOrientation(LinearLayout.VERTICAL);
-
+    public void populate() {
         String name = game.pc.race.name() + " " + game.pc.caste.name();
         String level = "Level " + game.pc.level + " ";
         this.binding.combatButtons.setVisibility(View.GONE);
@@ -73,6 +72,9 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
 
         String strLevel = "Level " + game.pc.level + ": ";
         binding.levelField.setText(strLevel);
+
+        String location = game.gameState + " depth" + game.depth;
+        binding.locationField.setText(location);
 
         listener.setBinding(this.binding);
     }
@@ -98,68 +100,62 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
 
     private void setMove() {
         TextView log = new TextView(this.getRootView().getContext());
+        final String[] entry = {""};
 
         this.binding.upButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.onMove(game, "w");
+                listener.onMove("w");
                 log.setText("You moved up" + regen());
                 clearLog();
                 addToLog(log);
 
-                if (game.checkAdjacent()) {
-                    onCombat();
-                }
+                if (game.checkAdjacent()) { onCombat(); }
             }
         });
 
         this.binding.leftButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.onMove(game, "a");
+                listener.onMove("a");
                 log.setText("You moved left" + regen());
                 clearLog();
                 addToLog(log);
 
-                if (game.checkAdjacent()) {
-                    onCombat();
-                }
+                if (game.checkAdjacent()) { onCombat(); }
             }
         });
         this.binding.rightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.onMove(game, "d");
+                listener.onMove("d");
                 log.setText("You moved right" + regen());
                 clearLog();
                 addToLog(log);
 
-                if (game.checkAdjacent()) {
-                    onCombat();
-                }
+                if (game.checkAdjacent()) { onCombat(); }
             }
         });
         this.binding.downButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.onMove(game, "s");
+                listener.onMove("s");
                 log.setText("You moved down" + regen());
                 clearLog();
                 addToLog(log);
 
-                if (game.checkAdjacent()) {
-                    onCombat();
-                }
+                if (game.checkAdjacent()) { onCombat(); }
             }
         });
     }
 
-
     private void createLog() {
+        this.combatLayout = new LinearLayout(this.getContext());
+        combatLayout.setOrientation(LinearLayout.VERTICAL);
         binding.combatLog.addView(combatLayout);
     }
 
-    private void addToLog(TextView view) {
+    public void addToLog(TextView view) {
         combatLayout.addView(view);
     }
 
@@ -203,7 +199,6 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         });
 
     }
-
 
     private View getRootView() { return this.binding.getRoot(); }
 }

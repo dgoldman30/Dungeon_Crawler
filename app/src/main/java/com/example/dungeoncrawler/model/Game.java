@@ -4,70 +4,33 @@ import java.util.Hashtable;
 import java.util.Map;
 
 public class Game {
+
     public int depth;
-    int gameState; // default state
+    public int mapSize = 10;
 
     public enum GameStates {
         START,
         EXPLORE,
-        COMBAT
+        CLEARED
     }
+    public GameStates gameState;
+
+    public int enemiesCleared;
 
     public Tile[][] map;
     public Player pc;
     public NPC enemy;
 
     public Game(int size) {
+        mapSize = size;
         createSkills();
-        createMap(size);
+        createMap(size, size);
         depth = 1;
     }
 
     public void setCharacters(Player pc, NPC enemy) {
         this.pc = pc;
         this.enemy = enemy;
-    }
-
-    public static void main(String[] args) {
-        Game game = new Game(10);
-
-        // create and place the pc
-        //game.pc = ui.characterCreation();
-        game.pc.occupy(game.map[0][0]);
-
-        // create an enemy and place them on a random square
-        game.enemy = new NPC(Race.values()[(int) Math.random()*7], Caste.GLADIATOR, true, 1);
-        game.enemy.occupy(game.map[(int) (Math.random() * game.map.length)][(int) (Math.random() * game.map.length)]);
-
-        game.enemy.setTarget(game.pc);
-
-        game.gameState++; // set game state to 1 - moving state
-
-        /*while (true) {
-            switch (game.gameState) {
-                case 1:
-                    ui.displayMap(game.map);
-                    if (game.checkAdjacent()) { // if the enemy is in any adjacent tiles
-                        game.gameState++; // set game state to 2 - combat state
-                        break;
-                    } else { ui.moving(game); }
-                    break;
-                case 2:
-                    ui.displayMap(game.map);
-                    ui.combat(game.pc, game.enemy);
-                    break;
-                case 3:
-                    game.enemy = new NPC(Race.values()[(int) Math.random()*7], Caste.GLADIATOR, true);
-                    game.enemy.occupy(game.map[(int) (Math.random() * game.map.length)][(int) (Math.random() * game.map.length)]);
-                    game.enemy.setTarget(game.pc);
-                    game.gameState = 1;
-                    ui.displayMap(game.map);
-                    break;
-                case 10:
-                    System.exit(0);
-            }
-        }*/
-
     }
 
     public boolean checkAdjacent() {
@@ -79,8 +42,8 @@ public class Game {
     }
 
 
-    public void createMap(int size) {
-        this.map = new Tile[size][size];
+    public void createMap(int sizeX, int sizeY) {
+        this.map = new Tile[sizeX][sizeY];
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[0].length; j++) {
                 map[i][j] = new Tile(i, j);

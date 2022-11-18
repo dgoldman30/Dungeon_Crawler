@@ -29,11 +29,13 @@ import com.example.dungeoncrawler.view.MainView;
 
 public class ControllerActivity extends AppCompatActivity implements ICharCreationView.Listener, IExploreFragment.Listener, ICharacterSheetFragment.Listener {
 
-    Game.GameStates gameState = Game.GameStates.START;
     IMainView mainView;
     Game game;
 
     FragmentExploreBinding binding;
+    ExploreFragment exploreFragment;
+
+    CharacterSheetFragment charSheetFragment;
 
 
     @Override
@@ -65,9 +67,9 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         game.enemy.occupy(game.map[(int) (Math.random() * game.map.length)][(int) (Math.random() * game.map.length)]);
         game.enemy.setTarget(game.pc);
 
-        gameState = Game.GameStates.EXPLORE;
+        game.gameState = Game.GameStates.EXPLORE;
 
-        ExploreFragment exploreFragment = new ExploreFragment(this, game);
+        exploreFragment = new ExploreFragment(this, game);
         this.mainView.displayFragment(exploreFragment, false, "explore");
     }
 
@@ -181,14 +183,15 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
     public String onEnemyDefeated(Game game) {
         String log = "\n You killed the enemy and recieved " + (game.enemy.level * 10) + "experience points.";
         game.pc.experience += game.enemy.level * 10;
+        game.enemiesCleared++;
 
         binding.moveButtons.setEnabled(true);
         binding.combatButtons.setVisibility(View.INVISIBLE);
 
         binding.enemyHP.setVisibility(LinearLayout.INVISIBLE);
         binding.enemyHPBar.setVisibility(LinearLayout.INVISIBLE);
-        replaceEnemy();
 
+        log += replaceEnemy();
         return log;
     }
 
@@ -207,19 +210,38 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
     }
 
     // private method to replace enemy on game map
-    private void replaceEnemy() {
+    private String replaceEnemy() {
+        String log = "";
         for (int i = 0; i < game.map.length; i++) {
             for (int j = 0; j < game.map.length; j++) {
                 if (game.map[i][j].occupant instanceof NPC) { game.map[i][j].occupant = null; } } }
-        spawnEnemy();
+        if (game.enemiesCleared > game.depth) {
+            log += levelCleared();
+        } else log += spawnEnemy();
         binding.mapView.setText(printMap(game));
+        return log;
     }
 
     // private method to create a new enemy in a random space on the map
-    private void spawnEnemy() {
-        game.enemy = new NPC(Race.values()[(int) Math.random()*7], Caste.values()[(int) Math.random()*6], true, game.depth);
+    private String spawnEnemy() {
+        // random race and caste
+        Race eRace = Race.values()[(int) Math.random() * 7];
+        Caste eCaste = Caste.values()[(int) Math.random() * 6];
+
+        game.enemy = new NPC(eRace, eCaste, true, game.depth);
+        // occupy a random square and set pc as target
         game.enemy.occupy(game.map[(int) (Math.random() * game.map.length)][(int) (Math.random() * game.map.length)]);
         game.enemy.setTarget(game.pc);
+
+        return game.enemy.name;
+    }
+
+    private String levelCleared() {
+        String log = "You've cleared the level. Find the stairs to advance to the next map.";
+        game.gameState = Game.GameStates.CLEARED;
+        game.map[(int) (Math.random() * game.map.length)][(int) (Math.random() * game.map.length)].toStairs();
+        binding.mapView.setText(printMap(game));
+        return log;
     }
 
 
@@ -227,7 +249,6 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
     public void setBinding(FragmentExploreBinding binding) {
         this.binding = binding;
     }
-
 
     @Override
     public void performLevelUp() {
@@ -248,16 +269,45 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
     }
 
     @Override
-    public Game onMove(Game game, String input) {
-        game.pc.move(game, input);
-        game.enemy.move(game.map);
-        binding.mapView.setText(printMap(game));
-        return game;
+    public void onMove(String input) {
+
+        switch (game.gameState) {
+            case EXPLORE:
+                game.pc.move(game, input);
+                game.enemy.move(game.map);
+                binding.mapView.setText(printMap(game));
+                break;
+            case CLEARED:
+                game.pc.move(game, input);
+                binding.mapView.setText(printMap(game));
+                if (game.pc.location.stairs) {
+                    binding.stairsButton.setVisibility(View.VISIBLE);
+                    binding.stairsButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            game.depth++;
+                            // make a new, wider map and place the pc in the same xy location
+                            game.createMap(game.mapSize, game.mapSize + game.depth);
+                            game.pc.occupy(game.map[game.pc.location.x][game.pc.location.y]);
+
+                            game.gameState = Game.GameStates.EXPLORE;
+                            binding.stairsButton.setVisibility(View.GONE);
+
+                            // push the depth progress to the log
+                            TextView log = new TextView(exploreFragment.getContext());
+                            String logText = "\nYou've taken the stairs down to depth " + game.depth;
+                            log.setText(logText);
+                            exploreFragment.addToLog(log);
+                        }
+                    });
+                }
+                break;
+        }
     }
     @Override
     public void onCharSheet() {
-        CharacterSheetFragment charSheetFrag = new CharacterSheetFragment(this, game);
-        this.mainView.displayFragment(charSheetFrag, true, "character sheet");
+        charSheetFragment = new CharacterSheetFragment(this, game);
+        this.mainView.displayFragment(charSheetFragment, true, "character sheet");
     }
 
     @Override
@@ -281,7 +331,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
 
     @Override
     public void onClose() {
-
+        mainView.displayFragment(exploreFragment, false, "explore");
     }
 
     @Override

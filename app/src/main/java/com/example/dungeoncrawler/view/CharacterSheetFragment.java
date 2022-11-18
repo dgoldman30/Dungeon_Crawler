@@ -40,6 +40,12 @@ public class CharacterSheetFragment extends Fragment implements ICharacterSheetF
         charInfo();
         attributeButtons();
         skillLayout();
+        binding.closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onClose();
+            }
+        });
 
     }
 
@@ -64,6 +70,7 @@ public class CharacterSheetFragment extends Fragment implements ICharacterSheetF
     private void skillLayout() {
         for (Skill s : game.pc.skills.values()) {
             TextView skill = new TextView(this.getRootView().getContext());
+            skill.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             String skillText = "" + s.name + ": " + s.value;
             skill.setText(skillText);
             this.binding.skillsLayout.addView(skill);

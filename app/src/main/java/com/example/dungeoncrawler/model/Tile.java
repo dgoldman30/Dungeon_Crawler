@@ -11,6 +11,8 @@ public class Tile
     public char display = 'X';
     public int x;
     public int y;
+
+    public boolean stairs = false;
     //char display = occupant.sprite; //display the occupants sprite
     ArrayList<Item> contents = new ArrayList<>();
     Button button;
@@ -24,5 +26,10 @@ public class Tile
         if (occupant == null) {
             display = 'X';
         } return this.display;
+    }
+
+    public void toStairs() {
+        display = 'O';
+        stairs = true;
     }
 }
