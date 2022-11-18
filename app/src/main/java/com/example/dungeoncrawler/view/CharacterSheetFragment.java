@@ -30,27 +30,6 @@ public class CharacterSheetFragment extends Fragment implements ICharacterSheetF
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container, @Nullable Bundle savedInstanceState) {
         this.binding = FragmentCharacterSheetBinding.inflate(inflater);
-
-        String charInfo = "Level " + game.pc.level + " " + game.pc.race.name() + " " + game.pc.caste.name();
-        this.binding.characterInfo.setText(charInfo);
-        String hpDisp = game.pc.HP.value + " / " + game.pc.maxHP;
-        this.binding.hpValue.setText(hpDisp);
-
-        this.binding.strButton.setText(game.pc.STR.value);
-        this.binding.dexButton.setText(game.pc.DEX.value);
-        this.binding.intButton.setText(game.pc.INT.value);
-        this.binding.willButton.setText(game.pc.WILL.value);
-
-        this.binding.dvButton.setText(game.pc.DV.value);
-        this.binding.avButton.setText(game.pc.AV.value);
-        this.binding.mvButton.setText(game.pc.MV.value);
-
-        for (Skill s : Character.skills.values()) {
-            TextView skill = new TextView(this.getRootView().getContext());
-            String skillText = "" + s.name + ": " + s.value;
-            skill.setText(skillText);
-            this.binding.skillsLayout.addView(skill);
-        }
         return this.getRootView();
     }
 
@@ -58,10 +37,37 @@ public class CharacterSheetFragment extends Fragment implements ICharacterSheetF
     public void onViewCreated(@NonNull View view, @NonNull Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        charInfo();
+        attributeButtons();
+        skillLayout();
+
+    }
+
+    private void charInfo() {
+        String charInfo = "Level " + game.pc.level + " " + game.pc.race.name() + " " + game.pc.caste.name();
+        this.binding.characterInfo.setText(charInfo);
+        String hpDisp = game.pc.HP.value + " / " + game.pc.maxHP;
+        this.binding.hpValue.setText(hpDisp);
     }
 
     private void attributeButtons() {
+        this.binding.strButton.setText("" + game.pc.STR.value);
+        this.binding.dexButton.setText("" + game.pc.DEX.value);
+        this.binding.intButton.setText("" + game.pc.INT.value);
+        this.binding.willButton.setText("" + game.pc.WILL.value);
 
+        this.binding.dvButton.setText("" + game.pc.DV.value);
+        this.binding.avButton.setText("" + game.pc.AV.value);
+        this.binding.mvButton.setText("" + game.pc.MV.value);
+    }
+
+    private void skillLayout() {
+        for (Skill s : game.pc.skills.values()) {
+            TextView skill = new TextView(this.getRootView().getContext());
+            String skillText = "" + s.name + ": " + s.value;
+            skill.setText(skillText);
+            this.binding.skillsLayout.addView(skill);
+        }
     }
 
     public View getRootView() { return this.binding.getRoot(); }

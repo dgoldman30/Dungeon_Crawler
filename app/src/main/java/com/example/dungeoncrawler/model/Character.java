@@ -40,11 +40,13 @@ public abstract class Character {
 
     public static Map<String, Skill> skills = new HashMap(Game.skills);
 
+    public String name;
 
     Character(){}
     Character(Race race, Caste caste) {
         this.race = race;
         this.caste = caste;
+        this.name = race.name() + " " + caste.name();
         this.level = 1;
 
         // increment aptitude for favorite caste and race skills

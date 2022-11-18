@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -84,29 +85,46 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
 
         double pcToHit = (game.pc.DEX.value + (game.pc.INT.value / 2)) * Math.random() * 10;
         double enemyToHit = (game.enemy.DEX.value + (game.enemy.INT.value / 2)) * Math.random() * 10;
-        double pcBlockBonus = (Character.skills.get("Shield").value + game.pc.DEX.value + game.pc.WILL.value) / 3;
+        double pcBlockBonus = Character.skills.get("Shield").value + game.pc.DEX.value + game.pc.WILL.value;
 
         switch (input) {
             case "f":
                 // if PC beats enemy's dodge and armor, PC strikes enemy
-                if (pcToHit >= game.enemy.DV.value && (game.pc.STR.value * Math.random()) >= game.enemy.AV.value) {
+                if (pcToHit >= game.enemy.DV.value && (game.pc.STR.value * Math.random() * 10) >= game.enemy.AV.value) {
                     log += "You hit the enemy for " + game.pc.weapon.strike(game.pc, game.enemy) + " damage.";
+
                 } else log += "You missed the enemy.";
 
                 // if enemy beats PC's dodge and armor, enemy strikes PC
-                if (enemyToHit >= game.pc.DV.value && (game.enemy.STR.value * Math.random()) >= game.pc.AV.value) {
+                if (enemyToHit >= game.pc.DV.value && (game.enemy.STR.value * Math.random() * 10 ) >= game.pc.AV.value) {
                     log += "\n" + "The enemy hit you for " + game.enemy.weapon.strike(game.enemy, game.pc) + " damage.";
                 } else log += "\n The enemy missed you.";
                 break;
             case "b":
                 // if block is greater than to hit, deflect the whole attack.
-                if (pcBlockBonus > enemyToHit) { log += "You deflected the " + game.enemy.race.name() + " " + game.enemy.caste.name() + "'s attack!";
+                if (pcBlockBonus > enemyToHit) {
+                    log += "You deflected the " + game.enemy.race.name() + " " + game.enemy.caste.name() + "'s attack!";
+                    if (pcToHit >= game.enemy.DV.value && (game.pc.STR.value * Math.random()) >= game.enemy.AV.value) {
+                        log += "\nYou counter attack for " + game.pc.weapon.strike(game.pc, game.enemy) + " damage.";
+                    }
                 } else if ((pcBlockBonus + game.pc.DV.value) <= enemyToHit && (game.enemy.STR.value * Math.random()) >= game.pc.AV.value) {
-                    log += "\n" + "The enemy hit you for " + game.enemy.weapon.strike(game.enemy, game.pc) + " damage.";
+                    log += "\nThe enemy hit you for " + game.enemy.weapon.strike(game.enemy, game.pc) + " damage.";
                 } else log += "\n The enemy missed you.";
                 break;
         }
         updateHP();
+
+        if (game.enemy.HP.value <= 0) {
+            onEnemyDefeated(game);
+            if (checkLevelUp()) { performLevelUp(); }
+            setXpProgress();
+            binding.moveButtons.setVisibility(View.VISIBLE);
+        }
+
+        if (game.pc.HP.value <= 0) {
+            log += "\n You were killed by the " + game.enemy.race.name() + " " + game.enemy.caste.name();
+            youDied();
+        }
         return log;
     }
 
@@ -127,6 +145,36 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
             }
         }
         return ret;
+    }
+
+    private boolean checkLevelUp() {
+        if (game.pc.experience >= game.pc.nextLevelXp) {
+            game.pc.readyForLevel = true;
+            return true;
+        } else return false;
+    }
+
+    private void setXpProgress() {
+        String xp = "" + game.pc.experience + " / " + game.pc.nextLevelXp;
+        String levelText = (String) binding.levelField.getText().subSequence(0, 9);
+        String ret = levelText + xp;
+        binding.levelField.setText(ret);
+    }
+
+    private void youDied() {
+        binding.exploreConstraint.setVisibility(View.GONE);
+        binding.deathConstraint.setVisibility(View.VISIBLE);
+
+        String deathText = "You have been killed by a level " + game.enemy.name + "." + "\n"
+                + "You reached level " + game.pc.level + " and explored down to depth " + game.depth + ".";
+        binding.deathText.setText(deathText);
+        
+        binding.restartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onRestart();
+            }
+        });
     }
 
     @Override
@@ -182,11 +230,21 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
 
 
     @Override
-    public String performLevelUp() {
+    public void performLevelUp() {
         String log = "";
-        game.pc.levelUp();
-        log += "You increased your level to " + game.pc.level;
-        return log;
+        log += game.pc.levelUp();
+
+        binding.exploreConstraint.setVisibility(View.INVISIBLE);
+        binding.levelUpConstraint.setVisibility(View.VISIBLE);
+        binding.levelUpText.setText(log);
+
+        binding.levelUpOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.exploreConstraint.setVisibility(View.VISIBLE);
+                binding.levelUpConstraint.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override
@@ -199,6 +257,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
     @Override
     public void onCharSheet() {
         CharacterSheetFragment charSheetFrag = new CharacterSheetFragment(this, game);
+        this.mainView.displayFragment(charSheetFrag, true, "character sheet");
     }
 
     @Override

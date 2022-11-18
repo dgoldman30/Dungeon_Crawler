@@ -20,9 +20,6 @@ public interface IExploreFragment {
         void updateHP();
         String printMap(Game game);
         void setBinding(FragmentExploreBinding binding);
-        String performLevelUp();
+        void performLevelUp();
     }
-
-    View getRootView();
-
 }

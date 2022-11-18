@@ -39,6 +39,27 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.binding = FragmentExploreBinding.inflate(inflater);
+        return this.getRootView();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        populate();
+        setMove();
+        menuButtons();
+
+        // set log to scroll to bottom
+        binding.combatLog.post(new Runnable() {
+            @Override
+            public void run() {
+                binding.combatLog.fullScroll(View.FOCUS_DOWN);
+            }
+        });
+    }
+
+    private void populate() {
         this.combatLayout = new LinearLayout(this.getContext());
         combatLayout.setOrientation(LinearLayout.VERTICAL);
 
@@ -50,29 +71,13 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         this.binding.mapView.setText(listener.printMap(game));
         createLog();
 
-        listener.setBinding(this.binding);
-
-        return this.getRootView();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        setMove();
         String strLevel = "Level " + game.pc.level + ": ";
         binding.levelField.setText(strLevel);
 
-        // set log to scroll to bottom
-        binding.combatLog.post(new Runnable() {
-            @Override
-            public void run() {
-                binding.combatLog.fullScroll(View.FOCUS_DOWN);
-            }
-        });
+        listener.setBinding(this.binding);
     }
 
     private void menuButtons() {
-        this.binding.characterButton.setVisibility(View.VISIBLE);
         this.binding.characterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -149,12 +154,6 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         });
     }
 
-    private void setXpProgress() {
-        String xp = "" + game.pc.experience + " / " + game.pc.xpToLevel();
-        String levelText = (String) binding.levelField.getText().subSequence(0, 9);
-        String ret = levelText + xp;
-        binding.levelField.setText(ret);
-    }
 
     private void createLog() {
         binding.combatLog.addView(combatLayout);
@@ -175,7 +174,7 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
 
         listener.updateHP();
 
-        this.binding.moveButtons.setEnabled(false);
+        this.binding.moveButtons.setVisibility(View.INVISIBLE);
         this.binding.combatButtons.setVisibility(View.VISIBLE);
 
         this.binding.fightButton.setOnClickListener(new View.OnClickListener() {
@@ -184,19 +183,6 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
                 TextView combatRound = new TextView(getRootView().getContext());
                 String combatText = listener.onCombat(game, "f");
 
-                if (game.enemy.HP.value <= 0) {
-                    listener.onEnemyDefeated(game);
-                    Log.d("Experience gained", "" + (game.enemy.level * 10));
-                    setXpProgress();
-                    if (checkLevelUp()) {
-                        combatText += "\n" + listener.performLevelUp();
-                    }
-                }
-
-                if (game.pc.HP.value <= 0) {
-                    combatText += "\n You were killed by the " + game.enemy.race.name() + " " + game.enemy.caste.name();
-                    youDied();
-                }
                 // push round to log
                 combatRound.setText(combatText);
                 addToLog(combatRound);
@@ -206,37 +192,18 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
             @Override
             public void onClick(View view) {
                 TextView combatRound = new TextView(getRootView().getContext());
+
+                // call to listener to run on combat and update combatText
                 String combatText = listener.onCombat(game, "b");
 
-                if (game.pc.HP.value <= 0) {
-                    combatText += "\n You were killed by the " + game.enemy.race.name() + " " + game.enemy.caste.name();
-                    youDied();
-                }
                 // push round to log
                 combatRound.setText(combatText);
                 addToLog(combatRound);
             }
         });
+
     }
 
-    private void youDied() {
-        binding.exploreConstraint.setVisibility(Button.GONE);
-        binding.restartButton.setVisibility(Button.VISIBLE);
 
-        binding.restartButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onRestart();
-            }
-        });
-    }
-
-    private boolean checkLevelUp() {
-        if (game.pc.experience >= game.pc.xpToLevel()) {
-            game.pc.readyForLevel = true;
-            return true;
-        } else return false;
-    }
-
-    public View getRootView() { return this.binding.getRoot(); }
+    private View getRootView() { return this.binding.getRoot(); }
 }

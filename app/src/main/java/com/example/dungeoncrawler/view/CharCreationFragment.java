@@ -99,5 +99,4 @@ public class CharCreationFragment extends Fragment implements ICharCreationView 
     }
 
     public View getRootView() { return this.binding.getRoot(); }
-
 }

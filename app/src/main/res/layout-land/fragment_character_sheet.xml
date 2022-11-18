@@ -104,6 +104,8 @@
                 android:id="@+id/strButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 android:layout_weight="1"
                 android:clickable="false"
                 android:text="Button" />
@@ -112,6 +114,8 @@
                 android:id="@+id/dexButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 android:layout_weight="1"
                 android:clickable="false"
                 android:text="Button" />
@@ -120,6 +124,8 @@
                 android:id="@+id/intButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 android:layout_weight="1"
                 android:clickable="false"
                 android:text="Button" />
@@ -128,6 +134,8 @@
                 android:id="@+id/willButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 android:layout_weight="1"
                 android:clickable="false"
                 android:text="Button" />
@@ -178,24 +186,30 @@
                 android:id="@+id/dvButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 android:layout_weight="1"
-                android:clickable="true"
+                android:clickable="false"
                 android:text="Button" />
 
             <Button
                 android:id="@+id/avButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 android:layout_weight="1"
-                android:clickable="true"
+                android:clickable="false"
                 android:text="Button" />
 
             <Button
                 android:id="@+id/mvButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 android:layout_weight="1"
-                android:clickable="true"
+                android:clickable="false"
                 android:text="Button" />
         </LinearLayout>
     </LinearLayout>
