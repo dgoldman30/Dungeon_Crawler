@@ -17,6 +17,8 @@ public class Game {
 
     public int enemiesCleared;
 
+    public Floor floor;
+
     public Tile[][] map;
     public Player pc;
     public NPC enemy;
@@ -24,8 +26,9 @@ public class Game {
     public Game(int size) {
         mapSize = size;
         createSkills();
-        createMap(size, size);
         depth = 1;
+        floor = new Floor(depth, size);
+        map = floor.map;
     }
 
     public void setCharacters(Player pc, NPC enemy) {
@@ -42,14 +45,7 @@ public class Game {
     }
 
 
-    public void createMap(int sizeX, int sizeY) {
-        this.map = new Tile[sizeX][sizeY];
-        for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map[0].length; j++) {
-                map[i][j] = new Tile(i, j);
-            }
-        }
-    }
+
 
     // SKILLS
 

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.dungeoncrawler.databinding.FragmentExploreBinding;
 import com.example.dungeoncrawler.model.Caste;
 import com.example.dungeoncrawler.model.Character;
+import com.example.dungeoncrawler.model.Floor;
 import com.example.dungeoncrawler.model.Game;
 import com.example.dungeoncrawler.model.NPC;
 import com.example.dungeoncrawler.model.Player;
@@ -123,6 +124,8 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
             binding.moveButtons.setVisibility(View.VISIBLE);
         }
 
+        updateHP();
+
         if (game.pc.HP.value <= 0) {
             log += "\n You were killed by the " + game.enemy.race.name() + " " + game.enemy.caste.name();
             youDied();
@@ -215,24 +218,20 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         for (int i = 0; i < game.map.length; i++) {
             for (int j = 0; j < game.map.length; j++) {
                 if (game.map[i][j].occupant instanceof NPC) { game.map[i][j].occupant = null; } } }
-        if (game.enemiesCleared > game.depth) {
+        if (game.enemiesCleared >= game.floor.enemies.length) {
             log += levelCleared();
-        } else log += spawnEnemy();
+        } else log += "A new " + spawnEnemy() + " has spawned.";
+        updateHP();
         binding.mapView.setText(printMap(game));
         return log;
     }
 
     // private method to create a new enemy in a random space on the map
     private String spawnEnemy() {
-        // random race and caste
-        Race eRace = Race.values()[(int) Math.random() * 7];
-        Caste eCaste = Caste.values()[(int) Math.random() * 6];
-
-        game.enemy = new NPC(eRace, eCaste, true, game.depth);
+        game.enemy = game.floor.enemies[game.enemiesCleared-1];
         // occupy a random square and set pc as target
         game.enemy.occupy(game.map[(int) (Math.random() * game.map.length)][(int) (Math.random() * game.map.length)]);
         game.enemy.setTarget(game.pc);
-
         return game.enemy.name;
     }
 
@@ -287,7 +286,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
                         public void onClick(View view) {
                             game.depth++;
                             // make a new, wider map and place the pc in the same xy location
-                            game.createMap(game.mapSize, game.mapSize + game.depth);
+                            game.floor = new Floor(game.depth, game.mapSize);
                             game.pc.occupy(game.map[game.pc.location.x][game.pc.location.y]);
 
                             game.gameState = Game.GameStates.EXPLORE;
