@@ -89,36 +89,35 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         double pcToHit = (game.pc.DEX.value + (game.pc.INT.value / 2)) * Math.random() * 10;
         double enemyToHit = (game.enemy.DEX.value + (game.enemy.INT.value / 2)) * Math.random() * 10;
         double pcBlockBonus = Character.skills.get("Shield").value + game.pc.DEX.value + game.pc.WILL.value;
+            switch (input) {
+                case "f":
+                    // if PC beats enemy's dodge and armor, PC strikes enemy
+                    if (pcToHit >= game.enemy.DV.value && (game.pc.STR.value * Math.random() * 10) >= game.enemy.AV.value) {
+                        log += "You hit the enemy for " + game.pc.weapon.strike(game.pc, game.enemy) + " damage.";
 
-        switch (input) {
-            case "f":
-                // if PC beats enemy's dodge and armor, PC strikes enemy
-                if (pcToHit >= game.enemy.DV.value && (game.pc.STR.value * Math.random() * 10) >= game.enemy.AV.value) {
-                    log += "You hit the enemy for " + game.pc.weapon.strike(game.pc, game.enemy) + " damage.";
+                    } else log += "You missed the enemy.";
 
-                } else log += "You missed the enemy.";
-
-                // if enemy beats PC's dodge and armor, enemy strikes PC
-                if (enemyToHit >= game.pc.DV.value && (game.enemy.STR.value * Math.random() * 10 ) >= game.pc.AV.value) {
-                    log += "\n" + "The enemy hit you for " + game.enemy.weapon.strike(game.enemy, game.pc) + " damage.";
-                } else log += "\n The enemy missed you.";
-                break;
-            case "b":
-                // if block is greater than to hit, deflect the whole attack.
-                if (pcBlockBonus > enemyToHit) {
-                    log += "You deflected the " + game.enemy.race.name() + " " + game.enemy.caste.name() + "'s attack!";
-                    if (pcToHit >= game.enemy.DV.value && (game.pc.STR.value * Math.random()) >= game.enemy.AV.value) {
-                        log += "\nYou counter attack for " + game.pc.weapon.strike(game.pc, game.enemy) + " damage.";
-                    }
-                } else if ((pcBlockBonus + game.pc.DV.value) <= enemyToHit && (game.enemy.STR.value * Math.random()) >= game.pc.AV.value) {
-                    log += "\nThe enemy hit you for " + game.enemy.weapon.strike(game.enemy, game.pc) + " damage.";
-                } else log += "\n The enemy missed you.";
-                break;
-        }
+                    // if enemy beats PC's dodge and armor, enemy strikes PC
+                    if (enemyToHit >= game.pc.DV.value && (game.enemy.STR.value * Math.random() * 10) >= game.pc.AV.value) {
+                        log += "\n" + "The enemy hit you for " + game.enemy.weapon.strike(game.enemy, game.pc) + " damage.";
+                    } else log += "\n The enemy missed you.";
+                    break;
+                case "b":
+                    // if block is greater than to hit, deflect the whole attack.
+                    if (pcBlockBonus > enemyToHit) {
+                        log += "You deflected the " + game.enemy.race.name() + " " + game.enemy.caste.name() + "'s attack!";
+                        if (pcToHit >= game.enemy.DV.value && (game.pc.STR.value * Math.random()) >= game.enemy.AV.value) {
+                            log += "\nYou counter attack for " + game.pc.weapon.strike(game.pc, game.enemy) + " damage.";
+                        }
+                    } else if ((pcBlockBonus + game.pc.DV.value) <= enemyToHit && (game.enemy.STR.value * Math.random()) >= game.pc.AV.value) {
+                        log += "\nThe enemy hit you for " + game.enemy.weapon.strike(game.enemy, game.pc) + " damage.";
+                    } else log += "\n The enemy missed you.";
+                    break;
+            }
         updateHP();
 
         if (game.enemy.HP.value <= 0) {
-            onEnemyDefeated(game);
+            log += onEnemyDefeated(game);
             if (checkLevelUp()) { performLevelUp(); }
             setXpProgress();
             binding.moveButtons.setVisibility(View.VISIBLE);
@@ -215,10 +214,13 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
     // private method to replace enemy on game map
     private String replaceEnemy() {
         String log = "";
-        for (int i = 0; i < game.map.length; i++) {
+        //not sure why replaceEnemy doesn't work
+        /*for (int i = 0; i < game.map.length; i++) {
             for (int j = 0; j < game.map.length; j++) {
-                if (game.map[i][j].occupant instanceof NPC) { game.map[i][j].occupant = null; } } }
-        if (game.enemiesCleared >= game.floor.enemies.length) {
+                if (game.map[i][j].occupant instanceof NPC) { game.map[i][j].occupant = null; } } }*/
+        //they're refering to the same tile so i should be able to do this
+        game.enemy.remove(game.enemy.location);
+        if (game.enemiesCleared >= /*game.floor.enemies.length*/ 1) {
             log += levelCleared();
         } else log += "A new " + spawnEnemy() + " has spawned.";
         updateHP();
@@ -228,8 +230,9 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
 
     // private method to create a new enemy in a random space on the map
     private String spawnEnemy() {
-        game.enemy = game.floor.enemies[game.enemiesCleared-1];
+//        game.enemy = game.floor.enemies[game.enemiesCleared-1];
         // occupy a random square and set pc as target
+        game.enemy = new NPC( Race.values()[(int) (Math.random() * Race.values().length - 1)], Caste.values()[(int) (Math.random() * Caste.values().length - 1)], true, game.enemy.level);
         game.enemy.occupy(game.map[(int) (Math.random() * game.map.length)][(int) (Math.random() * game.map.length)]);
         game.enemy.setTarget(game.pc);
         return game.enemy.name;
