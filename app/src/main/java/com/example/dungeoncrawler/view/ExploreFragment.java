@@ -45,20 +45,18 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        // set log to scroll to bottom
+        binding.combatLog.post(new Runnable() {
+            @Override
+            public void run() {
+                binding.combatLog.scrollTo(0, binding.combatLog.getBottom());
+            }
+        });
         game.gameState = Game.GameStates.EXPLORE;
 
         populate();
         setMove();
         menuButtons();
-
-        // set log to scroll to bottom
-        binding.combatLog.post(new Runnable() {
-            @Override
-            public void run() {
-                binding.combatLog.fullScroll(View.FOCUS_DOWN);
-            }
-        });
     }
 
     public void populate() {
@@ -73,7 +71,7 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         String strLevel = "Level " + game.pc.level + ": ";
         binding.levelField.setText(strLevel);
 
-        String location = game.gameState + " depth" + game.depth;
+        String location = game.gameState + " depth " + game.depth;
         binding.locationField.setText(location);
 
         listener.setBinding(this.binding);
@@ -109,8 +107,11 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
                 log.setText("You moved up" + regen());
                 clearLog();
                 addToLog(log);
-
-                if (game.checkAdjacent()) { onCombat(); }
+                if (game.gameState == Game.GameStates.EXPLORE) {
+                    if (game.checkAdjacent()) {
+                        onCombat();
+                    }
+                }
             }
         });
 
@@ -122,7 +123,11 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
                 clearLog();
                 addToLog(log);
 
-                if (game.checkAdjacent()) { onCombat(); }
+                if (game.gameState == Game.GameStates.EXPLORE) {
+                    if (game.checkAdjacent()) {
+                        onCombat();
+                    }
+                }
             }
         });
         this.binding.rightButton.setOnClickListener(new View.OnClickListener() {
@@ -133,7 +138,11 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
                 clearLog();
                 addToLog(log);
 
-                if (game.checkAdjacent()) { onCombat(); }
+                if (game.gameState == Game.GameStates.EXPLORE) {
+                    if (game.checkAdjacent()) {
+                        onCombat();
+                    }
+                }
             }
         });
         this.binding.downButton.setOnClickListener(new View.OnClickListener() {
@@ -144,7 +153,11 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
                 clearLog();
                 addToLog(log);
 
-                if (game.checkAdjacent()) { onCombat(); }
+                if (game.gameState == Game.GameStates.EXPLORE) {
+                    if (game.checkAdjacent()) {
+                        onCombat();
+                    }
+                }
             }
         });
     }
@@ -172,7 +185,6 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
 
         this.binding.moveButtons.setVisibility(View.INVISIBLE);
         this.binding.combatButtons.setVisibility(View.VISIBLE);
-
         this.binding.fightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
