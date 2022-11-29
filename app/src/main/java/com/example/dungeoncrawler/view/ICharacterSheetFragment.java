@@ -7,7 +7,6 @@ public interface ICharacterSheetFragment {
     interface Listener {
         void onLevelUp();
         void onClose();
-        void onEquip();
     }
 
     View getRootView();

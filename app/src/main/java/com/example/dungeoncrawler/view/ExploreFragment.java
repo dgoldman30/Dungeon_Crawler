@@ -88,11 +88,13 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
 
 
     public String regen() {
+        String log = "";
         int regen = (int) (game.pc.WILL.value / 2) + 1;
-        game.pc.HP.value += regen;
+        if (game.pc.HP.value < game.pc.maxHP) {
+            game.pc.HP.value += regen;
+            log += " and regenerate " + regen + " HP.";
+        }
         listener.updateHP();
-
-        String log = " and regenerate " + regen + " HP.";
         return log;
     }
 

@@ -103,7 +103,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="100dp"
             android:text="I"
-            android:visibility="invisible"
+            android:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

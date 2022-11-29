@@ -23,9 +23,9 @@ public class Tile
     }
 
     public char display() {
-        if (occupant == null) {
-            display = 'X';
-        } return this.display;
+        if (stairs) { display = 'O'; }
+        else if (occupant == null) { display = 'X'; }
+        return this.display;
     }
 
     public void toStairs() {

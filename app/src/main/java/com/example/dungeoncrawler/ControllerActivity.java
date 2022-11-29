@@ -25,10 +25,13 @@ import com.example.dungeoncrawler.view.ExploreFragment;
 import com.example.dungeoncrawler.view.ICharCreationView;
 import com.example.dungeoncrawler.view.ICharacterSheetFragment;
 import com.example.dungeoncrawler.view.IExploreFragment;
+import com.example.dungeoncrawler.view.IInventoryFragment;
 import com.example.dungeoncrawler.view.IMainView;
 import com.example.dungeoncrawler.view.MainView;
 
-public class ControllerActivity extends AppCompatActivity implements ICharCreationView.Listener, IExploreFragment.Listener, ICharacterSheetFragment.Listener {
+public class ControllerActivity extends AppCompatActivity implements ICharCreationView.Listener, IExploreFragment.Listener, ICharacterSheetFragment.Listener,
+        IInventoryFragment.Listener
+{
 
     IMainView mainView;
     Game game;
@@ -101,6 +104,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
                     if (enemyToHit >= game.pc.DV.value && (game.enemy.STR.value * Math.random() * 10) >= game.pc.AV.value) {
                         log += "\n" + "The enemy hit you for " + game.enemy.weapon.strike(game.enemy, game.pc) + " damage.";
                     } else log += "\n The enemy missed you.";
+                    updateHP();
                     break;
                 case "b":
                     // if block is greater than to hit, deflect the whole attack.
@@ -110,11 +114,11 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
                             log += "\nYou counter attack for " + game.pc.weapon.strike(game.pc, game.enemy) + " damage.";
                         }
                     } else if ((pcBlockBonus + game.pc.DV.value) <= enemyToHit && (game.enemy.STR.value * Math.random()) >= game.pc.AV.value) {
-                        log += "\nThe enemy hit you for " + game.enemy.weapon.strike(game.enemy, game.pc) + " damage.";
-                    } else log += "\n The enemy missed you.";
+                        log += "You failed to block the attack! \nThe enemy hit you for " + game.enemy.weapon.strike(game.enemy, game.pc) + " damage.";
+                    } else log += "You failed to block the attack, but the enemy missed you.";
+                    updateHP();
                     break;
             }
-        updateHP();
 
         if (game.enemy.HP.value <= 0) {
             log += onEnemyDefeated(game);
@@ -183,13 +187,14 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
 
     @Override
     public String onEnemyDefeated(Game game) {
-        String log = "\n You killed the enemy and recieved " + (game.enemy.level * 10) + "experience points.";
+        String log = "\n You killed the enemy and recieved " + (game.enemy.level * 10) + " experience points.";
         game.pc.experience += game.enemy.level * 10;
         game.enemiesCleared++;
 
+        game.enemy.remove(game.enemy.location);
+
         binding.moveButtons.setEnabled(true);
         binding.combatButtons.setVisibility(View.INVISIBLE);
-
         binding.enemyHP.setVisibility(LinearLayout.INVISIBLE);
         binding.enemyHPBar.setVisibility(LinearLayout.INVISIBLE);
 
@@ -204,25 +209,21 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         binding.pcHPBar.setMax(game.pc.maxHP);
         binding.pcHPBar.setProgress(game.pc.HP.value);
 
-        binding.enemyHP.setVisibility(LinearLayout.VISIBLE);
-        binding.enemyHPBar.setVisibility(LinearLayout.VISIBLE);
-        binding.enemyHP.setText("" + game.enemy.HP.value);
-        binding.enemyHPBar.setMax(game.enemy.maxHP);
-        binding.enemyHPBar.setProgress(game.enemy.HP.value);
+        if (game.enemy != null) {
+            binding.enemyHP.setVisibility(LinearLayout.VISIBLE);
+            binding.enemyHPBar.setVisibility(LinearLayout.VISIBLE);
+            binding.enemyHP.setText("" + game.enemy.HP.value);
+            binding.enemyHPBar.setMax(game.enemy.maxHP);
+            binding.enemyHPBar.setProgress(game.enemy.HP.value);
+        }
     }
 
     // private method to replace enemy on game map
     private String replaceEnemy() {
         String log = "";
-        //not sure why replaceEnemy doesn't work
-        /*for (int i = 0; i < game.map.length; i++) {
-            for (int j = 0; j < game.map.length; j++) {
-                if (game.map[i][j].occupant instanceof NPC) { game.map[i][j].occupant = null; } } }*/
-        //they're refering to the same tile so i should be able to do this
-        game.enemy.remove(game.enemy.location);
-        if (game.enemiesCleared >= /*game.floor.enemies.length*/ 1) {
+        if (game.enemiesCleared >= game.depth) {
             log += levelCleared();
-        } else log += "A new " + spawnEnemy() + " has spawned.";
+        } else log += "\nA new " + spawnEnemy() + " has spawned.";
         updateHP();
         binding.mapView.setText(printMap(game));
         return log;
@@ -232,16 +233,18 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
     private String spawnEnemy() {
 //        game.enemy = game.floor.enemies[game.enemiesCleared-1];
         // occupy a random square and set pc as target
-        game.enemy = new NPC( Race.values()[(int) (Math.random() * Race.values().length - 1)], Caste.values()[(int) (Math.random() * Caste.values().length - 1)], true, game.enemy.level);
+        game.enemy = new NPC( Race.values()[(int) (Math.random() * Race.values().length - 1)], Caste.values()[(int) (Math.random() * Caste.values().length - 1)], true, (int) game.depth/2);
         game.enemy.occupy(game.map[(int) (Math.random() * game.map.length)][(int) (Math.random() * game.map.length)]);
         game.enemy.setTarget(game.pc);
-        return game.enemy.name;
+        return "level " + game.enemy.level + " " + game.enemy.name;
     }
 
     private String levelCleared() {
-        String log = "You've cleared the level. Find the stairs to advance to the next map.";
+        String log = "\nYou've cleared the level. Find the stairs to advance to the next map.";
         game.gameState = Game.GameStates.CLEARED;
-        game.map[(int) (Math.random() * game.map.length)][(int) (Math.random() * game.map.length)].toStairs();
+        game.enemiesCleared = 0;
+        //game.map[(int) (Math.random() * game.map.length)][(int) (Math.random() * game.map.length)].toStairs();
+        game.map[0][0].toStairs();
         binding.mapView.setText(printMap(game));
         return log;
     }
@@ -288,9 +291,14 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
                         @Override
                         public void onClick(View view) {
                             game.depth++;
+                            String depthStr = "Depth: " + game.depth;
+                            binding.locationField.setText(depthStr);
                             // make a new, wider map and place the pc in the same xy location
-                            game.floor = new Floor(game.depth, game.mapSize);
+                            game.createMap(game.mapSize, game.mapSize + game.depth);
                             game.pc.occupy(game.map[game.pc.location.x][game.pc.location.y]);
+                            spawnEnemy();
+
+                            binding.mapView.setText(printMap(game));
 
                             game.gameState = Game.GameStates.EXPLORE;
                             binding.stairsButton.setVisibility(View.GONE);
@@ -338,7 +346,22 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
     }
 
     @Override
-    public void onEquip() {
+    public void onInventoryItem() {
+        
+    }
+
+    @Override
+    public void onWeapon() {
+
+    }
+
+    @Override
+    public void onArmor() {
+
+    }
+
+    @Override
+    public void onPotion() {
 
     }
 }

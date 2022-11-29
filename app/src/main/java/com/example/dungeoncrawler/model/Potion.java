@@ -1,6 +1,7 @@
 package com.example.dungeoncrawler.model;
 
-class Potion extends Item {
+public class Potion extends Item {
+    public String name;
     int factor;
     int target;
 

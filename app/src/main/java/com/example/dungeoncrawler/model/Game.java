@@ -27,13 +27,21 @@ public class Game {
         mapSize = size;
         createSkills();
         depth = 1;
-        floor = new Floor(depth, size);
-        map = floor.map;
+        createMap(size, size);
     }
 
     public void setCharacters(Player pc, NPC enemy) {
         this.pc = pc;
         this.enemy = enemy;
+    }
+
+    public void createMap(int sizeX, int sizeY) {
+        this.map = new Tile[sizeX][sizeY];
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[0].length; j++) {
+                map[i][j] = new Tile(i, j);
+            }
+        }
     }
 
     public boolean checkAdjacent() {

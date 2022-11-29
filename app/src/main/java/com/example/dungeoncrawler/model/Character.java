@@ -12,7 +12,6 @@ public abstract class Character {
     public Caste caste;
     char myChar;
     public Tile location;
-    Spell attunedSpell;
 
     public int maxHP;
 
@@ -21,13 +20,11 @@ public abstract class Character {
 
     //equipment
     public Weapon weapon;
-    Item head;
-    Item hands;
-    Item body;
-    Item neck;
-    Item feet;
+    public Armor body;
+    public Potion pot;
+    Spell spell;
 
-    List<Item> inventory = new ArrayList<>();
+    public List<Item> inventory = new ArrayList<>();
     public Attribute STR = new Attribute("strength");
     public Attribute DEX = new Attribute("dexterity");
     public Attribute INT = new Attribute("intelligence");
@@ -71,12 +68,14 @@ public abstract class Character {
         this.attributes[6].value += (int) ((attributes[3].value / 3) + skills.get("Armor").value);
         this.attributes[7].value += (attributes[3].value + (attributes[2].value * 2) + skills.get("Spellcasting").value) / 3;
 
+        // equip starting weapon and armor
         for (int i = 0; i < this.caste.startingItems.size(); i++) {
             if (this.caste.startingItems.get(i).getClass() == Weapon.class) {
                 this.equipWeapon((Weapon) this.caste.startingItems.get(i));
             }
-            if (this.caste.startingItems.get(i).getClass() == Armor.class) this.body = this.caste.startingItems.get(i);
-            else this.inventory.add(this.caste.startingItems.get(i));
+            if (this.caste.startingItems.get(i).getClass() == Armor.class) {
+                this.equipArmor((Armor) this.caste.startingItems.get(i));
+            } else this.inventory.add(this.caste.startingItems.get(i));
         }
     }
 
@@ -87,7 +86,6 @@ public abstract class Character {
         tile.occupant = this;
         tile.available = false;
         this.location = tile;
-        this.location.display();
 
         this.x = tile.x;
         this.y = tile.y;
@@ -113,6 +111,13 @@ public abstract class Character {
             inventory.add(this.weapon);
             this.weapon = weapon;
         } else this.weapon = weapon;
+    }
+
+    public void equipArmor(Armor armor) {
+        if (this.body != null) {
+            inventory.add(this.body);
+            this.body = armor;
+        } else this.body = armor;
     }
 
     public void drinkPotion(Potion pot) {
