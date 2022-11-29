@@ -303,6 +303,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
                 break;
         }
     }
+
     @Override
     public void onCharSheet() {
         charSheetFragment = new CharacterSheetFragment(this, game);
