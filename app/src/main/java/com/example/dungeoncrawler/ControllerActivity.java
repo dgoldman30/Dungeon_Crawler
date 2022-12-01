@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.dungeoncrawler.databinding.FragmentExploreBinding;
+import com.example.dungeoncrawler.databinding.FragmentInventoryBinding;
 import com.example.dungeoncrawler.model.Caste;
 import com.example.dungeoncrawler.model.Character;
 import com.example.dungeoncrawler.model.Floor;
@@ -27,6 +28,7 @@ import com.example.dungeoncrawler.view.ICharacterSheetFragment;
 import com.example.dungeoncrawler.view.IExploreFragment;
 import com.example.dungeoncrawler.view.IInventoryFragment;
 import com.example.dungeoncrawler.view.IMainView;
+import com.example.dungeoncrawler.view.InventoryFragment;
 import com.example.dungeoncrawler.view.MainView;
 
 public class ControllerActivity extends AppCompatActivity implements ICharCreationView.Listener, IExploreFragment.Listener, ICharacterSheetFragment.Listener,
@@ -38,6 +40,9 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
 
     FragmentExploreBinding binding;
     ExploreFragment exploreFragment;
+
+    InventoryFragment inventoryFragment;
+
 
     CharacterSheetFragment charSheetFragment;
 
@@ -80,7 +85,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
     // Explore Fragment
     @Override
     public void onInventory() {
-
+        inventory
     }
 
     public String onCombat(Game game, String input) {
@@ -347,7 +352,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
 
     @Override
     public void onInventoryItem() {
-        
+
     }
 
     @Override

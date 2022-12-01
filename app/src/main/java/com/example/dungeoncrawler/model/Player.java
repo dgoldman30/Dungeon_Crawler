@@ -70,7 +70,7 @@ public class Player extends Character {
     }
 
     public void setAttunedSpell(Spell spell) {
-        this.attunedSpell = spell;
+        this.spell = spell;
     }
 
     public void equip(Weapon weapon) {
