@@ -1,5 +1,7 @@
 package com.example.dungeoncrawler.model;
 
+import android.graphics.drawable.Drawable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +15,8 @@ public abstract class Character {
     char myChar;
     public Tile location;
 
+    public int sprite;
+
     public int maxHP;
 
     public int x;
@@ -21,7 +25,7 @@ public abstract class Character {
     //equipment
     public Weapon weapon;
     public Armor body;
-    public Potion pot;
+    public Potion potion;
     Spell spell;
 
     public List<Item> inventory = new ArrayList<>();

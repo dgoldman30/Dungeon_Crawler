@@ -7,7 +7,10 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.dungeoncrawler.databinding.FragmentExploreBinding;
@@ -16,6 +19,7 @@ import com.example.dungeoncrawler.model.Caste;
 import com.example.dungeoncrawler.model.Character;
 import com.example.dungeoncrawler.model.Floor;
 import com.example.dungeoncrawler.model.Game;
+import com.example.dungeoncrawler.model.Item;
 import com.example.dungeoncrawler.model.NPC;
 import com.example.dungeoncrawler.model.Player;
 import com.example.dungeoncrawler.model.Race;
@@ -42,7 +46,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
     ExploreFragment exploreFragment;
 
     InventoryFragment inventoryFragment;
-
+    FragmentInventoryBinding inventoryBinding;
 
     CharacterSheetFragment charSheetFragment;
 
@@ -82,10 +86,12 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         this.mainView.displayFragment(exploreFragment, false, "explore");
     }
 
-    // Explore Fragment
+    // Display inventory on inventory click
     @Override
     public void onInventory() {
-        inventory
+        inventoryFragment = new InventoryFragment(this, game);
+        inventoryBinding = inventoryFragment.binding;
+        this.mainView.displayFragment(inventoryFragment, true, "inventory");
     }
 
     public String onCombat(Game game, String input) {
@@ -141,7 +147,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         return log;
     }
 
-    @Override
+    /*@Override
     public String printMap(Game game) {
         String ret = "";
         Tile[][] map = game.map;
@@ -158,7 +164,31 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
             }
         }
         return ret;
+    }*/
+
+    @Override
+    public void printMap(Game game) {
+        Tile[][] map = game.map;
+        this.game = game;
+
+        for(int i = 0; i < map.length; i++) {
+            TableRow row = (TableRow) binding.mapLayout.getChildAt(i);
+            for(int j = 0; j < map.length; j++) {
+
+            }
+        }
     }
+
+    public int printTile(Tile tile) {
+        int i = tile.x;
+        int j = tile.y;
+        if (game.map[i][j].occupant != null) {
+            return game.map[i][j].occupant.sprite;
+        } else if (game.map[i][j].stairs) {
+            return game.map[i][j].ladder;
+        } return game.map[i][j].floor;
+    }
+
 
     private boolean checkLevelUp() {
         if (game.pc.experience >= game.pc.nextLevelXp) {
@@ -230,7 +260,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
             log += levelCleared();
         } else log += "\nA new " + spawnEnemy() + " has spawned.";
         updateHP();
-        binding.mapView.setText(printMap(game));
+        printMap(game);
         return log;
     }
 
@@ -250,7 +280,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         game.enemiesCleared = 0;
         //game.map[(int) (Math.random() * game.map.length)][(int) (Math.random() * game.map.length)].toStairs();
         game.map[0][0].toStairs();
-        binding.mapView.setText(printMap(game));
+        printMap(game);
         return log;
     }
 
@@ -285,11 +315,11 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
             case EXPLORE:
                 game.pc.move(game, input);
                 game.enemy.move(game.map);
-                binding.mapView.setText(printMap(game));
+                printMap(game);
                 break;
             case CLEARED:
                 game.pc.move(game, input);
-                binding.mapView.setText(printMap(game));
+                printMap(game);
                 if (game.pc.location.stairs) {
                     binding.stairsButton.setVisibility(View.VISIBLE);
                     binding.stairsButton.setOnClickListener(new View.OnClickListener() {
@@ -303,7 +333,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
                             game.pc.occupy(game.map[game.pc.location.x][game.pc.location.y]);
                             spawnEnemy();
 
-                            binding.mapView.setText(printMap(game));
+                            printMap(game);
 
                             game.gameState = Game.GameStates.EXPLORE;
                             binding.stairsButton.setVisibility(View.GONE);
@@ -357,16 +387,36 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
 
     @Override
     public void onWeapon() {
-
+        displayItemType("Weapon");
     }
 
     @Override
     public void onArmor() {
-
+        displayItemType("Armor");
     }
 
     @Override
     public void onPotion() {
+        displayItemType("Potion");
+    }
 
+    public void displayItemType(String input) {
+        Button newItem = new Button(this.binding.getRoot().getContext());
+        inventoryBinding.inventoryView.setVisibility(View.GONE);
+        inventoryBinding.selectItemLayout.setVisibility(View.VISIBLE);
+        for (Item item : game.pc.inventory) {
+            if (item.getClass().getName().equals(input)) {
+                newItem.setText(item.name);
+                newItem.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        game.pc.equip(item);
+                        inventoryBinding.inventoryView.setVisibility(View.VISIBLE);
+                        inventoryBinding.selectItemLayout.setVisibility(View.GONE);
+                    }
+                });
+                inventoryBinding.selectItemLayout.addView(newItem);
+            }
+        }
     }
 }

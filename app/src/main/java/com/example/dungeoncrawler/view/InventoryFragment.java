@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,7 +20,7 @@ import java.util.List;
 
 public class InventoryFragment extends Fragment implements IInventoryFragment {
 
-    FragmentInventoryBinding binding;
+    public FragmentInventoryBinding binding;
     Listener listener;
     Game game;
 
@@ -40,9 +41,7 @@ public class InventoryFragment extends Fragment implements IInventoryFragment {
 
         List<Item> inventory = game.pc.inventory;
         setEquipmentButtons();
-
-
-
+        displayInventory(inventory);
 
     }
 
@@ -67,8 +66,8 @@ public class InventoryFragment extends Fragment implements IInventoryFragment {
             }
         });
 
-        if (game.pc.pot != null) {
-            binding.potionButton.setText(game.pc.pot.name);
+        if (game.pc.potion != null) {
+            binding.potionButton.setText(game.pc.potion.name);
         } else binding.potionButton.setText("No potion");
         binding.potionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,4 +92,5 @@ public class InventoryFragment extends Fragment implements IInventoryFragment {
             this.binding.inventoryLayout.addView(item);
         }
     }
+
 }

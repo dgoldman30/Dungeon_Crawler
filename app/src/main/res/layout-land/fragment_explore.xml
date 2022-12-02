@@ -89,6 +89,7 @@
             android:text="TextView"
             android:textAlignment="center"
             android:textSize="24sp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.306"
@@ -308,6 +309,17 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/moveButtons"
             app:layout_constraintStart_toEndOf="@+id/mapView" />
+
+        <TableLayout
+            android:id="@+id/mapLayout"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/combatButtons"
+            app:layout_constraintHorizontal_bias="0.306"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.495"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

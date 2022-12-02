@@ -2,6 +2,8 @@ package com.example.dungeoncrawler.model;
 
 import android.util.Log;
 
+import com.example.dungeoncrawler.R;
+
 import java.util.ArrayList;
 
 
@@ -24,6 +26,7 @@ public class Player extends Character {
 
         super(race, caste);
         this.myChar = 'P';
+        this.sprite = R.drawable.player;
         nextLevelXp = (int) (Math.pow((this.level * scale), 1.2)) * xpBase;
 
         // add character creation attributes
@@ -73,7 +76,10 @@ public class Player extends Character {
         this.spell = spell;
     }
 
-    public void equip(Weapon weapon) {
+    public void equip(Item item) {
+        if (item instanceof Weapon) { this.weapon = (Weapon) item; }
+        if (item instanceof Armor) { this.body = (Armor) item; }
+        if (item instanceof Potion) { this.potion = (Potion) item; }
     }
 
     public ArrayList<Item> search() {

@@ -18,7 +18,7 @@ public interface IExploreFragment {
         String onCombat(Game game, String input);
         String onEnemyDefeated(Game game);
         void updateHP();
-        String printMap(Game game);
+        void printMap(Game game);
         void setBinding(FragmentExploreBinding binding);
         void performLevelUp();
     }

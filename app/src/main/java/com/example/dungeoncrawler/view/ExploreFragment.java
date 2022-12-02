@@ -6,7 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -46,12 +48,7 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // set log to scroll to bottom
-        binding.combatLog.post(new Runnable() {
-            @Override
-            public void run() {
-                binding.combatLog.scrollTo(0, binding.combatLog.getBottom());
-            }
-        });
+
         game.gameState = Game.GameStates.EXPLORE;
 
         populate();
@@ -65,7 +62,10 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         this.binding.combatButtons.setVisibility(View.GONE);
         this.binding.nameField.setText(name);
         this.binding.levelField.setText(level);
-        this.binding.mapView.setText(listener.printMap(game));
+
+        setMap();
+
+
         createLog();
 
         String strLevel = "Level " + game.pc.level + ": ";
@@ -75,7 +75,21 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         binding.locationField.setText(location);
 
         listener.setBinding(this.binding);
+        listener.printMap(game);
     }
+
+    private void setMap() {
+        for (int i = 0; i < 10; i++) {
+            TableRow row = new TableRow(this.getRootView().getContext());
+            for (int j = 0; j < 10; j++) {
+                ImageView cell = new ImageView(this.getRootView().getContext());
+                row.addView(cell);
+            }
+            binding.mapLayout.addView(row);
+        }
+    }
+
+
 
     private void menuButtons() {
         this.binding.characterButton.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +97,10 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
             public void onClick(View view) {
                 listener.onCharSheet();
             }
+        });
+        this.binding.inventoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { listener.onInventory(); }
         });
     }
 
@@ -179,6 +197,7 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
     }
 
     public void onCombat() {
+        binding.combatLog.scrollTo(0, binding.combatLog.getBottom());
         TextView enterCombat = new TextView(this.getRootView().getContext());
         enterCombat.setText("You have entered combat.");
         combatLayout.addView(enterCombat);

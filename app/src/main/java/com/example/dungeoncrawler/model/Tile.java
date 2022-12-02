@@ -2,6 +2,8 @@ package com.example.dungeoncrawler.model;
 
 import android.widget.Button;
 
+import com.example.dungeoncrawler.R;
+
 import java.util.ArrayList;
 
 public class Tile
@@ -11,6 +13,9 @@ public class Tile
     public char display = 'X';
     public int x;
     public int y;
+
+    public int floor = R.drawable.floor;
+    public int ladder = R.drawable.ladder;
 
     public boolean stairs = false;
     //char display = occupant.sprite; //display the occupants sprite

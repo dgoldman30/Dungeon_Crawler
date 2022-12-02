@@ -1,5 +1,7 @@
 package com.example.dungeoncrawler.model;
 
+import com.example.dungeoncrawler.R;
+
 public class NPC extends Character {
 
     Character target;
@@ -9,6 +11,7 @@ public class NPC extends Character {
     public NPC(Race race, Caste caste, boolean hostile, int level) {
         super(race, caste);
         this.hostile = hostile;
+        this.sprite = R.drawable.enemy;
         if(hostile) {myChar = 'E';} else myChar = 'N';
         this.level = level;
 
