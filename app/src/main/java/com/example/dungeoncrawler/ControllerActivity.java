@@ -170,12 +170,19 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
     public void printMap(Game game) {
         Tile[][] map = game.map;
         this.game = game;
-
-        for(int i = 0; i < map.length; i++) {
-            TableRow row = (TableRow) binding.mapLayout.getChildAt(i);
+        binding.mapLayout.removeAllViews();
+        int curr;
+        TableRow row;
+        ImageView img;
+        for (int i = 0; i < map.length; i++) {
+            row = new TableRow(this);
             for(int j = 0; j < map.length; j++) {
-
+                img = new ImageView(this);
+                row.addView(img);
+                curr = printTile(map[i][j]);
+                img.setImageResource(curr);
             }
+            binding.mapLayout.addView(row);
         }
     }
 
