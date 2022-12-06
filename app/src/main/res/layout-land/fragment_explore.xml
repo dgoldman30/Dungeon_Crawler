@@ -159,10 +159,12 @@
             android:id="@+id/combatLog"
             android:layout_width="275dp"
             android:layout_height="118dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:gravity="bottom"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/mapView"
+            app:layout_constraintStart_toEndOf="@+id/mapLayout"
             app:layout_constraintTop_toBottomOf="@+id/levelField"
             tools:ignore="SpeakableTextPresentCheck" />
 
@@ -171,7 +173,7 @@
             android:layout_width="481dp"
             android:layout_height="36dp"
             android:layout_marginEnd="32dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="8dp"
             android:orientation="horizontal"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -319,7 +321,7 @@
             app:layout_constraintHorizontal_bias="0.306"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.495"/>
+            app:layout_constraintVertical_bias="0.495" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

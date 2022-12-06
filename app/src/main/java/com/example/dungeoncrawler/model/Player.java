@@ -26,7 +26,7 @@ public class Player extends Character {
 
         super(race, caste);
         this.myChar = 'P';
-        this.sprite = R.drawable.player;
+        this.sprite = R.drawable.player_large;
         nextLevelXp = (int) (Math.pow((this.level * scale), 1.2)) * xpBase;
 
         // add character creation attributes

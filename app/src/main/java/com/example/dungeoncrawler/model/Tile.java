@@ -14,8 +14,8 @@ public class Tile
     public int x;
     public int y;
 
-    public int floor = R.drawable.floor;
-    public int ladder = R.drawable.ladder;
+    public int floor = R.drawable.floor_large;
+    public int ladder = R.drawable.ladder_large;
 
     public boolean stairs = false;
     //char display = occupant.sprite; //display the occupants sprite

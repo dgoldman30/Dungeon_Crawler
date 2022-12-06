@@ -215,7 +215,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         binding.exploreConstraint.setVisibility(View.GONE);
         binding.deathConstraint.setVisibility(View.VISIBLE);
 
-        String deathText = "You have been killed by a level " + game.enemy.name + "." + "\n"
+        String deathText = "You have been killed by a level " + game.enemy.level + " " + game.enemy.name + "." + "\n"
                 + "You reached level " + game.pc.level + " and explored down to depth " + game.depth + ".";
         binding.deathText.setText(deathText);
         
@@ -285,8 +285,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         String log = "\nYou've cleared the level. Find the stairs to advance to the next map.";
         game.gameState = Game.GameStates.CLEARED;
         game.enemiesCleared = 0;
-        //game.map[(int) (Math.random() * game.map.length)][(int) (Math.random() * game.map.length)].toStairs();
-        game.map[0][0].toStairs();
+        game.map[(int) (Math.random() * game.map.length)][(int) (Math.random() * game.map.length)].toStairs();
         printMap(game);
         return log;
     }
