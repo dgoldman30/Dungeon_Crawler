@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.dungeoncrawler.databinding.FragmentExploreBinding;
 import com.example.dungeoncrawler.databinding.FragmentInventoryBinding;
+import com.example.dungeoncrawler.model.Armor;
 import com.example.dungeoncrawler.model.Caste;
 import com.example.dungeoncrawler.model.Character;
 import com.example.dungeoncrawler.model.Floor;
@@ -22,8 +23,10 @@ import com.example.dungeoncrawler.model.Game;
 import com.example.dungeoncrawler.model.Item;
 import com.example.dungeoncrawler.model.NPC;
 import com.example.dungeoncrawler.model.Player;
+import com.example.dungeoncrawler.model.Potion;
 import com.example.dungeoncrawler.model.Race;
 import com.example.dungeoncrawler.model.Tile;
+import com.example.dungeoncrawler.model.Weapon;
 import com.example.dungeoncrawler.view.CharCreationFragment;
 import com.example.dungeoncrawler.view.CharacterSheetFragment;
 import com.example.dungeoncrawler.view.ExploreFragment;
@@ -386,29 +389,18 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         mainView.displayFragment(exploreFragment, false, "explore");
     }
 
-    @Override
-    public void onInventoryItem() {
 
-    }
 
     @Override
-    public void onWeapon() {
-        displayItemType("Weapon");
+    public void onEquip(Item item) {
+        game.pc.equip(item);
     }
 
-    @Override
-    public void onArmor() {
-        displayItemType("Armor");
-    }
 
-    @Override
-    public void onPotion() {
-        displayItemType("Potion");
-    }
 
-    public void displayItemType(String input) {
+/*    public void displayItemType(String input) {
         Button newItem = new Button(this.binding.getRoot().getContext());
-        inventoryBinding.inventoryView.setVisibility(View.GONE);
+        inventoryBinding.inventoryTable.setVisibility(View.GONE);
         inventoryBinding.selectItemLayout.setVisibility(View.VISIBLE);
         for (Item item : game.pc.inventory) {
             if (item.getClass().getName().equals(input)) {
@@ -424,5 +416,5 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
                 inventoryBinding.selectItemLayout.addView(newItem);
             }
         }
-    }
+    }*/
 }

@@ -7,7 +7,7 @@ public class Potion extends Item {
 
     public enum Potions {
         HEALTH(new Potion("Healing Potion", "Heals most wounds and recovers HP ", 10, 4)),
-        DEX(new Potion("Dexerity Potion", "Increases Dexterity", 1, 1)),
+        DEX(new Potion("Dexterity Potion", "Increases Dexterity", 1, 1)),
         STR(new Potion("Strength Potion", "Increases Strength", 1, 0)),
         INT(new Potion("Intelligence Potion", "Increases brainpower and knowledge", 1, 2)),
         WILL(new Potion("Willpower Potion", "Increases Willpower", 1, 3));
@@ -37,4 +37,9 @@ public class Potion extends Item {
     }
 
     public void use() {}
+
+    @Override
+    public String getName() {
+        return this.name;
+    }
 }

@@ -125,6 +125,11 @@ public class Game {
     // shield
     // religious symbol
     // holy water scroll
+
+    //Test
+    static String[] testSkills = clerSkills;
+    static Item[] testItems = {Weapon.Weapons.SABRE.wn, Potion.Potions.STR.po, Potion.Potions.WILL.po, Potion.Potions.INT.po, Potion.Potions.DEX.po, Potion.Potions.HEALTH.po, Armor.Armors.PLATE.armor, Weapon.Weapons.CLUB.wn};
+
     // RACE
     // change to enum in Race class
     public static Race[] races = new Race[7];

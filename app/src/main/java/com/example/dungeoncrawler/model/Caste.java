@@ -10,7 +10,8 @@ public enum Caste {
     WOODSMAN(Game.woodSkills, Game.woodItems, "Woodsman", ""),
     FISHERMAN(Game.fishSkills, Game.fishItems, "Fisherman", ""),
     APPRENTICE(Game.appSkills, Game.appItems, "Apprentice", ""),
-    CLERGYMAN(Game.clerSkills, Game.clerItems, "Clergyman", "");
+    CLERGYMAN(Game.clerSkills, Game.clerItems, "Clergyman", ""),
+    TEST(Game.testSkills, Game.testItems, "Test", "");
 
 
     String[] favoredSkills;

@@ -186,10 +186,12 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         this.combatLayout = new LinearLayout(this.getContext());
         combatLayout.setOrientation(LinearLayout.VERTICAL);
         binding.combatLog.addView(combatLayout);
+
     }
 
     public void addToLog(TextView view) {
         combatLayout.addView(view);
+        binding.combatLog.scrollToDescendant(view);
     }
 
     private void clearLog() {

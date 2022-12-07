@@ -7,4 +7,5 @@ public abstract class Item {
     abstract Item drop();
     boolean equipable;
 
+    public String getName() { return name; }
 }

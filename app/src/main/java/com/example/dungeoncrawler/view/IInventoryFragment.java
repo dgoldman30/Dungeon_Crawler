@@ -1,11 +1,11 @@
 package com.example.dungeoncrawler.view;
 
+import com.example.dungeoncrawler.model.*;
+
 public interface IInventoryFragment {
 
     interface Listener {
-        void onInventoryItem();
-        void onWeapon();
-        void onArmor();
-        void onPotion();
+        void onEquip(Item item);
+        void onClose();
     }
 }

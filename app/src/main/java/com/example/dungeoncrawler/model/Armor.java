@@ -32,4 +32,8 @@ public class Armor extends Item {
     Item drop() {
         return null;
     }
+
+    @Override
+    public String getName() { return this.name; }
+
 }
