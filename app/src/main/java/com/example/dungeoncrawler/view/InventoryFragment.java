@@ -24,7 +24,9 @@ import com.example.dungeoncrawler.model.*;
 import java.util.List;
 
 public class InventoryFragment extends Fragment implements IInventoryFragment {
-
+    int armorGreen = Color.rgb( 0, 200, 0);
+    int potionTeal = Color.rgb(102, 255, 255);
+    int weaponRed = Color.rgb(255, 0, 0);
     public FragmentInventoryBinding binding;
     Listener listener;
     Game game;
@@ -58,19 +60,20 @@ public class InventoryFragment extends Fragment implements IInventoryFragment {
     }
 
     private void setEquipmentButtons() {
+
         if (game.pc.weapon != null) {
             binding.weaponButton.setText(game.pc.weapon.name);
         } else binding.weaponButton.setText("No weapon");
-        binding.weaponButton.getBackground().setColorFilter(new LightingColorFilter(Color.RED, Color.RED));
+        binding.weaponButton.setBackgroundColor(weaponRed);
         if (game.pc.body != null) {
             binding.armorButton.setText(game.pc.body.name);
         } else binding.armorButton.setText("No armor");
-        binding.weaponButton.getBackground().setColorFilter(new LightingColorFilter(Color.GREEN, Color.GREEN));
+        binding.armorButton.setBackgroundColor(armorGreen);
 
         if (game.pc.potion != null) {
             binding.potionButton.setText(game.pc.potion.name);
         } else binding.potionButton.setText("No potion");
-        binding.weaponButton.getBackground().setColorFilter(new LightingColorFilter(Color.BLUE, Color.BLUE));
+        binding.potionButton.setBackgroundColor(potionTeal);
     }
 
     private void displayInventory(List<Item> inventory) {
@@ -99,14 +102,16 @@ public class InventoryFragment extends Fragment implements IInventoryFragment {
     }
 
     private void setColor(Button button, Item i) {
-        if (i instanceof Weapon) {button.getBackground().setColorFilter(new LightingColorFilter(0xFF00F0, 0x00F0FF)); }
-        if (i instanceof Armor) { button.getBackground().setColorFilter(new LightingColorFilter(0xF00FF0, 0x000000)); }
-        if (i instanceof Potion) { button.getBackground().setColorFilter(new LightingColorFilter(0x00FFFF, 0x00FF00));}
+        if (i instanceof Weapon) {button.getBackground().setColorFilter(weaponRed, PorterDuff.Mode.DARKEN); }
+        if (i instanceof Armor) { button.getBackground().setColorFilter(armorGreen, PorterDuff.Mode.DARKEN);; }
+        if (i instanceof Potion) {button.getBackground().setColorFilter(potionTeal, PorterDuff.Mode.DARKEN);}
     }
 
     private void selectItem(Item item) {
         if (item instanceof Weapon) {
             binding.weaponButton.setEnabled(true);
+            binding.potionButton.setEnabled(false);
+            binding.armorButton.setEnabled(false);
 
             binding.weaponButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,6 +123,8 @@ public class InventoryFragment extends Fragment implements IInventoryFragment {
         }); }
         else if (item instanceof Armor) {
             binding.armorButton.setEnabled(true);
+            binding.weaponButton.setEnabled(false);
+            binding.potionButton.setEnabled(false);
 
             binding.armorButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,6 +136,8 @@ public class InventoryFragment extends Fragment implements IInventoryFragment {
         }); }
         else if (item instanceof Potion) {
             binding.potionButton.setEnabled(true);
+            binding.weaponButton.setEnabled(false);
+            binding.armorButton.setEnabled(false);
 
             binding.potionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
