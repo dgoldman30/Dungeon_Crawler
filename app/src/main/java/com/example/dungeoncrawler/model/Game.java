@@ -128,7 +128,9 @@ public class Game {
 
     //Test
     static String[] testSkills = clerSkills;
-    static Item[] testItems = {Weapon.Weapons.SABRE.wn, Potion.Potions.STR.po, Potion.Potions.WILL.po, Potion.Potions.INT.po, Potion.Potions.DEX.po, Potion.Potions.HEALTH.po, Armor.Armors.PLATE.armor, Weapon.Weapons.CLUB.wn};
+    static Item[] testItems = {Weapon.Weapons.SABRE.wn, Potion.Potions.STR.po, Potion.Potions.WILL.po, Potion.Potions.INT.po,
+            Potion.Potions.DEX.po, Potion.Potions.HEALTH.po, Armor.Armors.PLATE.armor, Weapon.Weapons.CLUB.wn,
+            Armor.Armors.CHAIN.armor, Armor.Armors.LEATHER.armor};
 
     // RACE
     // change to enum in Race class

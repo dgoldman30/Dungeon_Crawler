@@ -99,9 +99,9 @@ public class InventoryFragment extends Fragment implements IInventoryFragment {
     }
 
     private void setColor(Button button, Item i) {
-        if (i instanceof Weapon) {button.getBackground().setColorFilter(new LightingColorFilter(800000, 065535)); }
-        if (i instanceof Armor) { button.getBackground().setColorFilter(new LightingColorFilter(065535, 468499)); }
-        if (i instanceof Potion) { button.getBackground().setColorFilter(new LightingColorFilter(468499, 800000));}
+        if (i instanceof Weapon) {button.getBackground().setColorFilter(new LightingColorFilter(0xFF00F0, 0x00F0FF)); }
+        if (i instanceof Armor) { button.getBackground().setColorFilter(new LightingColorFilter(0xF00FF0, 0x000000)); }
+        if (i instanceof Potion) { button.getBackground().setColorFilter(new LightingColorFilter(0x00FFFF, 0x00FF00));}
     }
 
     private void selectItem(Item item) {
