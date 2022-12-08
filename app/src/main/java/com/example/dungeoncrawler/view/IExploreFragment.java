@@ -14,7 +14,7 @@ public interface IExploreFragment {
         void onCharSheet();
         void onEquipment();
         void onRestart();
-        void onMove( String input);
+        String onMove();
         String onCombat(Game game, String input);
         String onEnemyDefeated(Game game);
         void updateHP();

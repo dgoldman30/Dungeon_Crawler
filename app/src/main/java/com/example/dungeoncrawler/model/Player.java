@@ -11,6 +11,7 @@ public class Player extends Character {
 
     public int experience;
     public int nextLevelXp;
+    public Tile target;
 
     int xpBase = 3;
     double scale = 10;
@@ -70,6 +71,42 @@ public class Player extends Character {
 
         this.executeMove(newLoc);
         Log.d("Dungeon Crawler", ret);
+    }
+
+    public void setTarget(Tile target) { this.target = target; }
+
+    public String nmove(Tile[][] map) {
+        String ret = "";
+        Tile tLoc = this.target;
+        Tile cLoc = this.location;
+
+        cLoc.occupant = null;
+
+        int xDiff = tLoc.x - cLoc.x;
+        int yDiff = tLoc.y - cLoc.y;
+
+        if (Math.abs(xDiff) > Math.abs(yDiff)) {
+            if (xDiff > 0) {
+                cLoc = map[cLoc.x+1][cLoc.y];
+                ret += "s";
+            }
+            else {
+                cLoc = map[cLoc.x-1][cLoc.y];
+            ret += "w";
+            }
+        } else if (yDiff > 0) {
+            cLoc = map[cLoc.x][cLoc.y+1];
+            ret += "d";
+        }
+        else {
+            cLoc = map[cLoc.x][cLoc.y-1];
+            ret += "a";
+        }
+
+        // occupy new tile if it's available
+        this.executeMove(cLoc);
+        //map[cLoc.x][cLoc.y] = cLoc;
+        return ret;
     }
 
     public void setAttunedSpell(Spell spell) {

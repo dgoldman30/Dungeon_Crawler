@@ -150,25 +150,6 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         return log;
     }
 
-    /*@Override
-    public String printMap(Game game) {
-        String ret = "";
-        Tile[][] map = game.map;
-        char[][] charMap = new char[map.length][map.length];
-        this.game = game;
-
-        for(int i = 0; i < map.length; i++) {
-            for(int j = 0; j < map.length; j++) {
-                charMap[i][j] = map[i][j].display();
-                ret = ret + charMap[i][j] + " ";
-                if (j == map.length - 1) {
-                    ret = ret + "\n";
-                }
-            }
-        }
-        return ret;
-    }*/
-
     @Override
     public void printMap(Game game) {
         Tile[][] map = game.map;
@@ -184,6 +165,17 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
                 row.addView(img);
                 curr = printTile(map[i][j]);
                 img.setImageResource(curr);
+                int finalI = i;
+                int finalJ = j;
+                img.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //this is where we would call our new move
+                        //should pass i + j pc.move(i, j)
+                        game.pc.setTarget(map[finalI][finalJ]);
+                       exploreFragment.setMove(onMove());
+                    }
+                });
             }
             binding.mapLayout.addView(row);
         }
@@ -318,44 +310,49 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
     }
 
     @Override
-    public void onMove(String input) {
+    public String onMove() {
+        String move = "";
 
         switch (game.gameState) {
             case EXPLORE:
-                game.pc.move(game, input);
+                move = game.pc.nmove(game.map);
                 game.enemy.move(game.map);
                 printMap(game);
                 break;
             case CLEARED:
-                game.pc.move(game, input);
+                move = game.pc.nmove(game.map);
                 printMap(game);
-                if (game.pc.location.stairs) {
-                    binding.stairsButton.setVisibility(View.VISIBLE);
-                    binding.stairsButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            game.depth++;
-                            String depthStr = "Depth: " + game.depth;
-                            binding.locationField.setText(depthStr);
-                            // make a new, wider map and place the pc in the same xy location
-                            game.createMap(game.mapSize, game.mapSize + game.depth);
-                            game.pc.occupy(game.map[game.pc.location.x][game.pc.location.y]);
-                            spawnEnemy();
-
-                            printMap(game);
-
-                            game.gameState = Game.GameStates.EXPLORE;
-                            binding.stairsButton.setVisibility(View.GONE);
-
-                            // push the depth progress to the log
-                            TextView log = new TextView(exploreFragment.getContext());
-                            String logText = "\nYou've taken the stairs down to depth " + game.depth;
-                            log.setText(logText);
-                            exploreFragment.addToLog(log);
-                        }
-                    });
-                }
+                onStairs();
                 break;
+        }
+        return move;
+    }
+    public void onStairs() {
+        if (game.pc.location.stairs) {
+            binding.stairsButton.setVisibility(View.VISIBLE);
+            binding.stairsButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    game.depth++;
+                    String depthStr = "Depth: " + game.depth;
+                    binding.locationField.setText(depthStr);
+                    // make a new, wider map and place the pc in the same xy location
+                    game.createMap(game.mapSize, game.mapSize + game.depth);
+                    game.pc.occupy(game.map[game.pc.location.x][game.pc.location.y]);
+                    spawnEnemy();
+
+                    printMap(game);
+
+                    game.gameState = Game.GameStates.EXPLORE;
+                    binding.stairsButton.setVisibility(View.GONE);
+
+                    // push the depth progress to the log
+                    TextView log = new TextView(exploreFragment.getContext());
+                    String logText = "\nYou've taken the stairs down to depth " + game.depth;
+                    log.setText(logText);
+                    exploreFragment.addToLog(log);
+                }
+            });
         }
     }
 

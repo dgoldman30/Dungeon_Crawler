@@ -47,12 +47,9 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // set log to scroll to bottom
-
         game.gameState = Game.GameStates.EXPLORE;
 
         populate();
-        setMove();
         menuButtons();
     }
 
@@ -116,70 +113,102 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         return log;
     }
 
-    private void setMove() {
+    public void setMove(String input) {
+//        TextView log = new TextView(this.getRootView().getContext());
+//
+//        this.binding.upButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                listener.onMove("w");
+//                log.setText("You moved up" + regen());
+//                clearLog();
+//                addToLog(log);
+//                if (game.gameState == Game.GameStates.EXPLORE) {
+//                    if (game.checkAdjacent()) {
+//                        onCombat();
+//                    }
+//                }
+//            }
+//        });
+//        this.binding.leftButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                listener.onMove("a");
+//                log.setText("You moved left" + regen());
+//                clearLog();
+//                addToLog(log);
+//
+//                if (game.gameState == Game.GameStates.EXPLORE) {
+//                    if (game.checkAdjacent()) {
+//                        onCombat();
+//                    }
+//                }
+//            }
+//        });
+//        this.binding.rightButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                listener.onMove("d");
+//                log.setText("You moved right" + regen());
+//                clearLog();
+//                addToLog(log);
+//
+//                if (game.gameState == Game.GameStates.EXPLORE) {
+//                    if (game.checkAdjacent()) {
+//                        onCombat();
+//                    }
+//                }
+//            }
+//        });
+//        this.binding.downButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                listener.onMove("s");
+//                log.setText("You moved down" + regen());
+//                clearLog();
+//                addToLog(log);
+//
+//                if (game.gameState == Game.GameStates.EXPLORE) {
+//                    if (game.checkAdjacent()) {
+//                        onCombat();
+//                    }
+//                }
+//            }
+//        });
         TextView log = new TextView(this.getRootView().getContext());
-        final String[] entry = {""};
-
-        this.binding.upButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onMove("w");
+        switch (input) {
+            case "w": {
                 log.setText("You moved up" + regen());
                 clearLog();
                 addToLog(log);
-                if (game.gameState == Game.GameStates.EXPLORE) {
-                    if (game.checkAdjacent()) {
-                        onCombat();
-                    }
-                }
+                break;
             }
-        });
-
-        this.binding.leftButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onMove("a");
-                log.setText("You moved left" + regen());
-                clearLog();
-                addToLog(log);
-
-                if (game.gameState == Game.GameStates.EXPLORE) {
-                    if (game.checkAdjacent()) {
-                        onCombat();
-                    }
-                }
-            }
-        });
-        this.binding.rightButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onMove("d");
-                log.setText("You moved right" + regen());
-                clearLog();
-                addToLog(log);
-
-                if (game.gameState == Game.GameStates.EXPLORE) {
-                    if (game.checkAdjacent()) {
-                        onCombat();
-                    }
-                }
-            }
-        });
-        this.binding.downButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onMove("s");
+            case "s": {
                 log.setText("You moved down" + regen());
                 clearLog();
                 addToLog(log);
-
-                if (game.gameState == Game.GameStates.EXPLORE) {
-                    if (game.checkAdjacent()) {
-                        onCombat();
-                    }
-                }
+                break;
             }
-        });
+            case "a": {
+                log.setText("You moved left" + regen());
+                clearLog();
+                addToLog(log);
+                break;
+            }
+            case "d": {
+                log.setText("You moved right" + regen());
+                clearLog();
+                addToLog(log);
+                break;
+            }
+
+        }
+        if (game.gameState == Game.GameStates.EXPLORE) {
+            if (game.checkAdjacent()) {
+                onCombat();
+            }
+        }
+
     }
 
     private void createLog() {
