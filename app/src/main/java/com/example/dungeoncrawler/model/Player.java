@@ -75,7 +75,7 @@ public class Player extends Character {
 
     public void setTarget(Tile target) { this.target = target; }
 
-    public String nmove(Tile[][] map) {
+    public String move(Tile[][] map) {
         String ret = "";
         Tile tLoc = this.target;
         Tile cLoc = this.location;
@@ -113,11 +113,7 @@ public class Player extends Character {
         this.spell = spell;
     }
 
-    public void equip(Item item) {
-        if (item instanceof Weapon) { this.weapon = (Weapon) item; }
-        if (item instanceof Armor) { this.body = (Armor) item; }
-        if (item instanceof Potion) { this.potion = (Potion) item; }
-    }
+
 
     public ArrayList<Item> search() {
         ArrayList<Item> items = new ArrayList<>(this.location.contents);

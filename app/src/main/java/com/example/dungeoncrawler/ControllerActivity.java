@@ -315,12 +315,12 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
 
         switch (game.gameState) {
             case EXPLORE:
-                move = game.pc.nmove(game.map);
+                move = game.pc.move(game.map);
                 game.enemy.move(game.map);
                 printMap(game);
                 break;
             case CLEARED:
-                move = game.pc.nmove(game.map);
+                move = game.pc.move(game.map);
                 printMap(game);
                 onStairs();
                 break;

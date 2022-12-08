@@ -1,8 +1,6 @@
 package com.example.dungeoncrawler.view;
 
-import android.content.ClipData;
 import android.graphics.Color;
-import android.graphics.LightingColorFilter;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,14 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TableRow;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.dungeoncrawler.R;
-import com.example.dungeoncrawler.databinding.FragmentCharCreationBinding;
 import com.example.dungeoncrawler.databinding.FragmentInventoryBinding;
 import com.example.dungeoncrawler.model.*;
 
@@ -49,6 +44,7 @@ public class InventoryFragment extends Fragment implements IInventoryFragment {
         List<Item> inventory = game.pc.inventory;
         setEquipmentButtons();
         displayInventory(inventory);
+        updateInventory();
 
         binding.closeInventory.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,17 +74,12 @@ public class InventoryFragment extends Fragment implements IInventoryFragment {
 
     private void displayInventory(List<Item> inventory) {
         TableRow row = new TableRow(this.binding.getRoot().getContext());
-        String itemText = "";
             for (Item i : inventory) {
-                Button item = new Button(this.binding.getRoot().getContext());
-                setColor(item, i);
-                item.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                itemText = i.getName();
-                item.setText(itemText);
+                InventoryButton item = new InventoryButton(this.binding.getRoot().getContext(), i);
                 item.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        selectItem(i);
+                        selectItem(item.getItem(), item);
                     }
                 });
                 row.addView(item);
@@ -97,9 +88,29 @@ public class InventoryFragment extends Fragment implements IInventoryFragment {
                     row = new TableRow(this.binding.getRoot().getContext());
                 }
             }
-
-
+            if (row.getChildCount() < 3) {
+                binding.inventoryTable.addView(row);
+            }
+            updateInventory();
     }
+
+    private void updateInventory() {
+        for (int i = 0; i < binding.inventoryTable.getChildCount(); i ++) {
+            TableRow row = (TableRow) binding.inventoryTable.getChildAt(i);
+            for (int j = 0; j < row.getChildCount(); j++) {
+                InventoryButton itemButton = (InventoryButton) row.getChildAt(j);
+                int index = i * 3 + j;
+                itemButton.setItem(game.pc.inventory.get(index));
+                setColor(itemButton, itemButton.getItem());
+                String itemText = itemButton.getItem().getName();
+                itemButton.setText(itemText);
+                row.removeViewAt(j);
+                row.addView(itemButton, j);
+            }
+        }
+    }
+
+
 
     private void setColor(Button button, Item i) {
         if (i instanceof Weapon) {button.getBackground().setColorFilter(weaponRed, PorterDuff.Mode.DARKEN); }
@@ -107,7 +118,7 @@ public class InventoryFragment extends Fragment implements IInventoryFragment {
         if (i instanceof Potion) {button.getBackground().setColorFilter(potionTeal, PorterDuff.Mode.DARKEN);}
     }
 
-    private void selectItem(Item item) {
+    private void selectItem(Item item, InventoryButton button) {
         if (item instanceof Weapon) {
             binding.weaponButton.setEnabled(true);
             binding.potionButton.setEnabled(false);
@@ -119,6 +130,8 @@ public class InventoryFragment extends Fragment implements IInventoryFragment {
                 listener.onEquip(item);
                 binding.weaponButton.setText(item.getName());
                 binding.weaponButton.setEnabled(false);
+                button.setItem(item);
+                updateInventory();
             }
         }); }
         else if (item instanceof Armor) {
@@ -132,6 +145,8 @@ public class InventoryFragment extends Fragment implements IInventoryFragment {
                 listener.onEquip(item);
                 binding.armorButton.setText(item.getName());
                 binding.armorButton.setEnabled(false);
+                button.setItem(item);
+                updateInventory();
             }
         }); }
         else if (item instanceof Potion) {
@@ -145,9 +160,10 @@ public class InventoryFragment extends Fragment implements IInventoryFragment {
                     listener.onEquip(item);
                     binding.potionButton.setText(item.getName());
                     binding.potionButton.setEnabled(false);
+                    button.setItem(item);
+                    updateInventory();
                 }
             });
         }
     }
-
 }

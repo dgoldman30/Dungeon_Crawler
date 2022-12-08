@@ -18,8 +18,7 @@ public class NPC extends Character {
     }
     public void setTarget(Character target) { this.target = target; }
 
-    @Override
-    public Tile[][] move(Tile[][] map) {
+    public void move(Tile[][] map) {
         Tile tLoc = this.target.location;
         Tile cLoc = this.location;
 
@@ -37,7 +36,7 @@ public class NPC extends Character {
         // occupy new tile if it's available
         this.executeMove(cLoc);
         //map[cLoc.x][cLoc.y] = cLoc;
-        return map;
+
     }
 
     public void occupy(Tile tile) {

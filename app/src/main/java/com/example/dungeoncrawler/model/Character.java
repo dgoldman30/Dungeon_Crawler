@@ -1,7 +1,5 @@
 package com.example.dungeoncrawler.model;
 
-import android.graphics.drawable.Drawable;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -65,6 +63,8 @@ public abstract class Character {
             attributes[i].value += race.attributeAdjustments[i];
         }
 
+
+
         maxHP = attributes[4].value;
 
         // dodge value, armor value, mental value
@@ -72,18 +72,15 @@ public abstract class Character {
         this.attributes[6].value += (int) ((attributes[3].value / 3) + skills.get("Armor").value);
         this.attributes[7].value += (attributes[3].value + (attributes[2].value * 2) + skills.get("Spellcasting").value) / 3;
 
-        // equip starting weapon and armor
-        for (int i = 0; i < this.caste.startingItems.size(); i++) {
-            if (this.caste.startingItems.get(i).getClass() == Weapon.class) {
-                this.equipWeapon((Weapon) this.caste.startingItems.get(i));
-            }
-            if (this.caste.startingItems.get(i).getClass() == Armor.class) {
-                this.equipArmor((Armor) this.caste.startingItems.get(i));
-            } else this.inventory.add(this.caste.startingItems.get(i));
-        }
-    }
+        // equip starting weapon armor potion
+        this.equip((Weapon) this.caste.startingItems.get(0));
+        this.equip((Armor) this.caste.startingItems.get(1));
+        this.equip((Potion) this.caste.startingItems.get(2));
 
-    public Tile[][] move(Tile[][] map) {return map;}
+        for (int i = 3; i < caste.startingItems.size(); i++) { this.inventory.add(this.caste.startingItems.get(i)); }
+
+
+    }
 
     public void occupy(Tile tile) {
         tile.display = this.myChar;
@@ -110,18 +107,25 @@ public abstract class Character {
         this.location = null;
     }
 
-    public void equipWeapon(Weapon weapon) {
-        if (this.weapon != null) {
-            inventory.add(this.weapon);
-            this.weapon = weapon;
-        } else this.weapon = weapon;
-    }
-
-    public void equipArmor(Armor armor) {
-        if (this.body != null) {
-            inventory.add(this.body);
-            this.body = armor;
-        } else this.body = armor;
+    public void equip(Item item) {
+        // placeholder
+        Item ret = Weapon.Weapons.BRASSKNUCKLES.wn;
+        if (item instanceof Weapon) {
+            ret = this.weapon;
+            this.inventory.remove(item);
+            this.weapon = (Weapon) item;
+        }
+        if (item instanceof Armor) {
+            ret = this.body;
+            this.inventory.remove(item);
+            this.body = (Armor) item;
+        }
+        if (item instanceof Potion) {
+            ret = this.potion;
+            this.inventory.remove(item);
+            this.potion = (Potion) item;
+        }
+        if (ret != null) { this.inventory.add(ret); }
     }
 
     public void drinkPotion(Potion pot) {

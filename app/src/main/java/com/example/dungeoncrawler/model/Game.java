@@ -91,36 +91,36 @@ public class Game {
     // CASTES
     // Gladiator
     public static String[] gladSkills = {"Melee", "Shield", "Dodge", "Armor"};
-    public static Item[] gladItems = {Weapon.Weapons.BRASSKNUCKLES.wn, Potion.Potions.HEALTH.po, Potion.Potions.STR.po, Armor.Armors.CHAIN.armor};
+    public static Item[] gladItems = {Weapon.Weapons.BRASSKNUCKLES.wn, Armor.Armors.CHAIN.armor, Potion.Potions.HEALTH.po, Potion.Potions.STR.po};
 
 
     // Urchin
     static String[] urSkills = {"Melee", "Ranged", "Dodge", "Invocation"};
-    static Item[] urItems = {Weapon.Weapons.DAGGER.wn, Potion.Potions.DEX.po, Armor.Armors.RAGS.armor}; // sling and rags
+    static Item[] urItems = {Weapon.Weapons.DAGGER.wn, Armor.Armors.RAGS.armor, Potion.Potions.DEX.po}; // sling and rags
 
 
     // Woodsman
     static String[] woodSkills = {"Ranged", "Dodge", "Faith", "Earth Magic"};
-    static Item[] woodItems = {Weapon.Weapons.SABRE.wn, Potion.Potions.DEX.po, Potion.Potions.HEALTH.po, Armor.Armors.LEATHER.armor};
+    static Item[] woodItems = {Weapon.Weapons.SABRE.wn,  Armor.Armors.LEATHER.armor, Potion.Potions.DEX.po, Potion.Potions.HEALTH.po};
     // add bow
     // add leather armor
 
     // Fisherman
     static String[] fishSkills = {"Melee", "Spellcasting", "Air Magic", "Water Magic"};
-    static Item[] fishItems = {Weapon.Weapons.HARPOON.wn, Potion.Potions.INT.po, Armor.Armors.CLOTHES.armor};
+    static Item[] fishItems = {Weapon.Weapons.HARPOON.wn, Armor.Armors.CLOTHES.armor, Potion.Potions.INT.po,};
     // air spell
     // water spell
     // clothes
 
     // Apprentice
     static String[] appSkills = {"Spellcasting", "Fire Magic", "Air Magic", "Invocation"};
-    static Item[] appItems = {Weapon.Weapons.CLUB.wn, Potion.Potions.INT.po, Armor.Armors.ROBES.armor};
+    static Item[] appItems = {Weapon.Weapons.CLUB.wn,  Armor.Armors.ROBES.armor, Potion.Potions.INT.po,};
     // fire spell
     // air spell
 
     // Clergyman
     static String[] clerSkills = {"Armor", "Shield", "Faith", "Water Magic"};
-    static Item[] clerItems = {Weapon.Weapons.MACE.wn, Potion.Potions.WILL.po, Armor.Armors.PLATE.armor};
+    static Item[] clerItems = {Weapon.Weapons.MACE.wn, Armor.Armors.PLATE.armor, Potion.Potions.WILL.po};
     // metal armor
     // shield
     // religious symbol
@@ -128,9 +128,9 @@ public class Game {
 
     //Test
     static String[] testSkills = clerSkills;
-    static Item[] testItems = {Weapon.Weapons.SABRE.wn, Potion.Potions.STR.po, Potion.Potions.WILL.po, Potion.Potions.INT.po,
+    static Item[] testItems = {Weapon.Weapons.SABRE.wn, Armor.Armors.LEATHER.armor, Potion.Potions.STR.po, Potion.Potions.WILL.po, Potion.Potions.INT.po,
             Potion.Potions.DEX.po, Potion.Potions.HEALTH.po, Armor.Armors.PLATE.armor, Weapon.Weapons.CLUB.wn,
-            Armor.Armors.CHAIN.armor, Armor.Armors.LEATHER.armor};
+            Armor.Armors.CHAIN.armor};
 
     // RACE
     // change to enum in Race class
