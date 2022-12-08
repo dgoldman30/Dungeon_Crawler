@@ -1,11 +1,9 @@
 package com.example.dungeoncrawler.view;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableRow;
@@ -14,15 +12,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.example.dungeoncrawler.ControllerActivity;
+import com.example.dungeoncrawler.R;
 import com.example.dungeoncrawler.databinding.FragmentExploreBinding;
-import com.example.dungeoncrawler.model.Attribute;
-import com.example.dungeoncrawler.model.Caste;
-import com.example.dungeoncrawler.model.Character;
 import com.example.dungeoncrawler.model.Game;
-import com.example.dungeoncrawler.model.NPC;
-import com.example.dungeoncrawler.model.Race;
-import com.example.dungeoncrawler.model.Tile;
 
 public class ExploreFragment extends Fragment implements IExploreFragment {
 
@@ -206,6 +198,16 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         if (game.gameState == Game.GameStates.EXPLORE) {
             if (game.checkAdjacent()) {
                 onCombat();
+                //this will disable the map when combat occurs
+                ViewGroup layout = getView().findViewById(R.id.mapLayout);
+                int count = layout.getChildCount();
+                for (int i = 0; i < count; i++) {
+                    // Get the view at the current index
+                    TableRow view = (TableRow) layout.getChildAt(i);
+                    for (int j = 0; j < view.getChildCount(); j++) {
+                        view.getChildAt(j).setEnabled(false);
+                    }
+                }
             }
         }
 
