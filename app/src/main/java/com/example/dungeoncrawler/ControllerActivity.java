@@ -133,7 +133,10 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
                     updateHP();
                     break;
             }
-
+        if (game.pc.HP.value <= 0) {
+            log += "\n You were killed by the " + game.enemy.race.name() + " " + game.enemy.caste.name();
+            youDied();
+        }
         if (game.enemy.HP.value <= 0) {
             log += onEnemyDefeated(game);
             if (checkLevelUp()) { performLevelUp(); }
@@ -141,11 +144,6 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         }
 
         updateHP();
-
-        if (game.pc.HP.value <= 0) {
-            log += "\n You were killed by the " + game.enemy.race.name() + " " + game.enemy.caste.name();
-            youDied();
-        }
         return log;
     }
 
