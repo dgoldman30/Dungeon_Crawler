@@ -72,7 +72,6 @@ public class CharCreationFragment extends Fragment implements ICharCreationView 
             casteDesc += caste.favoredSkills[i] + "\n";
         }
 
-
         binding.raceDescription.setText(raceDesc);
         binding.casteDescription.setText(casteDesc);
     }
@@ -94,6 +93,7 @@ public class CharCreationFragment extends Fragment implements ICharCreationView 
                 updateDescriptions();
             }
         });
+
         binding.casteSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
