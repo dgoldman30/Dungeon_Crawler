@@ -3,6 +3,7 @@ package com.example.dungeoncrawler.view;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,7 +75,8 @@ public class InventoryFragment extends Fragment implements IInventoryFragment {
 
     private void displayInventory(List<Item> inventory) {
         TableRow row = new TableRow(this.binding.getRoot().getContext());
-            for (Item i : inventory) {
+           for (Item i : inventory) {
+                row.setGravity(Gravity.CENTER);
                 InventoryButton item = new InventoryButton(this.binding.getRoot().getContext(), i);
                 item.setOnClickListener(new View.OnClickListener() {
                     @Override

@@ -14,7 +14,7 @@ public class NPC extends Character {
         this.sprite = R.drawable.enemy_large;
         if(hostile) {myChar = 'E';} else myChar = 'N';
         this.level = level;
-
+        for (int i = level; i > 1; i--) { this.levelUp(); }
     }
     public void setTarget(Character target) { this.target = target; }
 

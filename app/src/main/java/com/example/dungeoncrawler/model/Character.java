@@ -2,6 +2,7 @@ package com.example.dungeoncrawler.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +27,10 @@ public abstract class Character {
     public Potion potion;
     Spell spell;
 
+    public int nextLevelXp;
+    int xpBase = 3;
+    double scale = 10;
+
     public List<Item> inventory = new ArrayList<>();
     public Attribute STR = new Attribute("strength");
     public Attribute DEX = new Attribute("dexterity");
@@ -37,7 +42,7 @@ public abstract class Character {
     public Attribute MV = new Attribute("mental-value");
     public Attribute[] attributes = {STR, DEX, INT, WILL, HP, DV, AV, MV};
 
-    public static Map<String, Skill> skills = new HashMap(Game.skills);
+    public Map<String, Skill> skills = new Hashtable<>();
 
     public String name;
 
@@ -49,28 +54,30 @@ public abstract class Character {
         this.level = 1;
 
         // increment aptitude for favorite caste and race skills
-        for (int i = 0; i < this.race.favoredSkills.length; i++) {
-            skills.get(this.race.favoredSkills[i]).aptitude++;
-            skills.get(this.race.favoredSkills[i]).value++;
+        for (Map.Entry<String, Skill> entry : Game.skills.entrySet()) {
+            this.skills.put(entry.getKey(), entry.getValue());
+            for (String s : this.race.favoredSkills) {
+                if (entry.getKey().equals(s)) {
+                    this.skills.get(s).aptitude++;
+                    this.skills.get(s).value++;
+                }
+            }
+            for (String s : this.caste.favoredSkills) {
+                if (entry.getKey().equals(s)) {
+                    this.skills.get(s).aptitude++;
+                    this.skills.get(s).value++;
+                }
+            }
         }
-        for (int i = 0; i < this.caste.favoredSkills.length; i++) {
-            skills.get(this.caste.favoredSkills[i]).aptitude++;
-            skills.get(this.caste.favoredSkills[i]).value++;
-        }
+
+        calcStats();
 
         // add the race attributes
         for (int i = 0; i < 5; i++) {
             attributes[i].value += race.attributeAdjustments[i];
         }
 
-
-
         maxHP = attributes[4].value;
-
-        // dodge value, armor value, mental value
-        this.attributes[5].value += attributes[1].value + skills.get("Dodge").value;
-        this.attributes[6].value += (int) ((attributes[3].value / 3) + skills.get("Armor").value);
-        this.attributes[7].value += (attributes[3].value + (attributes[2].value * 2) + skills.get("Spellcasting").value) / 3;
 
         // equip starting weapon armor potion
         this.equip((Weapon) this.caste.startingItems.get(0));
@@ -81,6 +88,39 @@ public abstract class Character {
 
 
     }
+
+    public void calcStats() {
+        // dodge value, armor value, mental value
+        this.attributes[5].value += (int) attributes[1].value + (skills.get("Dodge").value / 3) ;
+        this.attributes[6].value += (int) ((attributes[3].value / 2) + (skills.get("Armor").value / 3));
+        this.attributes[7].value += (attributes[3].value + (attributes[2].value * 2) + skills.get("Spellcasting").value) / 3;
+    }
+
+    public void xpIncrement() {
+        nextLevelXp += (int) (Math.pow((this.level * scale), 1.2)) * xpBase;
+    }
+
+    public String levelUp() {
+        level++;
+        String ret = "You've leveled up to level " + level + ".\n" +
+                "Your attributes each increase by 1, and you gain " + (level * 3) + " hitpoints.\n" +
+                "Your skills gain value according to their aptitude.\n" +
+                "View your character sheet to see your stat increases.";
+        xpIncrement();
+        for (Attribute a : attributes) {
+            a.value++;
+            if (a.name.equals("hitpoints")) {
+                a.value += level * 3;
+                maxHP += level * 3;
+            }
+        }
+        for (Skill s : skills.values()) {
+            s.value += (int) (INT.value / 2) + s.aptitude;
+        }
+        this.calcStats();
+        return ret;
+    }
+
 
     public void occupy(Tile tile) {
         tile.display = this.myChar;
@@ -131,4 +171,6 @@ public abstract class Character {
     public void drinkPotion(Potion pot) {
         pot.drink(this);
     }
+
+    public Attribute[] getAttributes() { return attributes; }
 }

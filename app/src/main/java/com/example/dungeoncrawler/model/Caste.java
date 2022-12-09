@@ -14,7 +14,7 @@ public enum Caste {
     TEST(Game.testSkills, Game.testItems, "Test", "");
 
 
-    String[] favoredSkills;
+    public String[] favoredSkills;
     public List<Item> startingItems = new ArrayList<>();
     String description;
     String name;

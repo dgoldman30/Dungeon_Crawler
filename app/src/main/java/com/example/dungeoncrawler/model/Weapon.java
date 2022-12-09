@@ -46,7 +46,8 @@ public class Weapon extends Item {
             damage = (this.damage * 10) * (this.crit * 10) + user.STR.value - target.AV.value;
         } else damage = (this.damage * 10) + user.STR.value - target.AV.value;
         target.HP.value -=  damage;
-        return damage;
+        if (damage > 0) { return damage; }
+        return 0;
     }
 
 }

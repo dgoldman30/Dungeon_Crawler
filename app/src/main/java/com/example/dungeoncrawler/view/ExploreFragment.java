@@ -39,7 +39,7 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        game.gameState = Game.GameStates.EXPLORE;
+        if (game.enemy != null) { game.gameState = Game.GameStates.EXPLORE; }
         populate();
         menuButtons();
     }
@@ -53,8 +53,6 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         this.binding.levelField.setText(level);
 
         setMap();
-
-
         createLog();
 
         String strLevel = "Level " + game.pc.level + ": ";
@@ -106,67 +104,6 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
     }
 
     public void setMove(String input) {
-//        TextView log = new TextView(this.getRootView().getContext());
-//
-//        this.binding.upButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                listener.onMove("w");
-//                log.setText("You moved up" + regen());
-//                clearLog();
-//                addToLog(log);
-//                if (game.gameState == Game.GameStates.EXPLORE) {
-//                    if (game.checkAdjacent()) {
-//                        onCombat();
-//                    }
-//                }
-//            }
-//        });
-//        this.binding.leftButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                listener.onMove("a");
-//                log.setText("You moved left" + regen());
-//                clearLog();
-//                addToLog(log);
-//
-//                if (game.gameState == Game.GameStates.EXPLORE) {
-//                    if (game.checkAdjacent()) {
-//                        onCombat();
-//                    }
-//                }
-//            }
-//        });
-//        this.binding.rightButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                listener.onMove("d");
-//                log.setText("You moved right" + regen());
-//                clearLog();
-//                addToLog(log);
-//
-//                if (game.gameState == Game.GameStates.EXPLORE) {
-//                    if (game.checkAdjacent()) {
-//                        onCombat();
-//                    }
-//                }
-//            }
-//        });
-//        this.binding.downButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                listener.onMove("s");
-//                log.setText("You moved down" + regen());
-//                clearLog();
-//                addToLog(log);
-//
-//                if (game.gameState == Game.GameStates.EXPLORE) {
-//                    if (game.checkAdjacent()) {
-//                        onCombat();
-//                    }
-//                }
-//            }
-//        });
         TextView log = new TextView(this.getRootView().getContext());
         switch (input) {
             case "w": {
@@ -237,7 +174,6 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
 
         listener.updateHP();
 
-        this.binding.moveButtons.setVisibility(View.INVISIBLE);
         this.binding.combatButtons.setVisibility(View.VISIBLE);
         this.binding.fightButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -105,7 +105,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
 
         double pcToHit = (game.pc.DEX.value + (game.pc.INT.value / 2)) * Math.random() * 10;
         double enemyToHit = (game.enemy.DEX.value + (game.enemy.INT.value / 2)) * Math.random() * 10;
-        double pcBlockBonus = Character.skills.get("Shield").value + game.pc.DEX.value + game.pc.WILL.value;
+        double pcBlockBonus = game.pc.skills.get("Shield").value + game.pc.DEX.value + game.pc.WILL.value;
             switch (input) {
                 case "f":
                     // if PC beats enemy's dodge and armor, PC strikes enemy
@@ -138,7 +138,6 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
             log += onEnemyDefeated(game);
             if (checkLevelUp()) { performLevelUp(); }
             setXpProgress();
-            binding.moveButtons.setVisibility(View.VISIBLE);
         }
 
         updateHP();
@@ -173,7 +172,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
                         //this is where we would call our new move
                         //should pass i + j pc.move(i, j)
                         game.pc.setTarget(map[finalI][finalJ]);
-                       exploreFragment.setMove(onMove());
+                        exploreFragment.setMove(onMove());
                     }
                 });
             }
@@ -230,7 +229,6 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
 
         game.enemy.remove(game.enemy.location);
 
-        binding.moveButtons.setEnabled(true);
         binding.combatButtons.setVisibility(View.INVISIBLE);
         binding.enemyHP.setVisibility(LinearLayout.INVISIBLE);
         binding.enemyHPBar.setVisibility(LinearLayout.INVISIBLE);
@@ -252,6 +250,9 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
             binding.enemyHP.setText("" + game.enemy.HP.value);
             binding.enemyHPBar.setMax(game.enemy.maxHP);
             binding.enemyHPBar.setProgress(game.enemy.HP.value);
+        } else {
+            binding.enemyHP.setVisibility(View.INVISIBLE);
+            binding.enemyHPBar.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -278,6 +279,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
 
     private String levelCleared() {
         String log = "\nYou've cleared the level. Find the stairs to advance to the next map.";
+        game.enemy = null;
         game.gameState = Game.GameStates.CLEARED;
         game.enemiesCleared = 0;
         game.map[(int) (Math.random() * game.map.length)][(int) (Math.random() * game.map.length)].toStairs();
