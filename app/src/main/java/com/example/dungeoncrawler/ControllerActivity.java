@@ -50,7 +50,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getSupportFragmentManager().
+        this.getSupportFragmentManager().
                 setFragmentFactory(new DungeonCrawlerFragmentFactory(this));
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
