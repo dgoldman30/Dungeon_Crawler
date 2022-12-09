@@ -67,10 +67,10 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         setContentView(mainView.getRootView());
 
         if (savedInstanceState == null) { // first time launching the activity
-            // to begin with, make the screen display the ledger fragment
+            // to begin with, make the screen display the charcreation fragment
             CharCreationFragment charCreationFragment = new CharCreationFragment(this, game);
             mainView.displayFragment(charCreationFragment, false, "char creation");
-        } else { // recreating the activity, reload current sale
+        } else { // recreating the activity, reload current game
             this.game = (Game) savedInstanceState.getSerializable(CUR_GAME);
         }
     }

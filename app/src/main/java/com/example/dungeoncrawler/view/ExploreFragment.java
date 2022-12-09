@@ -21,6 +21,7 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
     public FragmentExploreBinding binding;
     Listener listener;
     Game game;
+    private final String CURGAME = "cur_Game";
 
 
     LinearLayout combatLayout;
@@ -39,11 +40,20 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        if (savedInstanceState != null) {
+            this.game = (Game) savedInstanceState.getSerializable(CURGAME);
+        }
         if (game.enemy != null) { game.gameState = Game.GameStates.EXPLORE; }
         populate();
         menuButtons();
     }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(CURGAME, this.game);
+    }
+
 
     public void populate() {
         String name = game.pc.race.name() + " " + game.pc.caste.name();
