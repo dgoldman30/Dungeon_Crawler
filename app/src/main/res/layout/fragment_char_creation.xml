@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <TextView
+        android:id="@id/characterCreation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Character Creation"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="#874040"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="716dp"
+        android:layout_height="293dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/enterChoice"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/characterCreation">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@id/raceText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select race"
+                android:textAlignment="center"
+                android:textColor="#874040"
+                android:textSize="20sp" />
+
+            <Spinner
+                android:id="@id/raceSpinner"
+                style="@style/spinnerStyle"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_weight="1"
+                android:entries="@array/races"
+                android:textAlignment="center"
+                android:textColor="#964B00"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@id/raceDescription"
+                android:layout_width="match_parent"
+                android:layout_height="207dp"
+                android:text="TextView"
+                android:textAlignment="center"
+                android:textColor="#874040"
+                android:textSize="16dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@id/casteText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select caste"
+                android:textAlignment="center"
+                android:textColor="#874040"
+                android:textSize="20sp" />
+
+            <Spinner
+                android:id="@id/casteSpinner"
+                style="@style/spinnerStyle"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_weight="1"
+                android:entries="@array/castes"
+                android:textAlignment="center"
+                android:textColor="#964B00"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@id/casteDescription"
+                android:layout_width="match_parent"
+                android:layout_height="205dp"
+                android:text="TextView"
+                android:textAlignment="center"
+                android:textColor="#874040"
+                android:textSize="16dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@id/attText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Assign attribute points"
+                android:textAlignment="center"
+                android:textColor="#874040"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@id/attPointsLeft"
+                android:layout_width="48dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp"
+                android:clickable="false"
+                android:ems="10"
+                android:enabled="false"
+                android:inputType="none"
+                android:minHeight="48dp"
+                android:text="3"
+                android:textAlignment="center"
+                android:textColor="#874040" />
+
+            <Button
+                android:id="@id/STRbutton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:text="+STR"
+                android:textColor="#806046"
+                android:textSize="24dp" />
+
+            <Button
+                android:id="@id/DEXbutton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:text="+DEX"
+                android:textColor="#806046"
+                android:textSize="24dp" />
+
+            <Button
+                android:id="@id/INTbutton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:text="+INT"
+                android:textColor="#806046"
+                android:textSize="24dp" />
+
+            <Button
+                android:id="@id/WILLbutton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:text="+WILL"
+                android:textColor="#806046"
+                android:textSize="24dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@id/enterChoice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="289dp"
+        android:layout_marginEnd="289dp"
+        android:layout_marginBottom="8dp"
+        android:text="Enter Choices"
+        android:textColor="#806046"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
