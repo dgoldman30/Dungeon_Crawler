@@ -50,13 +50,15 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        this.getSupportFragmentManager().
-                setFragmentFactory(new DungeonCrawlerFragmentFactory(this));
+        //frag factory
+        this.getSupportFragmentManager().setFragmentFactory(new DungeonCrawlerFragmentFactory(this, game));
         super.onCreate(savedInstanceState);
+        //hide window tab
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
-        CharCreationFragment charCreationFragment = new CharCreationFragment(this);
+        //
+        CharCreationFragment charCreationFragment = new CharCreationFragment(this, game);
         this.mainView = new MainView(this);
         setContentView(mainView.getRootView());
         mainView.displayFragment(charCreationFragment, false, "char creation");
@@ -365,7 +367,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
 
     @Override
     public void onGameRestart() {
-        CharCreationFragment charCreationFragment = new CharCreationFragment(this);
+        CharCreationFragment charCreationFragment = new CharCreationFragment(this, game);
         mainView.displayFragment(charCreationFragment, false, "char creation");
     }
 

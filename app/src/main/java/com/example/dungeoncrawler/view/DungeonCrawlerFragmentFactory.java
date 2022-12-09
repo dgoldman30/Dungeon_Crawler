@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentFactory;
 
 import com.example.dungeoncrawler.ControllerActivity;
+import com.example.dungeoncrawler.model.Game;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -17,12 +18,15 @@ public class DungeonCrawlerFragmentFactory  extends FragmentFactory {
         private static final String VIEW_PACKAGE = "com.example.dungeoncrawler.view"; // package where all the view reside
         private final ControllerActivity controller; // the controller instance to pass to fragments
 
+        public Game game;
+
         /**
          * Constructor method.
          * @param controller the activity to pass in to fragments
          */
-        public DungeonCrawlerFragmentFactory(ControllerActivity controller){
+        public DungeonCrawlerFragmentFactory(ControllerActivity controller, Game game){
             this.controller = controller;
+            this.game = game;
         }
 
         /**
@@ -43,7 +47,7 @@ public class DungeonCrawlerFragmentFactory  extends FragmentFactory {
                 try {
                     Constructor<?>[] fcons = fragClass.getConstructors(); // get all the constructors
                     assert fcons.length > 0 : "Fragment class does not have a constructor";
-                    return (Fragment) fcons[0].newInstance(controller); // go with first constructor
+                    return (Fragment) fcons[0].newInstance(controller, game); // go with first constructor
                 } catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
                     final String emsg = String.format("Can't instantiate %s: ensure it's concrete and " +
                             "has a public constructor with a ControllerActivity parameter", fragClass);
