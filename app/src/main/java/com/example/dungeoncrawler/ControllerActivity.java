@@ -1,5 +1,6 @@
 package com.example.dungeoncrawler;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -32,12 +33,15 @@ import com.example.dungeoncrawler.view.IMainView;
 import com.example.dungeoncrawler.view.InventoryFragment;
 import com.example.dungeoncrawler.view.MainView;
 
+import java.io.Serializable;
+
 public class ControllerActivity extends AppCompatActivity implements ICharCreationView.Listener, IExploreFragment.Listener, ICharacterSheetFragment.Listener,
         IInventoryFragment.Listener
 {
 
     IMainView mainView;
     Game game;
+    private static final String CUR_GAME = "CUR_GAME";
 
     FragmentExploreBinding binding;
     ExploreFragment exploreFragment;
@@ -58,11 +62,29 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
         //
-        CharCreationFragment charCreationFragment = new CharCreationFragment(this, game);
+
         this.mainView = new MainView(this);
         setContentView(mainView.getRootView());
-        mainView.displayFragment(charCreationFragment, false, "char creation");
+
+        if (savedInstanceState == null) { // first time launching the activity
+            // to begin with, make the screen display the ledger fragment
+            CharCreationFragment charCreationFragment = new CharCreationFragment(this, game);
+            mainView.displayFragment(charCreationFragment, false, "char creation");
+        } else { // recreating the activity, reload current sale
+            this.game = (Game) savedInstanceState.getSerializable(CUR_GAME);
+        }
     }
+
+    /**
+     * Overridden to save dynamic state before activity destruction.
+     * @param outState the bundle to write state to.
+     */
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(CUR_GAME,  this.game);
+    }
+
 
     // Char creation
     @Override

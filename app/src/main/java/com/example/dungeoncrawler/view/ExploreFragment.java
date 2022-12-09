@@ -39,11 +39,11 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         if (game.enemy != null) { game.gameState = Game.GameStates.EXPLORE; }
         populate();
         menuButtons();
     }
-
 
     public void populate() {
         String name = game.pc.race.name() + " " + game.pc.caste.name();

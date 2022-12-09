@@ -1,9 +1,10 @@
 package com.example.dungeoncrawler.model;
 
+import java.io.Serializable;
 import java.util.Hashtable;
 import java.util.Map;
 
-public class Game {
+public class Game implements Serializable {
 
     public int depth;
     public int mapSize = 10;
