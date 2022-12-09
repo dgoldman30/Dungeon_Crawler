@@ -6,29 +6,23 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.dungeoncrawler.databinding.FragmentExploreBinding;
 import com.example.dungeoncrawler.databinding.FragmentInventoryBinding;
-import com.example.dungeoncrawler.model.Armor;
 import com.example.dungeoncrawler.model.Caste;
-import com.example.dungeoncrawler.model.Character;
-import com.example.dungeoncrawler.model.Floor;
 import com.example.dungeoncrawler.model.Game;
 import com.example.dungeoncrawler.model.Item;
 import com.example.dungeoncrawler.model.NPC;
 import com.example.dungeoncrawler.model.Player;
-import com.example.dungeoncrawler.model.Potion;
 import com.example.dungeoncrawler.model.Race;
 import com.example.dungeoncrawler.model.Tile;
-import com.example.dungeoncrawler.model.Weapon;
 import com.example.dungeoncrawler.view.CharCreationFragment;
 import com.example.dungeoncrawler.view.CharacterSheetFragment;
+import com.example.dungeoncrawler.view.DungeonCrawlerFragmentFactory;
 import com.example.dungeoncrawler.view.ExploreFragment;
 import com.example.dungeoncrawler.view.ICharCreationView;
 import com.example.dungeoncrawler.view.ICharacterSheetFragment;
@@ -56,6 +50,8 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getSupportFragmentManager().
+                setFragmentFactory(new DungeonCrawlerFragmentFactory(this));
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -214,7 +210,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         binding.restartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onRestart();
+                onGameRestart();
             }
         });
     }
@@ -368,8 +364,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
     }
 
     @Override
-    public void onRestart() {
-        super.onRestart();
+    public void onGameRestart() {
         CharCreationFragment charCreationFragment = new CharCreationFragment(this);
         mainView.displayFragment(charCreationFragment, false, "char creation");
     }

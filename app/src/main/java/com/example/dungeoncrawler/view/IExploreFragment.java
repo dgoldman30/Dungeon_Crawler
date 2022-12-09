@@ -1,9 +1,5 @@
 package com.example.dungeoncrawler.view;
 
-import android.view.View;
-
-import androidx.fragment.app.Fragment;
-
 import com.example.dungeoncrawler.databinding.FragmentExploreBinding;
 import com.example.dungeoncrawler.model.Game;
 
@@ -13,7 +9,7 @@ public interface IExploreFragment {
         void onInventory();
         void onCharSheet();
         void onEquipment();
-        void onRestart();
+        void onGameRestart();
         String onMove();
         String onCombat(Game game, String input);
         String onEnemyDefeated(Game game);

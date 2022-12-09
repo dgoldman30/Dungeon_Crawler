@@ -12,23 +12,47 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 public class DungeonCrawlerFragmentFactory  extends FragmentFactory {
-    private ControllerActivity controller;
-    public DungeonCrawlerFragmentFactory(ControllerActivity controller){
-        super();
-        this.controller = controller;
-    }
-    @NonNull
-    @Override
-    public Fragment instantiate(@NonNull ClassLoader classLoader, @NonNull String className) {
-        Class<? extends Fragment> fragmentClass = loadFragmentClass(classLoader, className);
-        if (fragmentClass.getPackage().getName().equals("edu.vassar.cmpu203.dungeoncrawler.view")) { try {
-            Constructor<?>[] fcons = fragmentClass.getConstructors(); // find all constructors assert fcons.length > 0 : "Fragment class does not have a constructor";
-            return (Fragment) fcons[0].newInstance(controller); // invoke first constructor
-        } catch (IllegalAccessException | InstantiationException | InvocationTargetException e) { final String emsg = String.format("Can't instantiate %s: ensure it's concrete and " +
-                "has a public constructor with a ControllerActivity parameter", fragmentClass); Log.e("DungeonCrawler", emsg);
-            e.printStackTrace();
+
+
+        private static final String VIEW_PACKAGE = "com.example.dungeoncrawler.view"; // package where all the view reside
+        private final ControllerActivity controller; // the controller instance to pass to fragments
+
+        /**
+         * Constructor method.
+         * @param controller the activity to pass in to fragments
+         */
+        public DungeonCrawlerFragmentFactory(ControllerActivity controller){
+            this.controller = controller;
         }
+
+        /**
+         * Method used by fragment manager/transaction to instantiate fragments.
+         * @param classLoader object to use to load fragment class
+         * @param className name of fragment class to instantiate
+         * @return instantiated fragment
+         */
+        @NonNull
+        @Override
+        public Fragment instantiate(@NonNull ClassLoader classLoader, @NonNull String className) {
+
+            // convert from class name to class
+            Class<? extends Fragment> fragClass = loadFragmentClass(classLoader, className);
+
+            // is this fragment in our view package? if so, it must be one of ours!
+            if (fragClass.getPackage().getName().equals(VIEW_PACKAGE)) {
+                try {
+                    Constructor<?>[] fcons = fragClass.getConstructors(); // get all the constructors
+                    assert fcons.length > 0 : "Fragment class does not have a constructor";
+                    return (Fragment) fcons[0].newInstance(controller); // go with first constructor
+                } catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
+                    final String emsg = String.format("Can't instantiate %s: ensure it's concrete and " +
+                            "has a public constructor with a ControllerActivity parameter", fragClass);
+                    Log.e("NextGenPos", emsg);
+                    e.printStackTrace();
+                }
+            }
+
+            // default is to delegate to superclass
+            return super.instantiate(classLoader, className);
         }
-        return super.instantiate(classLoader, className); // delegate to super by default }
     }
-}

@@ -23,7 +23,9 @@ public class CharCreationFragment extends Fragment implements ICharCreationView 
     Listener listener;
     Game testGame = new Game(10);
 
-    public CharCreationFragment(Listener listener) { this.listener = listener; }
+    public CharCreationFragment(Listener listener) {
+        this.listener = listener;
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container, @Nullable Bundle savedInstanceState) {
