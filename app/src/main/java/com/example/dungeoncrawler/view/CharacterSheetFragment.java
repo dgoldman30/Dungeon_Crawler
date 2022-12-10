@@ -20,6 +20,7 @@ public class CharacterSheetFragment extends Fragment implements ICharacterSheetF
     FragmentCharacterSheetBinding binding;
     Listener listener;
     Game game;
+    private final String CURGAME = "cur_Game";
 
     public CharacterSheetFragment(Listener listener, Game game) {
         this.listener = listener;
@@ -36,6 +37,9 @@ public class CharacterSheetFragment extends Fragment implements ICharacterSheetF
     @Override
     public void onViewCreated(@NonNull View view, @NonNull Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if (savedInstanceState != null) {
+            this.game = (Game) savedInstanceState.getSerializable(CURGAME);
+        }
 
         charInfo();
         attributeButtons();
@@ -47,6 +51,12 @@ public class CharacterSheetFragment extends Fragment implements ICharacterSheetF
             }
         });
 
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(CURGAME, this.game);
     }
 
     private void charInfo() {

@@ -26,7 +26,7 @@ public class InventoryFragment extends Fragment implements IInventoryFragment {
     public FragmentInventoryBinding binding;
     Listener listener;
     Game game;
-
+    private final String CURGAME = "cur_Game";
     public InventoryFragment(Listener listener, Game game) {
         this.listener = listener;
         this.game = game;
@@ -41,7 +41,9 @@ public class InventoryFragment extends Fragment implements IInventoryFragment {
     @Override
     public void onViewCreated(@NonNull View view, @NonNull Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        if (savedInstanceState != null) {
+            this.game = (Game) savedInstanceState.getSerializable(CURGAME);
+        }
         List<Item> inventory = game.pc.inventory;
         setEquipmentButtons();
         displayInventory(inventory);
@@ -54,6 +56,12 @@ public class InventoryFragment extends Fragment implements IInventoryFragment {
             }
         });
 
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(CURGAME, this.game);
     }
 
     private void setEquipmentButtons() {
