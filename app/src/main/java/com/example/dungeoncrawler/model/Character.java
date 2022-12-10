@@ -31,6 +31,8 @@ public abstract class Character {
     int xpBase = 3;
     double scale = 10;
 
+
+
     public List<Item> inventory = new ArrayList<>();
     public Attribute STR = new Attribute("strength");
     public Attribute DEX = new Attribute("dexterity");
@@ -166,6 +168,28 @@ public abstract class Character {
             this.potion = (Potion) item;
         }
         if (ret != null) { this.inventory.add(ret); }
+    }
+
+    public double toHit() {
+        double toHit = 1000 * Math.random() * (this.DEX.value + (this.INT.value / 2));
+        return toHit;
+    }
+
+    public double toBlock() {
+        double toBlock = 1000 * Math.random() * (this.skills.get("Shield").value + this.DEX.value + this.WILL.value);
+        return toBlock;
+    }
+
+    public boolean toDodge(double toHit) {
+        if (toHit < (this.DV.value * (Math.random() * 10))) { return true; }
+        return false;
+    }
+
+    public boolean toPenetrate(Character target) {
+        double toPenetrate = 1000 * Math.random() * (this.STR.value + (this.skills.get("Melee").value / 3));
+        double toResist = 1000 * Math.random() * (target.AV.value + target.body.AV);
+        if (toPenetrate > toResist) { return true; }
+        return false;
     }
 
     public void drinkPotion(Potion pot) {

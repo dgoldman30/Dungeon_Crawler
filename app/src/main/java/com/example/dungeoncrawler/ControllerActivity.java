@@ -123,31 +123,30 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         binding.enemyHP.setVisibility(LinearLayout.VISIBLE);
         binding.enemyHPBar.setVisibility(LinearLayout.VISIBLE);
 
-        double pcToHit = (game.pc.DEX.value + (game.pc.INT.value / 2)) * Math.random() * 10;
-        double enemyToHit = (game.enemy.DEX.value + (game.enemy.INT.value / 2)) * Math.random() * 10;
-        double pcBlockBonus = game.pc.skills.get("Shield").value + game.pc.DEX.value + game.pc.WILL.value;
+        double pcToHit = game.pc.toHit();
+        double enemyToHit = game.enemy.toHit();
             switch (input) {
                 case "f":
-                    // if PC beats enemy's dodge and armor, PC strikes enemy
-                    if (pcToHit >= game.enemy.DV.value && (game.pc.STR.value * Math.random() * 10) >= game.enemy.AV.value) {
-                        log += "You hit the enemy for " + game.pc.weapon.strike(game.pc, game.enemy) + " damage.";
 
+                    // if PC beats enemy's dodge and armor, PC strikes enemy
+                    if (!game.enemy.toDodge(pcToHit) && game.pc.toPenetrate(game.enemy)) {
+                        log += "You hit the enemy for " + game.pc.weapon.strike(game.pc, game.enemy) + " damage.";
                     } else log += "You missed the enemy.";
 
                     // if enemy beats PC's dodge and armor, enemy strikes PC
-                    if (enemyToHit >= game.pc.DV.value && (game.enemy.STR.value * Math.random() * 10) >= game.pc.AV.value) {
+                    if (!game.pc.toDodge(enemyToHit) && game.enemy.toPenetrate(game.pc)) {
                         log += "\n" + "The enemy hit you for " + game.enemy.weapon.strike(game.enemy, game.pc) + " damage.";
                     } else log += "\n The enemy missed you.";
                     updateHP();
                     break;
                 case "b":
                     // if block is greater than to hit, deflect the whole attack.
-                    if (pcBlockBonus > enemyToHit) {
+                    if (game.pc.toBlock() > enemyToHit) {
                         log += "You deflected the " + game.enemy.race.name() + " " + game.enemy.caste.name() + "'s attack!";
-                        if (pcToHit >= game.enemy.DV.value && (game.pc.STR.value * Math.random()) >= game.enemy.AV.value) {
+                        if (game.enemy.toDodge(pcToHit) && game.pc.toPenetrate(game.enemy)) {
                             log += "\nYou counter attack for " + game.pc.weapon.strike(game.pc, game.enemy) + " damage.";
                         }
-                    } else if ((pcBlockBonus + game.pc.DV.value) <= enemyToHit && (game.enemy.STR.value * Math.random()) >= game.pc.AV.value) {
+                    } else if (!game.pc.toDodge(enemyToHit) && game.enemy.toPenetrate(game.pc)) {
                         log += "You failed to block the attack! \nThe enemy hit you for " + game.enemy.weapon.strike(game.enemy, game.pc) + " damage.";
                     } else log += "You failed to block the attack, but the enemy missed you.";
                     updateHP();
