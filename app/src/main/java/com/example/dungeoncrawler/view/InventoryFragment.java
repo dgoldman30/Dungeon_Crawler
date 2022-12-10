@@ -39,6 +39,14 @@ public class InventoryFragment extends Fragment implements IInventoryFragment {
     }
 
     @Override
+   public void onViewStateRestored(@Nullable Bundle saveInstanceState){
+        super.onViewStateRestored(saveInstanceState);
+        if (saveInstanceState != null) {
+            this.game = (Game) saveInstanceState.getSerializable(CURGAME);
+        }
+       }
+
+    @Override
     public void onViewCreated(@NonNull View view, @NonNull Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (savedInstanceState != null) {

@@ -10,6 +10,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.dungeoncrawler.R;
@@ -52,6 +53,13 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable(CURGAME, this.game);
+    }
+    @Override
+    public void onViewStateRestored(@Nullable Bundle saveInstanceState){
+        super.onViewStateRestored(saveInstanceState);
+        if (saveInstanceState != null) {
+            this.game = (Game) saveInstanceState.getSerializable(CURGAME);
+        }
     }
 
 

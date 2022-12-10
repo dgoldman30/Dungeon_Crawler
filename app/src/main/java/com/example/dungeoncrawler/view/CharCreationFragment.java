@@ -23,6 +23,7 @@ public class CharCreationFragment extends Fragment implements ICharCreationView 
     Listener listener;
     Game testGame = new Game(10);
 
+
     public CharCreationFragment(Listener listener, Game game) {
         this.listener = listener;
     }
