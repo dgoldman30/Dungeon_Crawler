@@ -123,30 +123,31 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         binding.enemyHP.setVisibility(LinearLayout.VISIBLE);
         binding.enemyHPBar.setVisibility(LinearLayout.VISIBLE);
 
-        double pcToHit = game.pc.toHit();
-        double enemyToHit = game.enemy.toHit();
+        game.pc.setToHit();
+        game.enemy.setToHit();
+        game.pc.setToBlock();
             switch (input) {
                 case "f":
 
                     // if PC beats enemy's dodge and armor, PC strikes enemy
-                    if (!game.enemy.toDodge(pcToHit) && game.pc.toPenetrate(game.enemy)) {
+                    if (!game.enemy.toDodge(game.pc.toHit()) && game.pc.toPenetrate(game.enemy)) {
                         log += "You hit the enemy for " + game.pc.weapon.strike(game.pc, game.enemy) + " damage.";
                     } else log += "You missed the enemy.";
 
                     // if enemy beats PC's dodge and armor, enemy strikes PC
-                    if (!game.pc.toDodge(enemyToHit) && game.enemy.toPenetrate(game.pc)) {
+                    if (!game.pc.toDodge(game.enemy.toHit()) && game.enemy.toPenetrate(game.pc)) {
                         log += "\n" + "The enemy hit you for " + game.enemy.weapon.strike(game.enemy, game.pc) + " damage.";
                     } else log += "\n The enemy missed you.";
                     updateHP();
                     break;
                 case "b":
                     // if block is greater than to hit, deflect the whole attack.
-                    if (game.pc.toBlock() > enemyToHit) {
+                    if (game.pc.toBlock() > game.enemy.toHit()) {
                         log += "You deflected the " + game.enemy.race.name() + " " + game.enemy.caste.name() + "'s attack!";
-                        if (game.enemy.toDodge(pcToHit) && game.pc.toPenetrate(game.enemy)) {
+                        if (game.enemy.toDodge(game.pc.toHit()) && game.pc.toPenetrate(game.enemy)) {
                             log += "\nYou counter attack for " + game.pc.weapon.strike(game.pc, game.enemy) + " damage.";
                         }
-                    } else if (!game.pc.toDodge(enemyToHit) && game.enemy.toPenetrate(game.pc)) {
+                    } else if (!game.pc.toDodge(game.enemy.toHit()) && game.enemy.toPenetrate(game.pc)) {
                         log += "You failed to block the attack! \nThe enemy hit you for " + game.enemy.weapon.strike(game.enemy, game.pc) + " damage.";
                     } else log += "You failed to block the attack, but the enemy missed you.";
                     updateHP();
@@ -154,7 +155,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
                 case "p":
                     log += game.pc.drinkPotion();
                     // if enemy beats PC's dodge and armor, enemy strikes PC
-                    if (!game.pc.toDodge(enemyToHit) && game.enemy.toPenetrate(game.pc)) {
+                    if (!game.pc.toDodge(game.enemy.toHit()) && game.enemy.toPenetrate(game.pc)) {
                         log += "\n" + "The enemy hit you for " + game.enemy.weapon.strike(game.enemy, game.pc) + " damage.";
                     } else log += "\n The enemy missed you.";
                     updateHP();

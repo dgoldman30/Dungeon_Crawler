@@ -6,6 +6,8 @@ abstract class Spell {
     String description;
     double factor;
     int attribute;
+    int duration;
+    int mp;
     Character target;
 
     void resolve(Character target) {}
