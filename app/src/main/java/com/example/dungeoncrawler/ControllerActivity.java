@@ -1,6 +1,7 @@
 package com.example.dungeoncrawler;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -45,6 +46,9 @@ import com.example.dungeoncrawler.view.MainView;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
 
 public class ControllerActivity extends AppCompatActivity implements ICharCreationView.Listener, IExploreFragment.Listener, ICharacterSheetFragment.Listener,
         IInventoryFragment.Listener, ILeaderBoardFragment.Listener
@@ -62,6 +66,8 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
 
     CharacterSheetFragment charSheetFragment;
     IPersistenceFacade persistenceFacade = new FirestoreFacade();
+
+    LeaderBoardFragment leaderBoardFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -257,14 +263,17 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
                 + "You reached level " + game.pc.level + " and explored down to depth " + game.depth + ".";
         binding.deathText.setText(deathText);
 
-        this.persistenceFacade.saveGame(game);
-
         binding.restartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onGameRestart();
             }
         });
+    }
+
+    @Override
+    public void saveGame(String name) {
+        this.persistenceFacade.saveGame(game, name);
     }
 
     @Override
@@ -389,11 +398,15 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         });
     }
 
+
     @Override
     public void onLeaderboard() {
-        LeaderBoardFragment leaderboard = new LeaderBoardFragment(this, game);
-        mainView.displayFragment(leaderboard, true, "leaderboard");
+        leaderBoardFragment = new LeaderBoardFragment(this, game);
+        persistenceFacade.retrieveScores(leaderBoardFragment);
+        mainView.displayFragment(leaderBoardFragment, true, "leaderboard");
     }
+
+
 
     @Override
     public String onMove() {
@@ -488,28 +501,4 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         game.pc.equip(item);
     }
 
-
-
-
-
-
-/*    public void displayItemType(String input) {
-        Button newItem = new Button(this.binding.getRoot().getContext());
-        inventoryBinding.inventoryTable.setVisibility(View.GONE);
-        inventoryBinding.selectItemLayout.setVisibility(View.VISIBLE);
-        for (Item item : game.pc.inventory) {
-            if (item.getClass().getName().equals(input)) {
-                newItem.setText(item.name);
-                newItem.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        game.pc.equip(item);
-                        inventoryBinding.inventoryView.setVisibility(View.VISIBLE);
-                        inventoryBinding.selectItemLayout.setVisibility(View.GONE);
-                    }
-                });
-                inventoryBinding.selectItemLayout.addView(newItem);
-            }
-        }
-    }*/
 }

@@ -28,6 +28,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
+        android:id="@+id/leaderboardScroll"
         android:layout_width="521dp"
         android:layout_height="284dp"
         android:layout_marginTop="16dp"
@@ -36,6 +37,7 @@
         app:layout_constraintTop_toBottomOf="@+id/leaderBoardTitle">
 
         <LinearLayout
+            android:id="@+id/leaderboardLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" />

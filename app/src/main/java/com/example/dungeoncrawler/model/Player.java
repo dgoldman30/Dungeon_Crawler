@@ -72,6 +72,10 @@ public class Player extends Character {
         Tile tLoc = this.target;
         Tile cLoc = this.location;
 
+        if (tLoc.equals(cLoc)) {
+            return "x";
+        }
+
         cLoc.occupant = null;
 
         int xDiff = tLoc.x - cLoc.x;
@@ -100,6 +104,8 @@ public class Player extends Character {
         //map[cLoc.x][cLoc.y] = cLoc;
         return ret;
     }
+
+
 
     public void setAttunedSpell(Spell spell) {
         this.spell = spell;

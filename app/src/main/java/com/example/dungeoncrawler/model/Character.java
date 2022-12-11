@@ -31,7 +31,7 @@ public abstract class Character {
     public Spell spell;
     public SpellEffect activeEffect;
 
-    public ArrayList<Spell> knownSpells;
+    public ArrayList<Spell> knownSpells = new ArrayList<Spell>();
 
     public int nextLevelXp;
     int xpBase = 3;

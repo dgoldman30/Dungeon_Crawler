@@ -1,20 +1,26 @@
 package com.example.dungeoncrawler.view;
 
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.example.dungeoncrawler.model.Game;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.firestore.Source;
 import com.google.firebase.firestore.auth.User;
 
@@ -42,11 +48,12 @@ public class FirestoreFacade implements IPersistenceFacade {
      *
      * @param game the sale to be saved
      */
-    public void saveGame(Game game) {
+    public void saveGame(Game game, String name) {
         Map<String, Object> data = new HashMap<>();
-        data.put("name", game.pc.name);
+        String entryName = name + " - " + game.pc.name;
+        data.put("name", entryName);
         data.put("depth", game.depth);
-        db.collection(GAME_COLLECTION).document("Scores").set(data)
+        db.collection(GAME_COLLECTION).document().set(data, SetOptions.merge())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -66,69 +73,31 @@ public class FirestoreFacade implements IPersistenceFacade {
     /**
      * Issues a ledger retrieval operation.
      *
-     * @param listener the listener to be notified when the ledger becomes available.
-     */
-    public void retrieveGame(DataListener<Game> listener) {
+     *
+     * */
+    public void retrieveScores(LeaderBoardFragment leaderboard) {
+        Map<String, Integer> data = new HashMap<>();
         this.db.collection(GAME_COLLECTION)
                 .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() { // called when the data comes back from the database
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onSuccess(QuerySnapshot qsnap) {
-                        ArrayList leaderBoard = new ArrayList();
-                        for (DocumentSnapshot dsnap : qsnap) {
-                            Game game = dsnap.toObject(Game.class);
-                            leaderBoard.add(game);
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Integer i = (int) (long) document.get("depth");
+                                data.put((String) document.get("name"), i);
+                                Log.d("Firestore", "accessed firestore");
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
                         }
-                        listener.onDataReceived(leaderBoard); // let the listener know we have a ledger now
+                        leaderboard.leaderboardMap = data;
                     }
-                });
+                });// called when the data comes back from the database
+        leaderboard.leaderboardMap = data;
     }
 
 
-    /**
-     * Creates an entry for the specified User in the underlying persistence subsystem.
-     *
-     * @param game     the user to be created
-     * @param listener the observer to be notified of the query result. OnYesResult() is called if
-     *                 a new user was created. Conversely, OnNoResult() is called if a user with
-     *                 the specified username already existed.
-     */
-    @Override
-    public void createGameIfNotExists(@NonNull Game game, @NonNull BinaryResultListener listener) {
-
-        String charName = game.pc.name;
-
-        this.retrieveUser(charName, new DataListener<Game>() {
-            @Override
-            public void onDataReceived(@NonNull ArrayList data) {
-                listener.onNoResult();
-            }
-
-
-            @Override
-            public void onNoDataFound() {
-                db.collection(GAME_COLLECTION).document(charName).
-                        set(game).
-                        addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                listener.onYesResult();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                listener.onNoResult();
-                            }
-                        });
-
-            }
-        });
-    }
-
-    @Override
-    public void retrieveUser(@NonNull String charName, @NonNull DataListener<Game> listener) {
-
-    }
 }
 
 

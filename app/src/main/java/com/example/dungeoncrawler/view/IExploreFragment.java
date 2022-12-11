@@ -18,6 +18,7 @@ public interface IExploreFragment {
         void setBinding(FragmentExploreBinding binding);
         void performLevelUp();
         void onLeaderboard();
+        void saveGame(String name);
 
     }
 }

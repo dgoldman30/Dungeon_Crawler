@@ -46,17 +46,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <EditText
+            android:id="@+id/leaderboardName"
+            android:layout_width="187dp"
+            android:layout_height="39dp"
+            android:layout_marginTop="16dp"
+            android:editable="true"
+            android:text="Enter Name"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
         <Button
             android:id="@+id/restartButton"
             android:layout_width="288dp"
             android:layout_height="147dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="64dp"
             android:text="YOU DIED\n RESTART"
             android:textSize="32sp"
             android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/leaderboardButton"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/leaderboardName" />
 
         <TextView
             android:id="@+id/deathText"
@@ -74,13 +90,14 @@
 
         <Button
             android:id="@+id/leaderboardButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="214dp"
+            android:layout_height="71dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="64dp"
             android:text="leaderboard"
-            app:layout_constraintBottom_toTopOf="@+id/restartButton"
+            android:textSize="24dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/leaderboardName" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

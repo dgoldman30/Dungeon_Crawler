@@ -1,6 +1,9 @@
 package com.example.dungeoncrawler.view;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -112,6 +115,21 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
             @Override
             public void onClick(View view) { listener.onLeaderboard(); }
         });
+        this.binding.leaderboardName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String name = charSequence.toString();
+                listener.saveGame(name);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
 
@@ -152,6 +170,11 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
             case "d": {
                 log.setText("You moved right" + regen());
                 clearLog();
+                addToLog(log);
+                break;
+            }
+            case "x": {
+                log.setText("You must click another tile");
                 addToLog(log);
                 break;
             }
