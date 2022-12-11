@@ -23,5 +23,6 @@ public class DeathSpell extends Spell {
         this.attribute = attribute;
         this.duration = duration;
         this.mp = mp;
+        this.effect = new SpellEffect(this.duration, this.factor, this.attribute);
     }
 }

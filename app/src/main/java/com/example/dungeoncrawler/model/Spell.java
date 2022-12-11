@@ -1,6 +1,6 @@
 package com.example.dungeoncrawler.model;
 
-abstract class Spell {
+public abstract class Spell {
 
     boolean self;
     String description;
@@ -9,6 +9,7 @@ abstract class Spell {
     int duration;
     int mp;
     Character target;
+    SpellEffect effect;
 
     void resolve(Character target) {}
 

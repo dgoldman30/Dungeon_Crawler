@@ -31,6 +31,8 @@ public abstract class Character {
     int xpBase = 3;
     double scale = 10;
 
+    SpellEffect activeEffect;
+
 
 
     public List<Item> inventory = new ArrayList<>();
@@ -207,6 +209,14 @@ public abstract class Character {
         } else return "You don't have a potion equipped!";
         this.potion = null;
         return ret;
+    }
+
+    public void applyEffect(Spell spell) {
+        activeEffect = spell.effect;
+    }
+
+    public void removeEffect() {
+        this.activeEffect = null;
     }
 
     public Attribute[] getAttributes() { return attributes; }
