@@ -2,6 +2,7 @@ package com.example.dungeoncrawler.view;
 
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -14,9 +15,13 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.Source;
 import com.google.firebase.firestore.auth.User;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -28,13 +33,9 @@ public class FirestoreFacade implements IPersistenceFacade {
     private final FirebaseFirestore db = FirebaseFirestore.getInstance(); // database connection
 
 
-    CollectionReference colRef = db.collection("dungeon-crawler-");
-    DocumentReference docRef = colRef.document();
-
-    private static final String GAME_COLLECTION = "GAME_COLLECTION"; // sales collection name
+    private static final String GAME_COLLECTION = "Leaderboard"; // sales collection name
 
 
-    /* ledger-related methods start */
 
     /**
      * Saves the game passed in as input to the underlying persistence solution.
@@ -42,8 +43,25 @@ public class FirestoreFacade implements IPersistenceFacade {
      * @param game the sale to be saved
      */
     public void saveGame(Game game) {
-        this.db.collection(GAME_COLLECTION).add(game); // creates new document with pseudorandom id, uses firestore's built-in serialization
+        Map<String, Object> data = new HashMap<>();
+        data.put("name", game.pc.name);
+        data.put("depth", game.depth);
+        db.collection(GAME_COLLECTION).document("Scores").set(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.e("Firestore", "Great Success!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("Firestore", "Didn't get there");
+                    }
+                });
     }
+
+
 
     /**
      * Issues a ledger retrieval operation.
