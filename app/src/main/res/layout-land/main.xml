@@ -10,12 +10,15 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
+        android:name="com.example.dungeoncrawler.view.CharCreationFragment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/fragment_char_creation" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

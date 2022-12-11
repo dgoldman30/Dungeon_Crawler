@@ -79,6 +79,8 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         String location = game.gameState + " depth " + game.depth;
         binding.locationField.setText(location);
 
+        setCombatButtons();
+
         listener.setBinding(this.binding);
         listener.printMap(game);
     }
@@ -93,8 +95,6 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
             binding.mapLayout.addView(row);
         }
     }
-
-
 
     private void menuButtons() {
         this.binding.characterButton.setOnClickListener(new View.OnClickListener() {
@@ -180,19 +180,8 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
         binding.combatLog.scrollToDescendant(view);
     }
 
-    private void clearLog() {
-        combatLayout.removeAllViews();
-    }
-
-    public void onCombat() {
-        binding.combatLog.scrollTo(0, binding.combatLog.getBottom());
-        TextView enterCombat = new TextView(this.getRootView().getContext());
-        enterCombat.setText("You have entered combat.");
-        combatLayout.addView(enterCombat);
-
-        listener.updateHP();
-
-        this.binding.combatButtons.setVisibility(View.VISIBLE);
+    private void setCombatButtons() {
+        // set fight button
         this.binding.fightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -204,6 +193,7 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
                 addToLog(combatRound);
             }
         });
+        // set block button
         this.binding.blockButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -217,7 +207,33 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
                 addToLog(combatRound);
             }
         });
+        // set potion button
+        this.binding.potionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TextView combatRound = new TextView(getRootView().getContext());
 
+                // call to listener to run on combat and update combatText
+                String combatText = listener.onCombat(game, "p");
+
+                // push round to log
+                combatRound.setText(combatText);
+                addToLog(combatRound);
+            }
+        });
+    }
+
+    private void clearLog() {
+        combatLayout.removeAllViews();
+    }
+
+    public void onCombat() {
+        binding.combatLog.scrollTo(0, binding.combatLog.getBottom());
+        TextView enterCombat = new TextView(this.getRootView().getContext());
+        enterCombat.setText("You have entered combat.");
+        combatLayout.addView(enterCombat);
+        listener.updateHP();
+        this.binding.combatButtons.setVisibility(View.VISIBLE);
     }
 
     private View getRootView() { return this.binding.getRoot(); }

@@ -2,7 +2,7 @@ package com.example.dungeoncrawler.model;
 
 abstract class Spell {
 
-    int range;
+    boolean self;
     String description;
     double factor;
     int attribute;

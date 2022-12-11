@@ -198,10 +198,10 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/combatButtons"
             android:layout_width="198dp"
-            android:layout_height="57dp"
+            android:layout_height="84dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="64dp"
-            android:layout_marginBottom="64dp"
+            android:layout_marginBottom="32dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/combatLog">
@@ -212,17 +212,27 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:text="FIGHT"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/blockButton" />
+                app:layout_constraintEnd_toStartOf="@+id/blockButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/blockButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
                 android:text="block"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/potionButton"
+                android:layout_width="94dp"
+                android:layout_height="45dp"
+                android:text="Potion"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
