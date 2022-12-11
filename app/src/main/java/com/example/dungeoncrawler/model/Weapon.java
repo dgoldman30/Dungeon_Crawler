@@ -48,7 +48,7 @@ public class Weapon extends Item {
 
         if (damage > 0) {
             target.HP.value -=  damage;
-            return damage;
+            return (int) damage;
         } return 0;
     }
 

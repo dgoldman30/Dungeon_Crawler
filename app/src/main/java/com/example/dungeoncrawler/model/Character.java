@@ -202,6 +202,7 @@ public abstract class Character {
         if (this.potion != null) {
             ret += this.potion.drink(this);
         } else return "You don't have a potion equipped!";
+        this.potion = null;
         return ret;
     }
 

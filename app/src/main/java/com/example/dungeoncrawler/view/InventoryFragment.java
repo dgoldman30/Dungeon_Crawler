@@ -118,12 +118,14 @@ public class InventoryFragment extends Fragment implements IInventoryFragment {
             for (int j = 0; j < row.getChildCount(); j++) {
                 InventoryButton itemButton = (InventoryButton) row.getChildAt(j);
                 int index = i * 3 + j;
-                itemButton.setItem(game.pc.inventory.get(index));
-                setColor(itemButton, itemButton.getItem());
-                String itemText = itemButton.getItem().getName();
-                itemButton.setText(itemText);
                 row.removeViewAt(j);
-                row.addView(itemButton, j);
+                if (game.pc.inventory.size() > 0) {
+                    itemButton.setItem(game.pc.inventory.get(index));
+                    setColor(itemButton, itemButton.getItem());
+                    String itemText = itemButton.getItem().getName();
+                    itemButton.setText(itemText);
+                    row.addView(itemButton, j);
+                }
             }
         }
     }
