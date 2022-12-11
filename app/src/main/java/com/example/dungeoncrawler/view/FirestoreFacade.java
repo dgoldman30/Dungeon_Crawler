@@ -28,7 +28,7 @@ public class FirestoreFacade implements IPersistenceFacade {
     private final FirebaseFirestore db = FirebaseFirestore.getInstance(); // database connection
 
 
-    CollectionReference colRef = db.collection("High Score Games");
+    CollectionReference colRef = db.collection("dungeon-crawler-");
     DocumentReference docRef = colRef.document();
 
     private static final String GAME_COLLECTION = "GAME_COLLECTION"; // sales collection name
@@ -42,8 +42,7 @@ public class FirestoreFacade implements IPersistenceFacade {
      * @param game the sale to be saved
      */
     public void saveGame(Game game) {
-        this.db.collection(GAME_COLLECTION)
-                .add(game); // creates new document with pseudorandom id, uses firestore's built-in serialization
+        this.db.collection(GAME_COLLECTION).add(game); // creates new document with pseudorandom id, uses firestore's built-in serialization
     }
 
     /**

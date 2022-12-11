@@ -56,7 +56,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
     FragmentInventoryBinding inventoryBinding;
 
     CharacterSheetFragment charSheetFragment;
-    private final IPersistenceFacade persistenceFacade = new FirestoreFacade();
+    IPersistenceFacade persistenceFacade = new FirestoreFacade();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

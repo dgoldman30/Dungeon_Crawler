@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "877838426124",
+    "project_id": "dungeon-crawler-5822c",
+    "storage_bucket": "dungeon-crawler-5822c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:877838426124:android:029c0a0613c05bd14a4e29",
+        "android_client_info": {
+          "package_name": "com.example.dungeoncrawler"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "877838426124-6a3kecqrjvvbdqbekkvogc59gp9bfdfq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgc80AOBAseCCQVwdYeMd62p8zvC4Rpec"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "877838426124-6a3kecqrjvvbdqbekkvogc59gp9bfdfq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
