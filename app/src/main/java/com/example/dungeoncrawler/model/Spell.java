@@ -2,14 +2,14 @@ package com.example.dungeoncrawler.model;
 
 public abstract class Spell {
 
-    boolean self;
-    String description;
+    public boolean self;
+    public String name;
     double factor;
     int attribute;
     int duration;
     int mp;
     Character target;
-    SpellEffect effect;
+    public SpellEffect effect;
 
     void resolve(Character target) {}
 

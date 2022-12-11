@@ -12,7 +12,7 @@ public class Potion extends Item {
         INT(new Potion("Intelligence Potion", "Increases brainpower and knowledge", 1, 2)),
         WILL(new Potion("Willpower Potion", "Increases Willpower", 1, 3));
 
-        Potion po;
+        public Potion po;
         Potions(Potion p) {
             po = p;
         }

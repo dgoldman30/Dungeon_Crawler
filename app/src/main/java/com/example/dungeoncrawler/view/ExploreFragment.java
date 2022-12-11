@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import com.example.dungeoncrawler.R;
 import com.example.dungeoncrawler.databinding.FragmentExploreBinding;
 import com.example.dungeoncrawler.model.Game;
+import com.example.dungeoncrawler.model.Tile;
 
 public class ExploreFragment extends Fragment implements IExploreFragment {
 
@@ -225,6 +226,19 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
                 // push round to log
                 combatRound.setText(combatText);
                 addToLog(combatRound);
+            }
+        });
+        // set spell button
+        this.binding.spellButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (game.checkAdjacent()) {
+                    TextView combatRound = new TextView(getRootView().getContext());
+                    String combatText = listener.onCombat(game, "s");
+
+                    combatRound.setText(combatText);
+                    addToLog(combatRound);
+                } else listener.onSpell();
             }
         });
     }

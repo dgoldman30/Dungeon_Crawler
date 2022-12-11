@@ -23,6 +23,7 @@ public class InventoryFragment extends Fragment implements IInventoryFragment {
     int armorGreen = Color.rgb( 0, 200, 0);
     int potionTeal = Color.rgb(102, 255, 255);
     int weaponRed = Color.rgb(255, 0, 0);
+    int spellPurple = Color.rgb(200, 0, 200);
     public FragmentInventoryBinding binding;
     Listener listener;
     Game game;
@@ -73,7 +74,6 @@ public class InventoryFragment extends Fragment implements IInventoryFragment {
     }
 
     private void setEquipmentButtons() {
-
         if (game.pc.weapon != null) {
             binding.weaponButton.setText(game.pc.weapon.name);
         } else binding.weaponButton.setText("No weapon");
@@ -87,6 +87,36 @@ public class InventoryFragment extends Fragment implements IInventoryFragment {
             binding.potionButton.setText(game.pc.potion.name);
         } else binding.potionButton.setText("No potion");
         binding.potionButton.setBackgroundColor(potionTeal);
+
+        if (game.pc.spell != null) {
+            binding.setSpellButton.setText(game.pc.spell.name);
+        } else binding.setSpellButton.setText("No spell");
+        binding.setSpellButton.setBackgroundColor(spellPurple);
+
+        binding.setSpellButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+    }
+
+    private void displaySpells(Spell[] knownSpells) {
+        binding.inventoryTable.setVisibility(View.INVISIBLE);
+        binding.spellView.setVisibility(View.VISIBLE);
+
+        for (Spell s : knownSpells) {
+            SpellButton spell = new SpellButton(this.binding.getRoot().getContext(), s);
+            spell.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    game.pc.spell = spell.getSpell();
+                    binding.inventoryTable.setVisibility(View.VISIBLE);
+                    binding.spellView.setVisibility(View.INVISIBLE);
+                }
+            });
+            binding.spellView.addView(spell);
+        }
     }
 
     private void displayInventory(List<Item> inventory) {

@@ -21,18 +21,21 @@ public abstract class Character {
     public int x;
     public int y;
 
+    public int manaPoints;
+    public int maxMP;
+
     //equipment
     public Weapon weapon;
     public Armor body;
     public Potion potion;
-    Spell spell;
+    public Spell spell;
+    public SpellEffect activeEffect;
+
+    public ArrayList<Spell> knownSpells;
 
     public int nextLevelXp;
     int xpBase = 3;
     double scale = 10;
-
-    SpellEffect activeEffect;
-
 
 
     public List<Item> inventory = new ArrayList<>();
@@ -85,6 +88,8 @@ public abstract class Character {
 
         maxHP = attributes[4].value;
 
+
+
         // equip starting weapon armor potion
         this.equip((Weapon) this.caste.startingItems.get(0));
         this.equip((Armor) this.caste.startingItems.get(1));
@@ -99,7 +104,9 @@ public abstract class Character {
         // dodge value, armor value, mental value
         this.attributes[5].value += (int) attributes[1].value + (skills.get("Dodge").value / 3) ;
         this.attributes[6].value += (int) ((attributes[3].value / 2) + (skills.get("Armor").value / 3));
-        this.attributes[7].value += (attributes[3].value + (attributes[2].value * 2) + skills.get("Spellcasting").value) / 3;
+        this.attributes[7].value += (int) (attributes[3].value + (attributes[2].value * 2) + skills.get("Spellcasting").value) / 3;
+        this.maxMP = this.attributes[7].value + this.level;
+        this.manaPoints = maxMP;
     }
 
     public void xpIncrement() {
@@ -123,6 +130,8 @@ public abstract class Character {
         for (Skill s : skills.values()) {
             s.value += (int) (INT.value / 2) + s.aptitude;
         }
+        maxMP += 1;
+        manaPoints = maxMP;
         this.calcStats();
         return ret;
     }
@@ -185,6 +194,7 @@ public abstract class Character {
     public int toHit() { return attributes[8].value; }
     public int toBlock() { return attributes[9].value; }
 
+
     public boolean toDodge(double toHit) {
         if (toHit < (this.DV.value * (Math.random() * 10))) { return true; }
         return false;
@@ -217,6 +227,21 @@ public abstract class Character {
 
     public void removeEffect() {
         this.activeEffect = null;
+    }
+
+    public String castSpell(Character target) {
+        String ret = "";
+        if (this.manaPoints > this.spell.mp) {
+            this.manaPoints -= this.spell.mp;
+            if (this.spell.self) {
+                this.spell.resolve(this);
+                ret += "You cast a life spell on yourself, increasing your " + this.attributes[this.spell.attribute].name + " by " + this.spell.effect.factor;
+            } else if (this.MV.value + this.spell.mp > target.MV.value) {
+                this.spell.resolve(target);
+                ret += "You cast a death spell on the " + target.name + ", decreasing their " + target.attributes[this.spell.attribute].name + " by " + this.spell.effect.factor;
+            } else ret += "Your spell missed the " + target.name;
+        } else ret += "You don't have enough mana to cast this spell.";
+        return ret;
     }
 
     public Attribute[] getAttributes() { return attributes; }

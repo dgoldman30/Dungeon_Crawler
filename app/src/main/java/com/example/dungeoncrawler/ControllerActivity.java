@@ -15,13 +15,18 @@ import android.widget.TextView;
 
 import com.example.dungeoncrawler.databinding.FragmentExploreBinding;
 import com.example.dungeoncrawler.databinding.FragmentInventoryBinding;
+import com.example.dungeoncrawler.model.Armor;
 import com.example.dungeoncrawler.model.Caste;
+import com.example.dungeoncrawler.model.DeathSpell;
 import com.example.dungeoncrawler.model.Game;
 import com.example.dungeoncrawler.model.Item;
+import com.example.dungeoncrawler.model.LifeSpell;
 import com.example.dungeoncrawler.model.NPC;
 import com.example.dungeoncrawler.model.Player;
+import com.example.dungeoncrawler.model.Potion;
 import com.example.dungeoncrawler.model.Race;
 import com.example.dungeoncrawler.model.Tile;
+import com.example.dungeoncrawler.model.Weapon;
 import com.example.dungeoncrawler.view.CharCreationFragment;
 import com.example.dungeoncrawler.view.CharacterSheetFragment;
 import com.example.dungeoncrawler.view.DungeonCrawlerFragmentFactory;
@@ -37,9 +42,9 @@ import com.example.dungeoncrawler.view.IPersistenceFacade;
 import com.example.dungeoncrawler.view.InventoryFragment;
 import com.example.dungeoncrawler.view.LeaderBoardFragment;
 import com.example.dungeoncrawler.view.MainView;
-import com.google.firebase.FirebaseApp;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 public class ControllerActivity extends AppCompatActivity implements ICharCreationView.Listener, IExploreFragment.Listener, ICharacterSheetFragment.Listener,
         IInventoryFragment.Listener, ILeaderBoardFragment.Listener
@@ -129,44 +134,51 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         binding.enemyHP.setVisibility(LinearLayout.VISIBLE);
         binding.enemyHPBar.setVisibility(LinearLayout.VISIBLE);
 
+        if (game.pc.activeEffect != null) { game.pc.activeEffect.tick(game.pc); }
+        if (game.enemy.activeEffect != null) { game.enemy.activeEffect.tick(game.enemy); }
+
         game.pc.setToHit();
         game.enemy.setToHit();
         game.pc.setToBlock();
-            switch (input) {
-                case "f":
+        switch (input) {
+            case "f":
 
-                    // if PC beats enemy's dodge and armor, PC strikes enemy
-                    if (!game.enemy.toDodge(game.pc.toHit()) && game.pc.toPenetrate(game.enemy)) {
-                        log += "You hit the enemy for " + game.pc.weapon.strike(game.pc, game.enemy) + " damage.";
-                    } else log += "You missed the enemy.";
+                // if PC beats enemy's dodge and armor, PC strikes enemy
+                if (!game.enemy.toDodge(game.pc.toHit()) && game.pc.toPenetrate(game.enemy)) {
+                    log += "You hit the enemy for " + game.pc.weapon.strike(game.pc, game.enemy) + " damage.";
+                } else log += "You missed the enemy.";
 
-                    // if enemy beats PC's dodge and armor, enemy strikes PC
-                    if (!game.pc.toDodge(game.enemy.toHit()) && game.enemy.toPenetrate(game.pc)) {
-                        log += "\n" + "The enemy hit you for " + game.enemy.weapon.strike(game.enemy, game.pc) + " damage.";
-                    } else log += "\n The enemy missed you.";
-                    updateHP();
-                    break;
-                case "b":
-                    // if block is greater than to hit, deflect the whole attack.
-                    if (game.pc.toBlock() > game.enemy.toHit()) {
-                        log += "You deflected the " + game.enemy.race.name() + " " + game.enemy.caste.name() + "'s attack!";
-                        if (game.enemy.toDodge(game.pc.toHit()) && game.pc.toPenetrate(game.enemy)) {
-                            log += "\nYou counter attack for " + game.pc.weapon.strike(game.pc, game.enemy) + " damage.";
-                        }
-                    } else if (!game.pc.toDodge(game.enemy.toHit()) && game.enemy.toPenetrate(game.pc)) {
-                        log += "You failed to block the attack! \nThe enemy hit you for " + game.enemy.weapon.strike(game.enemy, game.pc) + " damage.";
-                    } else log += "You failed to block the attack, but the enemy missed you.";
-                    updateHP();
-                    break;
-                case "p":
-                    log += game.pc.drinkPotion();
-                    // if enemy beats PC's dodge and armor, enemy strikes PC
-                    if (!game.pc.toDodge(game.enemy.toHit()) && game.enemy.toPenetrate(game.pc)) {
-                        log += "\n" + "The enemy hit you for " + game.enemy.weapon.strike(game.enemy, game.pc) + " damage.";
-                    } else log += "\n The enemy missed you.";
-                    updateHP();
-                    break;
-            }
+                // if enemy beats PC's dodge and armor, enemy strikes PC
+                if (!game.pc.toDodge(game.enemy.toHit()) && game.enemy.toPenetrate(game.pc)) {
+                    log += "\n" + "The enemy hit you for " + game.enemy.weapon.strike(game.enemy, game.pc) + " damage.";
+                } else log += "\n The enemy missed you.";
+                updateHP();
+                break;
+            case "b":
+                // if block is greater than to hit, deflect the whole attack.
+                if (game.pc.toBlock() > game.enemy.toHit()) {
+                    log += "You deflected the " + game.enemy.race.name() + " " + game.enemy.caste.name() + "'s attack!";
+                    if (game.enemy.toDodge(game.pc.toHit()) && game.pc.toPenetrate(game.enemy)) {
+                        log += "\nYou counter attack for " + game.pc.weapon.strike(game.pc, game.enemy) + " damage.";
+                    }
+                } else if (!game.pc.toDodge(game.enemy.toHit()) && game.enemy.toPenetrate(game.pc)) {
+                    log += "You failed to block the attack! \nThe enemy hit you for " + game.enemy.weapon.strike(game.enemy, game.pc) + " damage.";
+                } else log += "You failed to block the attack, but the enemy missed you.";
+                updateHP();
+                break;
+            case "p":
+                log += game.pc.drinkPotion();
+                // if enemy beats PC's dodge and armor, enemy strikes PC
+                if (!game.pc.toDodge(game.enemy.toHit()) && game.enemy.toPenetrate(game.pc)) {
+                    log += "\n" + "The enemy hit you for " + game.enemy.weapon.strike(game.enemy, game.pc) + " damage.";
+                } else log += "\n The enemy missed you.";
+                updateHP();
+                break;
+            case "s":
+                log += game.pc.castSpell(game.enemy);
+                break;
+
+        }
         if (game.pc.HP.value <= 0) {
             log += "\n You were killed by the " + game.enemy.race.name() + " " + game.enemy.caste.name();
             youDied();
@@ -246,7 +258,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         binding.deathText.setText(deathText);
 
         this.persistenceFacade.saveGame(game);
-        
+
         binding.restartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -261,7 +273,9 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         game.pc.experience += game.enemy.level * 10;
         game.enemiesCleared++;
 
+        generateLoot();
         game.enemy.remove(game.enemy.location);
+
 
         binding.combatButtons.setVisibility(View.INVISIBLE);
         binding.enemyHP.setVisibility(LinearLayout.INVISIBLE);
@@ -269,6 +283,36 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
 
         log += replaceEnemy();
         return log;
+    }
+
+    private String generateLoot() {
+        String ret = "The enemy dropped a ";
+        int rand = (int) (1000 * Math.random());
+        Item drop = Potion.Potions.DEX.po;
+        if (rand < 50) {
+            drop = Potion.Potions.values()[(int) (Math.random() * 5)].po;
+        } else if (rand < 70) {
+            drop = Weapon.Weapons.values()[(int) (Math.random() * 9)].wn;
+        } else if (rand < 90) {
+            drop = Armor.Armors.values()[(int) (Math.random() * 6)].armor;
+        } else return spellLearned();
+        ret += drop.getName();
+        return ret;
+    }
+
+    private String spellLearned() {
+        String ret = "You learned a new ";
+        int rand = (int) (1000 * Math.random());
+        if (rand < 50) {
+            LifeSpell spell = LifeSpell.Life.values()[(int) (Math.random() * 5)].spell;
+            game.pc.knownSpells.add(spell);
+            ret += "life spell: " + spell.name;
+        } else {
+            DeathSpell spell = DeathSpell.Death.values()[(int) (Math.random() * 4)].spell;
+            game.pc.knownSpells.add(spell);
+            ret += "death spell: " + spell.name;
+        }
+        return ret;
     }
 
     @Override
@@ -376,6 +420,10 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
                 @Override
                 public void onClick(View view) {
                     game.depth++;
+                    // regen mana equal to the depth
+                    game.pc.manaPoints += game.depth;
+                    if (game.pc.manaPoints > game.pc.maxMP) { game.pc.manaPoints = game.pc.maxMP; }
+
                     String depthStr = "Depth: " + game.depth;
                     binding.locationField.setText(depthStr);
                     // make a new, wider map and place the pc in the same xy location
@@ -405,8 +453,16 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
     }
 
     @Override
-    public void onEquipment() {
-
+    public void onSpell() {
+        int xDiff = Math.abs(game.pc.x - game.enemy.x);
+        int yDiff = Math.abs(game.pc.y - game.enemy.y);
+        int distance = Math.abs(xDiff - yDiff);
+        if (game.pc.spell.self) {
+            game.pc.castSpell(game.pc);
+        } else {
+            game.pc.spell.effect.setFactor(distance);
+            game.pc.castSpell(game.enemy);
+        }
     }
 
     @Override

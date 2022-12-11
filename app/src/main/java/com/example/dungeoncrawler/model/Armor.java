@@ -13,7 +13,7 @@ public class Armor extends Item {
         RAGS(new Armor("Dirty rags", "A decrepit set of rags", 0, 1)),
         CLOTHES(new Armor("Clothes", "A set of peasant's clothes", 0.5, 1.5));
 
-        Armor armor;
+        public Armor armor;
         Armors(Armor a) {
             armor = a;
         }

@@ -8,7 +8,7 @@ public interface IExploreFragment {
     interface Listener {
         void onInventory();
         void onCharSheet();
-        void onEquipment();
+        void onSpell();
         void onGameRestart();
         String onMove();
         String onCombat(Game game, String input);
@@ -18,5 +18,6 @@ public interface IExploreFragment {
         void setBinding(FragmentExploreBinding binding);
         void performLevelUp();
         void onLeaderboard();
+
     }
 }

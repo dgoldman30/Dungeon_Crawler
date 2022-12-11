@@ -17,7 +17,8 @@ public class Weapon extends Item {
         HAMMER(new Weapon("Hammer", 1, 0.7, 0.05, true, "A large hammer for pulverizing your enemies")),
         MACE(new Weapon("Mace",  0.85, 0.75, 0.1, false, "A spiked mace, perfect for smashing skeletons"));
 
-        Weapon wn;
+        public Weapon wn;
+
         Weapons(Weapon w) {
             wn = w;
         }
