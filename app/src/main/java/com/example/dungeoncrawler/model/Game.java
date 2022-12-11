@@ -53,9 +53,6 @@ public class Game implements Serializable {
         return Math.abs(x - ex) <= 1 && Math.abs(y - ey) <= 1;
     }
 
-
-
-
     // SKILLS
 
     // change to a map indexed by name. Also move to an enum in Skills class
@@ -69,10 +66,9 @@ public class Game implements Serializable {
         Skill armor = new Skill("Armor", "Effects the character's armor value (AV) and their ability to wear heavier armors");
         Skill invocation = new Skill("Invocation", "Effects the character's ability to successfully use magical items");
         Skill faith = new Skill("Faith", "Effects the character's divine abilities associated with their deity");
-        Skill fireMagic = new Skill("Fire Magic", "Effects the character's ability with fire magic");
-        Skill earthMagic = new Skill("Earth Magic", "Effects the character's ability with earth magic");
-        Skill airMagic = new Skill("Air Magic", "Effects the character's ability with air magic");
-        Skill waterMagic = new Skill("Water Magic", "Effects the character's ability with water magic");
+        Skill deathMagic = new Skill("Death", "Effects the character's ability with harmful magic");
+        Skill lifeMagic = new Skill("Life", "Effects the character's ability with beneficial magics");
+
         skills.put(melee.name, melee);
         skills.put(ranged.name, ranged);
         skills.put(spellcasting.name, spellcasting);
@@ -81,10 +77,8 @@ public class Game implements Serializable {
         skills.put(armor.name, armor);
         skills.put(invocation.name, invocation);
         skills.put(faith.name, faith);
-        skills.put(fireMagic.name, fireMagic);
-        skills.put(earthMagic.name, earthMagic);
-        skills.put(airMagic.name, airMagic);
-        skills.put(waterMagic.name, waterMagic);
+        skills.put(deathMagic.name, deathMagic);
+        skills.put(lifeMagic.name, lifeMagic);
     }
 
 
@@ -96,31 +90,31 @@ public class Game implements Serializable {
 
 
     // Urchin
-    static String[] urSkills = {"Melee", "Ranged", "Dodge", "Invocation"};
+    static String[] urSkills = {"Melee", "Dodge", "Shield", "Life"};
     static Item[] urItems = {Weapon.Weapons.DAGGER.wn, Armor.Armors.RAGS.armor, Potion.Potions.DEX.po}; // sling and rags
 
 
     // Woodsman
-    static String[] woodSkills = {"Ranged", "Dodge", "Faith", "Earth Magic"};
+    static String[] woodSkills = {"Ranged", "Dodge", "Spellcasting", "Life"};
     static Item[] woodItems = {Weapon.Weapons.SABRE.wn,  Armor.Armors.LEATHER.armor, Potion.Potions.DEX.po, Potion.Potions.HEALTH.po};
     // add bow
     // add leather armor
 
     // Fisherman
-    static String[] fishSkills = {"Melee", "Spellcasting", "Air Magic", "Water Magic"};
+    static String[] fishSkills = {"Melee", "Spellcasting", "Death", "Dodge"};
     static Item[] fishItems = {Weapon.Weapons.HARPOON.wn, Armor.Armors.CLOTHES.armor, Potion.Potions.INT.po,};
     // air spell
     // water spell
     // clothes
 
     // Apprentice
-    static String[] appSkills = {"Spellcasting", "Fire Magic", "Air Magic", "Invocation"};
+    static String[] appSkills = {"Spellcasting", "Death", "Life", "Dodge"};
     static Item[] appItems = {Weapon.Weapons.CLUB.wn,  Armor.Armors.ROBES.armor, Potion.Potions.INT.po,};
     // fire spell
     // air spell
 
     // Clergyman
-    static String[] clerSkills = {"Armor", "Shield", "Faith", "Water Magic"};
+    static String[] clerSkills = {"Armor", "Shield", "Faith", "Life"};
     static Item[] clerItems = {Weapon.Weapons.MACE.wn, Armor.Armors.PLATE.armor, Potion.Potions.WILL.po};
     // metal armor
     // shield
@@ -141,19 +135,19 @@ public class Game implements Serializable {
     static int[] humAtt = {2,2,3,1,9};
 
     // Minotaur
-    static String[] minSkills = {"Melee", "Armor", "Shield", "Fire Magic"};
+    static String[] minSkills = {"Melee", "Armor", "Shield", "Death"};
     static int[] minAtt = {4,2,1,1,10};
 
     // Spriggan
-    static String[] sprSkills = {"Ranged", "Spellcasting", "Dodge", "Earth Magic"};
+    static String[] sprSkills = {"Ranged", "Spellcasting", "Dodge", "Life"};
     static int[] sprAtt = {1,4,3,2,7};
 
     // Dwarf
-    static String[] dwSkills  = {"Armor", "Faith", "Invocation", "Earth Magic"};
+    static String[] dwSkills  = {"Armor", "Faith", "Shield", "Life"};
     static int[] dwAtt = {3,1,2,4,12};
 
     // Nymph
-    static String[] nySkills = {"Dodge", "Spellcasting", "Water Magic", "Earth Magic"};
+    static String[] nySkills = {"Dodge", "Spellcasting", "Death", "Life"};
     static int[] nyAtt = {1,3,4,2,6};
 
     // Orc
@@ -161,6 +155,6 @@ public class Game implements Serializable {
     static int[] orcAtt = {4,2,1,3,9};
 
     // Kenku
-    static String[] kSkills = {"Ranged", "Dodge", "Invocation", "Air Magic"};
+    static String[] kSkills = {"Ranged", "Dodge", "Spellcasting", "Life"};
     static int[] kAtt = {2,4,2,2,6};
 }

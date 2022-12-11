@@ -151,6 +151,14 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
                     } else log += "You failed to block the attack, but the enemy missed you.";
                     updateHP();
                     break;
+                case "p":
+                    log += game.pc.drinkPotion();
+                    // if enemy beats PC's dodge and armor, enemy strikes PC
+                    if (!game.pc.toDodge(enemyToHit) && game.enemy.toPenetrate(game.pc)) {
+                        log += "\n" + "The enemy hit you for " + game.enemy.weapon.strike(game.enemy, game.pc) + " damage.";
+                    } else log += "\n The enemy missed you.";
+                    updateHP();
+                    break;
             }
         if (game.pc.HP.value <= 0) {
             log += "\n You were killed by the " + game.enemy.race.name() + " " + game.enemy.caste.name();

@@ -192,8 +192,17 @@ public abstract class Character {
         return false;
     }
 
-    public void drinkPotion(Potion pot) {
-        pot.drink(this);
+    public void heal(int hp) {
+        this.HP.value += hp;
+        if (this.HP.value > this.maxHP) this.HP.value = this.maxHP;
+    }
+
+    public String drinkPotion() {
+        String ret = "";
+        if (this.potion != null) {
+            ret += this.potion.drink(this);
+        } else return "You don't have a potion equipped!";
+        return ret;
     }
 
     public Attribute[] getAttributes() { return attributes; }

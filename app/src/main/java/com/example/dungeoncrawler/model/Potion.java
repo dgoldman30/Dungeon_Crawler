@@ -32,11 +32,13 @@ public class Potion extends Item {
         return this;
     }
 
-    public void drink(Character target) {
-        target.attributes[this.target].value += this.factor;
+    public String drink(Character target) {
+        if (this.target == 4) {
+            target.heal(this.factor);
+        }
+        if (this.target < 4) { target.attributes[this.target].value += this.factor; }
+        return "You drank a " + this.name + ", increasing your " + target.attributes[this.target].name + " by " + this.factor;
     }
-
-    public void use() {}
 
     @Override
     public String getName() {
