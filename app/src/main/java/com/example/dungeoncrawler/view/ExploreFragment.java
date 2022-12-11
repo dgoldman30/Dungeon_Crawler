@@ -107,7 +107,13 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
             @Override
             public void onClick(View view) { listener.onInventory(); }
         });
+        this.binding.leaderboardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { listener.onLeaderboard(); }
+        });
     }
+
+
 
 
     public String regen() {

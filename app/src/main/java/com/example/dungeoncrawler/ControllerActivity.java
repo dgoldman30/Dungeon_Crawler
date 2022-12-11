@@ -3,6 +3,7 @@ package com.example.dungeoncrawler;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -25,18 +26,23 @@ import com.example.dungeoncrawler.view.CharCreationFragment;
 import com.example.dungeoncrawler.view.CharacterSheetFragment;
 import com.example.dungeoncrawler.view.DungeonCrawlerFragmentFactory;
 import com.example.dungeoncrawler.view.ExploreFragment;
+import com.example.dungeoncrawler.view.FirestoreFacade;
 import com.example.dungeoncrawler.view.ICharCreationView;
 import com.example.dungeoncrawler.view.ICharacterSheetFragment;
 import com.example.dungeoncrawler.view.IExploreFragment;
 import com.example.dungeoncrawler.view.IInventoryFragment;
+import com.example.dungeoncrawler.view.ILeaderBoardFragment;
 import com.example.dungeoncrawler.view.IMainView;
+import com.example.dungeoncrawler.view.IPersistenceFacade;
 import com.example.dungeoncrawler.view.InventoryFragment;
+import com.example.dungeoncrawler.view.LeaderBoardFragment;
 import com.example.dungeoncrawler.view.MainView;
+import com.google.firebase.FirebaseApp;
 
 import java.io.Serializable;
 
 public class ControllerActivity extends AppCompatActivity implements ICharCreationView.Listener, IExploreFragment.Listener, ICharacterSheetFragment.Listener,
-        IInventoryFragment.Listener
+        IInventoryFragment.Listener, ILeaderBoardFragment.Listener
 {
 
     IMainView mainView;
@@ -50,7 +56,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
     FragmentInventoryBinding inventoryBinding;
 
     CharacterSheetFragment charSheetFragment;
-
+    private final IPersistenceFacade persistenceFacade = new FirestoreFacade();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -238,6 +244,8 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         String deathText = "You have been killed by a level " + game.enemy.level + " " + game.enemy.name + "." + "\n"
                 + "You reached level " + game.pc.level + " and explored down to depth " + game.depth + ".";
         binding.deathText.setText(deathText);
+
+        this.persistenceFacade.saveGame(game);
         
         binding.restartButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -338,6 +346,12 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
     }
 
     @Override
+    public void onLeaderboard() {
+        LeaderBoardFragment leaderboard = new LeaderBoardFragment(this, game);
+        mainView.displayFragment(leaderboard, true, "leaderboard");
+    }
+
+    @Override
     public String onMove() {
         String move = "";
 
@@ -413,12 +427,13 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         mainView.displayFragment(exploreFragment, false, "explore");
     }
 
-
-
     @Override
     public void onEquip(Item item) {
         game.pc.equip(item);
     }
+
+
+
 
 
 
