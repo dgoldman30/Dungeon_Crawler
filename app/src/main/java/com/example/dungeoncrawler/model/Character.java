@@ -42,7 +42,9 @@ public abstract class Character {
     public Attribute DV = new Attribute("dodge-value");
     public Attribute AV = new Attribute("armor-value");
     public Attribute MV = new Attribute("mental-value");
-    public Attribute[] attributes = {STR, DEX, INT, WILL, HP, DV, AV, MV};
+    public Attribute toHit = new Attribute("to-hit");
+    public Attribute toBlock = new Attribute("to-block");
+    public Attribute[] attributes = {STR, DEX, INT, WILL, HP, DV, AV, MV, toHit, toBlock};
 
     public Map<String, Skill> skills = new Hashtable<>();
 
@@ -170,15 +172,16 @@ public abstract class Character {
         if (ret != null) { this.inventory.add(ret); }
     }
 
-    public double toHit() {
-        double toHit = 1000 * Math.random() * (this.DEX.value + (this.INT.value / 2));
-        return toHit;
+    public void setToHit() {
+        attributes[8].value = (int) ((int) 1000 * Math.random() * (this.DEX.value + (this.INT.value / 2)));
     }
 
-    public double toBlock() {
-        double toBlock = 1000 * Math.random() * (this.skills.get("Shield").value + this.DEX.value + this.WILL.value);
-        return toBlock;
+    public void setToBlock() {
+        attributes[9].value = (int) ((int) 1000 * Math.random() * (this.skills.get("Shield").value + this.DEX.value + this.WILL.value));
     }
+
+    public int toHit() { return attributes[8].value; }
+    public int toBlock() { return attributes[9].value; }
 
     public boolean toDodge(double toHit) {
         if (toHit < (this.DV.value * (Math.random() * 10))) { return true; }
@@ -202,6 +205,7 @@ public abstract class Character {
         if (this.potion != null) {
             ret += this.potion.drink(this);
         } else return "You don't have a potion equipped!";
+        this.potion = null;
         return ret;
     }
 
