@@ -27,7 +27,7 @@ import java.util.TreeMap;
 import java.util.stream.Stream;
 
 public class LeaderBoardFragment extends Fragment implements ILeaderBoardFragment {
-    public Map<String, Integer> leaderboardMap;
+    public ArrayList<FirestoreFacade.LeaderboardEntry> leaderboardMap;
     Game game;
     Listener listener;
     FragmentLeaderboardBinding binding;
@@ -67,23 +67,17 @@ public class LeaderBoardFragment extends Fragment implements ILeaderBoardFragmen
     }
 
     public void displayLeaderboard() {
-        List<Map.Entry<String, Integer>> entries = new ArrayList<>(this.leaderboardMap.entrySet());
+        ArrayList<FirestoreFacade.LeaderboardEntry> entries = new ArrayList<>(this.leaderboardMap);
         LinearLayout leaderboardLayout = new LinearLayout(this.getContext());
 
-        Collections.sort(entries, new Comparator<Map.Entry<String, Integer>>() {
-            @Override
-            public int compare(Map.Entry<String, Integer> entry1, Map.Entry<String, Integer> entry2) {
-                return entry1.getValue().compareTo(entry2.getValue());
-            }
-        });
-
-        for (Map.Entry entry : entries) {
+        for (FirestoreFacade.LeaderboardEntry entry : entries) {
             TextView highScore = new TextView(this.getContext());
-            String score = entry.getKey() + " - depth: " + entry.getValue();
+            String score = entry.name + " - depth: " + entry.depth;
             highScore.setText(score);
             binding.leaderboardLayout.addView(highScore);
         }
         binding.leaderboardScroll.removeAllViews();
         binding.leaderboardScroll.addView(leaderboardLayout);
     }
+
 }

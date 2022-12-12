@@ -1,30 +1,19 @@
 package com.example.dungeoncrawler.view;
 
 
-import static android.content.ContentValues.TAG;
-
-import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.dungeoncrawler.ControllerActivity;
 import com.example.dungeoncrawler.model.Game;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
-import com.google.firebase.firestore.Source;
-import com.google.firebase.firestore.auth.User;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,6 +30,14 @@ public class FirestoreFacade implements IPersistenceFacade {
 
     private static final String GAME_COLLECTION = "Leaderboard"; // sales collection name
 
+    public class DataSave {
+       private int depth;
+       private String name;
+       public DataSave(String name, Integer depth) {
+           this.depth = depth.intValue();
+           this.name = name;
+       }
+    }
 
 
     /**
@@ -68,33 +65,41 @@ public class FirestoreFacade implements IPersistenceFacade {
                 });
     }
 
+    public class LeaderboardEntry {
+        String name;
+        int depth;
 
+        public LeaderboardEntry(String name, int depth) {
+            this.name = name;
+            this.depth = depth;
+        }
+    }
 
     /**
      * Issues a ledger retrieval operation.
      *
      *
      * */
-    public void retrieveScores(LeaderBoardFragment leaderboard) {
-        Map<String, Integer> data = new HashMap<>();
+    public ArrayList<LeaderboardEntry> retrieveScores() {
+        Log.d("Firestore", "inside retrieveScores");
+        ArrayList<LeaderboardEntry> data = new ArrayList<>();
         this.db.collection(GAME_COLLECTION)
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Integer i = (int) (long) document.get("depth");
-                                data.put((String) document.get("name"), i);
-                                Log.d("Firestore", "accessed firestore");
-                            }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                        leaderboard.leaderboardMap = data;
+                    public void onSuccess(@NonNull QuerySnapshot qsnap) {
+                            for (DocumentSnapshot document : qsnap) {
+                                int i = (int) (long) document.get("depth");
+                                String name = (String) document.get("name");
+                                LeaderboardEntry entry = new LeaderboardEntry(name, i);
+                                data.add(entry);
+                                Log.d("Firestore", "accessed entry from Firestore");
                     }
-                });// called when the data comes back from the database
-        leaderboard.leaderboardMap = data;
+                            Log.d("Firestore", data.toString());
+                }
+                });
+        Log.d("Firestore", data.toString());
+        return data;
     }
 
 
