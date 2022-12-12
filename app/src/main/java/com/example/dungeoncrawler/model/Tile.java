@@ -19,7 +19,6 @@ public class Tile
 
     public boolean stairs = false;
     //char display = occupant.sprite; //display the occupants sprite
-    ArrayList<Item> contents = new ArrayList<>();
     Button button;
 
     Tile(int x, int y) {

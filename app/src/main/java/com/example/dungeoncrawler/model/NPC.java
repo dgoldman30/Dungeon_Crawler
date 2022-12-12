@@ -7,7 +7,7 @@ public class NPC extends Character {
     Character target;
     boolean hostile;
 
-    NPC() {}
+    public NPC() {}
     public NPC(Race race, Caste caste, boolean hostile, int level) {
         super(race, caste);
         this.hostile = hostile;

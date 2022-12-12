@@ -182,6 +182,11 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
                 break;
             case "s":
                 log += game.pc.castSpell(game.enemy);
+                // if enemy beats PC's dodge and armor, enemy strikes PC
+                if (!game.pc.toDodge(game.enemy.toHit()) && game.enemy.toPenetrate(game.pc)) {
+                    log += "\n" + "The enemy hit you for " + game.enemy.weapon.strike(game.enemy, game.pc) + " damage.";
+                } else log += "\n The enemy missed you.";
+                updateHP();
                 break;
 
         }
@@ -398,15 +403,12 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         });
     }
 
-
     @Override
     public void onLeaderboard() {
         leaderBoardFragment = new LeaderBoardFragment(this, game);
         persistenceFacade.retrieveScores(leaderBoardFragment);
         mainView.displayFragment(leaderBoardFragment, true, "leaderboard");
     }
-
-
 
     @Override
     public String onMove() {

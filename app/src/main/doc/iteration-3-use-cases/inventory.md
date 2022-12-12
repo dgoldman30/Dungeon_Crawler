@@ -23,8 +23,9 @@ User wants to be able to view their inventory and drop items
 2. The Inventory Fragment is loaded. 
 
 # Extensions
-- The player can select an item to be dropped 
-- The user closes their inventory and continues exploring.
+- The user can select an item to be equipped
+  - The can chose to equip the item, select a different one, or close the inventory.
+- The user closes the inventory and continues exploring
 
 # Special Requirements
 - Functioning touch screen UI

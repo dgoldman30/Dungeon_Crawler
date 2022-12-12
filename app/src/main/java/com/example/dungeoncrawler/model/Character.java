@@ -37,7 +37,6 @@ public abstract class Character {
     int xpBase = 3;
     double scale = 10;
 
-
     public List<Item> inventory = new ArrayList<>();
     public Attribute STR = new Attribute("strength");
     public Attribute DEX = new Attribute("dexterity");

@@ -100,21 +100,18 @@ enduml```
 @startuml
 
 hide footbox
-
-'classes
 abstract class Character {
     level : int
     race : Race
     caste : Caste
     myChar : char
     location : Tile
+    
+    sprite : int
+    maxHP : int
     x : int
     y : int
-
-    dodgeValue : int
-    armorValue : int 
-    mental : int
-
+    
     attributes : Attribute[]
     skills : ArrayList<Skill>
     items : Item[]
@@ -122,10 +119,15 @@ abstract class Character {
     attunedSpell : Spell
 
     --
-    public Tile[][] move(map : Tile[][])
+    public void calcStats()
+    public void xpIncrement()
+    public String levelUp()
     public void occupy(tile : Tile)
     public void executeMove(tile : Tile)
-    public void equipWeapon(weapon : Weapon)
+    public void remove(tile : Tile)
+    public void equipWeapon(item : Item)
+    public String drinkPotion() 
+  
 }
 
 class  NPC {
@@ -148,8 +150,6 @@ class Player {
 
 Character <|-- NPC
 Character <|-- Player
-NPC <|-- Enemy
-
 
 enum Race {
     favoredSkills : ArrayList<Skill>
@@ -168,8 +168,11 @@ enum Caste {
 abstract Item {
     description : String
     name : String
+    disp : char
+    equipable : boolean
     --
     abstract Item drop()
+    public String getName()
 }
 
 class Attribute {
@@ -191,18 +194,66 @@ class Skill {
 }
 
 class Weapon {
-damage : double
-accuracy : double
-crit : double
-twoHanded : boolean
-enum Weapons
+    damage : double
+    accuracy : double
+    crit : double
+    twoHanded : boolean
+    enum Weapons
+    --
+    public double strike(user : Character, target : Character)
+}
 
-}
+enum Weapons {
+    DAGGER
+    SWORD
+    BRASSKNUCKLES
+    HARPOON
+    SABRE
+    CLUB
+    BALLANDCHAIN
+    HAMMER
+    MACE
+} 
+Weapons -> Weapon
+
 class Potion {
-attributeMulti : int 
-usageTime : int
-enum Potions
+    name : String
+    factor : int
+    target : int
+    enum Potions
+    --
+    public String drink(target : Character)
+    public String getName()
+    
 }
+enum Potions {
+    HEALTH
+    DEX
+    STR
+    INT
+    WILL
+}
+
+Potions -> Potion
+
+class Armor {
+    encumberance : double
+    AV : double
+    enum Armors
+    --
+    public String getName()
+}
+
+enum Armors {
+    CHAIN
+    LEATHER
+    PLATE
+    ROBES
+    RAGS
+    CLOTHES    
+}
+
+Armors -> Armor
 
 class Tile {
     available : boolean
@@ -210,121 +261,32 @@ class Tile {
     display : character 
     x : int 
     y : int 
+    floor : R.drawable
+    ladder : R.drawable
+    --
     public char display()
-
+    public void toStairs()
 }
-
 
 Item <|-- Weapon
 Item <|-- Potion
+Item <|-- Armor
 
 class Game {
-int gameState
+depth : int
+gameState : GameStates
+enemiesCleared : int
 map : Tile[][]
-enemy : Character 
+enemy : NPC 
 pc : Player
-{static} skills : ArrayList<Skill>
-{static} gladSkills : ArrayList<Skill>
-{static} gladItems : ArrayList<Item>
-{static} urSkills : ArrayList<Skill>
-{static} urItems : ArrayList<Item>
-{static} woodSkills : ArrayList<Skill>
-{static} woodItems : ArrayList<Item>
-{static} fishSkills : ArrayList<Skill>
-{static} fishItems : ArrayList<Item>
-{static} appSkills : ArrayList<Skill>
-{static} appItems : ArrayList<Item>
-{static} clerSkills : ArrayList<Skill>
-{static} clerItems : ArrayList<Item>
-{static} humSkills : ArrayList<Skill>
-{static} humAtt : int[]
-{static} minSkills : ArrayList<Skill>
-{static} minAtt : int[]
-{static} dwSkills : ArrayList<Skill>
-{static} dwAtt : int[]
-{static} sprSkills : ArrayList<Skill>
-{static} sprAtt : int[]
-{static} nySkills : ArrayList<Skill>
-{static} nyAtt : int[]
-{static} orcSkills : ArrayList<Skill>
-{static} orcAtt : int[]
-{static} kSkills : ArrayList<Skill>
-{static} kAtt : int[]
 --
-public boolean checkAdjacent(player : Character)
-public void createMap(size : int)
-public void createSkills()
-
+public boolean checkAdjacent()
+public void createMap(sizeX : int, sizeY : int)
+public static void createSkills()
 }
+
 
 package View {
-
-    interface ICharCreationView {
-    void onConfirm(race : String, caste : String, att : int[])
-    }
-
-    class CharCreationFragment implements ICharCreationView {
-    binding : FragmentCharCreation
-    listener : Listener
-    --
-    public View onCreateView(inflater : LayoutInflater , container : ViewGroup,  savedInstanceState : Bundle)
-    public void onAttIncrease()
-    public void onViewCreated(view : View, savedInstanceState : Bundle)
-    public View getRootView()
-    }
-
-    interface IExploreFragment {
-    void onInventory()
-    void onCharSheet()
-    void onEquipment()
-    void onRestart()
-    View getRootView()
-    }
-
-    class ExploreFragment implements IExploreFragment{
-        binding : FragmentExploreBinding
-        listener : Listener
-        game : Game
-        combatLayout : LinearLayout
-        depth : int
-        --
-        public void onCreateView(inflater : LayoutInflater, container : ViewGroup, savedInstanceState : Bundle)
-        public void onViewCreated(view : View, savedInstanceState : Bundle)
-        public String printMap(game : Game)
-        public void onCombat()
-
-        private void regen()
-        private void setMove()
-        private void setXpProgress()
-        private void createLog()
-        private void addToLog(text : TextView)
-        private void clearLog()
-        private void updateHP()
-        private void youDied()
-        private void replaceEnemy()
-        private void spawnEnemy()
-
-        public View getRootView()
-    }
-    interface IMainView {
-    View getRootView()
-    void displayFragment(Fragment fragment, boolean allowBack, String name);
-    }
-    class MainView implements IMainView{
-        fmanager : FragmentManager
-        binding : MainBinding
-        --
-        public void displayFragment(fragment : Fragment, allowBack : Boolean, name : String)
-    }
-}
-
-class ControllerActivity implements ICharCreationView.Listener, IExploreFragment.Listener{
-    mainView : IMainView
-    gameState : Game.GameState
-    --
-    protected void onCreate(savedInstanceState : Bundle)
-    public void onConfirm(race : String, caste : String, att : int[])
-    public void onRestart()
 }
 
 'associations

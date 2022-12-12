@@ -18,8 +18,6 @@ public class Game implements Serializable {
 
     public int enemiesCleared;
 
-    public Floor floor;
-
     public Tile[][] map;
     public Player pc;
     public NPC enemy;
