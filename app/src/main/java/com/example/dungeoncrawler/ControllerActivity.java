@@ -1,10 +1,8 @@
 package com.example.dungeoncrawler;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -44,14 +42,10 @@ import com.example.dungeoncrawler.view.InventoryFragment;
 import com.example.dungeoncrawler.view.LeaderBoardFragment;
 import com.example.dungeoncrawler.view.MainView;
 
-import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
+import java.util.ArrayList;
 
 public class ControllerActivity extends AppCompatActivity implements ICharCreationView.Listener, IExploreFragment.Listener, ICharacterSheetFragment.Listener,
-        IInventoryFragment.Listener, ILeaderBoardFragment.Listener
+        IInventoryFragment.Listener, ILeaderBoardFragment.Listener, IPersistenceFacade.Listener
 {
 
     IMainView mainView;
@@ -402,7 +396,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
     @Override
     public void onLeaderboard() {
         leaderBoardFragment = new LeaderBoardFragment(this, game);
-        persistenceFacade.retrieveScores(leaderBoardFragment);
+        leaderBoardFragment.leaderboardMap = new ArrayList<FirestoreFacade.LeaderboardEntry>(persistenceFacade.retrieveScores());
         mainView.displayFragment(leaderBoardFragment, true, "leaderboard");
     }
 
@@ -501,4 +495,8 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         game.pc.equip(item);
     }
 
+    @Override
+    public void onScore(String name, Integer depth) {
+
+    }
 }

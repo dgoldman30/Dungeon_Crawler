@@ -2,6 +2,7 @@ package com.example.dungeoncrawler.view;
 
 import androidx.annotation.NonNull;
 
+import com.example.dungeoncrawler.ControllerActivity;
 import com.example.dungeoncrawler.model.Game;
 import com.google.firebase.firestore.auth.User;
 
@@ -11,7 +12,9 @@ import java.util.Map;
 public interface IPersistenceFacade {
 
 
-
+interface Listener {
+    void onScore(String name, Integer depth);
+}
         /* ledger-related methods start */
         /**
          * Saves the sale passed in as input to the underlying persistence solution.
@@ -21,13 +24,9 @@ public interface IPersistenceFacade {
 
 
         /**
-         * Retrieves the User with the specified username from the underlying persistence subsystem.
-         *
-         * @param listener observer to be notified of query result. onDataReceived() is called if a
-         *                 user with the specified username was found. Otherwise, onNoDataFound() is
-         *                 called.
+         * Retrieves the User with the specified username from the underlying persistence subsystem
          */
-        void retrieveScores(LeaderBoardFragment leaderBoardFragment);
+        ArrayList retrieveScores();
 
 
 
