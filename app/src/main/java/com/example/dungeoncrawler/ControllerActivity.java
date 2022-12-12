@@ -134,8 +134,8 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         binding.enemyHP.setVisibility(LinearLayout.VISIBLE);
         binding.enemyHPBar.setVisibility(LinearLayout.VISIBLE);
 
-        if (game.pc.activeEffect != null) { game.pc.activeEffect.tick(game.pc); }
-        if (game.enemy.activeEffect != null) { game.enemy.activeEffect.tick(game.enemy); }
+//        if (game.pc.activeEffect != null) { game.pc.activeEffect.tick(game.pc); }
+//        if (game.enemy.activeEffect != null) { game.enemy.activeEffect.tick(game.enemy); }
 
         game.pc.setToHit();
         game.enemy.setToHit();
@@ -272,7 +272,9 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
 
     @Override
     public void saveGame(String name) {
+
         this.persistenceFacade.saveGame(game, name);
+        this.exploreFragment.binding.enterScoreButton.setEnabled(false);
     }
 
     @Override
@@ -309,20 +311,20 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         return ret;
     }
 
-    private String spellLearned() {
-        String ret = "You learned a new ";
-        int rand = (int) (1000 * Math.random());
-        if (rand < 50) {
-            LifeSpell spell = LifeSpell.Life.values()[(int) (Math.random() * 5)].spell;
-            game.pc.knownSpells.add(spell);
-            ret += "life spell: " + spell.name;
-        } else {
-            DeathSpell spell = DeathSpell.Death.values()[(int) (Math.random() * 4)].spell;
-            game.pc.knownSpells.add(spell);
-            ret += "death spell: " + spell.name;
-        }
-        return ret;
-    }
+//    private String spellLearned() {
+//        String ret = "You learned a new ";
+//        int rand = (int) (1000 * Math.random());
+//        if (rand < 50) {
+//            LifeSpell spell = LifeSpell.Life.values()[(int) (Math.random() * 5)].spell;
+//            game.pc.knownSpells.add(spell);
+//            ret += "life spell: " + spell.name;
+//        } else {
+//            DeathSpell spell = DeathSpell.Death.values()[(int) (Math.random() * 4)].spell;
+//            game.pc.knownSpells.add(spell);
+//            ret += "death spell: " + spell.name;
+//        }
+//        return ret;
+//    }
 
     @Override
     public void updateHP() {
