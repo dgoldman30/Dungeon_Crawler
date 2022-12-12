@@ -45,7 +45,7 @@ import com.example.dungeoncrawler.view.MainView;
 import java.util.ArrayList;
 
 public class ControllerActivity extends AppCompatActivity implements ICharCreationView.Listener, IExploreFragment.Listener, ICharacterSheetFragment.Listener,
-        IInventoryFragment.Listener, ILeaderBoardFragment.Listener, IPersistenceFacade.Listener
+        IInventoryFragment.Listener, ILeaderBoardFragment.Listener
 {
 
     IMainView mainView;
@@ -498,8 +498,4 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         game.pc.equip(item);
     }
 
-    @Override
-    public void onScore(String name, Integer depth) {
-
-    }
 }

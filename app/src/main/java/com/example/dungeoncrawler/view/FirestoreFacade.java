@@ -36,15 +36,6 @@ public class FirestoreFacade implements IPersistenceFacade {
 
     private static final String GAME_COLLECTION = "Leaderboard"; // sales collection name
 
-    public class DataSave {
-       private int depth;
-       private String name;
-       public DataSave(String name, Integer depth) {
-           this.depth = depth.intValue();
-           this.name = name;
-       }
-    }
-
 
     /**
      * Saves the game passed in as input to the underlying persistence solution.
@@ -69,43 +60,6 @@ public class FirestoreFacade implements IPersistenceFacade {
                         Log.e("Firestore", "Didn't get there");
                     }
                 });
-    }
-
-    public class LeaderboardEntry {
-        String name;
-        int depth;
-
-        public LeaderboardEntry(String name, int depth) {
-            this.name = name;
-            this.depth = depth;
-        }
-    }
-
-    /**
-     * Issues a ledger retrieval operation.
-     *
-     *
-     * */
-    public ArrayList<LeaderboardEntry> retrieveScores() {
-        Log.d("Firestore", "inside retrieveScores");
-        ArrayList<LeaderboardEntry> data = new ArrayList<>();
-        this.db.collection(GAME_COLLECTION)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(@NonNull QuerySnapshot qsnap) {
-                            for (DocumentSnapshot document : qsnap) {
-                                int i = (int) (long) document.get("depth");
-                                String name = (String) document.get("name");
-                                LeaderboardEntry entry = new LeaderboardEntry(name, i);
-                                data.add(entry);
-                                Log.d("Firestore", "accessed entry from Firestore");
-                    }
-                            Log.d("Firestore", data.toString());
-                }
-                });
-        Log.d("Firestore", data.toString());
-        return data;
     }
 
 
