@@ -281,7 +281,7 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         game.pc.experience += game.enemy.level * 10;
         game.enemiesCleared++;
 
-        generateLoot();
+        log += generateLoot();
         game.enemy.remove(game.enemy.location);
 
 
@@ -299,12 +299,13 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
         Item drop = Potion.Potions.DEX.po;
         if (rand < 50) {
             drop = Potion.Potions.values()[(int) (Math.random() * 5)].po;
-        } else if (rand < 70) {
+        } else if (rand < 75) {
             drop = Weapon.Weapons.values()[(int) (Math.random() * 9)].wn;
-        } else if (rand < 90) {
+        } else {
             drop = Armor.Armors.values()[(int) (Math.random() * 6)].armor;
-        } else return spellLearned();
+        }
         ret += drop.getName();
+        game.pc.inventory.add(drop);
         return ret;
     }
 

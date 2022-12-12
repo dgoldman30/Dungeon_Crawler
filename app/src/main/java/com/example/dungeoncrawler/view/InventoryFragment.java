@@ -149,7 +149,7 @@ public class InventoryFragment extends Fragment implements IInventoryFragment {
                 InventoryButton itemButton = (InventoryButton) row.getChildAt(j);
                 int index = i * 3 + j;
                 row.removeViewAt(j);
-                if (game.pc.inventory.size() > 0) {
+                if (index < game.pc.inventory.size()) {
                     itemButton.setItem(game.pc.inventory.get(index));
                     setColor(itemButton, itemButton.getItem());
                     String itemText = itemButton.getItem().getName();

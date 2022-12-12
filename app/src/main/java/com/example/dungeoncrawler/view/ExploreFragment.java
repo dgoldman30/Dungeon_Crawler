@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableRow;
@@ -116,6 +117,13 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
             @Override
             public void onClick(View view) { listener.onLeaderboard(); }
         });
+        EditText nameField = this.binding.leaderboardName;
+        this.binding.enterScoreButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.saveGame(String.valueOf(nameField.getText()));
+            }
+        });
     }
 
 
@@ -192,6 +200,7 @@ public class ExploreFragment extends Fragment implements IExploreFragment {
     }
 
     public void addToLog(TextView view) {
+        view.setTextSize(16);
         combatLayout.addView(view);
         binding.combatLog.scrollToDescendant(view);
     }

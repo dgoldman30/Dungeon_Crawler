@@ -4,6 +4,7 @@ package com.example.dungeoncrawler.view;
 import static android.content.ContentValues.TAG;
 
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -75,10 +76,12 @@ public class FirestoreFacade implements IPersistenceFacade {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 // document.getData() contains the data for each score
-                                Map<String, Object> data = document.getData();
                                 // You can use the data here
                                 TextView view = new TextView(fragment.getContext());
-                                view.setText(data.toString());
+                                String entry = document.get("name") + " - depth: " + document.get("depth");
+                                view.setText(entry);
+                                view.setTextSize(24);
+                                view.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                                 fragment.binding.leaderboardLayout.addView(view);
                             }
                         } else {
