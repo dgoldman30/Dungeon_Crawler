@@ -400,7 +400,8 @@ public class ControllerActivity extends AppCompatActivity implements ICharCreati
     @Override
     public void onLeaderboard() {
         leaderBoardFragment = new LeaderBoardFragment(this, game);
-        leaderBoardFragment.leaderboardMap = new ArrayList<FirestoreFacade.LeaderboardEntry>(persistenceFacade.retrieveScores());
+//        leaderBoardFragment.leaderboardMap = new ArrayList<FirestoreFacade.LeaderboardEntry>(persistenceFacade.retrieveScores());
+
         mainView.displayFragment(leaderBoardFragment, true, "leaderboard");
     }
 

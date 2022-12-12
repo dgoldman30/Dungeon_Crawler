@@ -1,18 +1,14 @@
 package com.example.dungeoncrawler.view;
 
-import androidx.annotation.NonNull;
-
-import com.example.dungeoncrawler.ControllerActivity;
 import com.example.dungeoncrawler.model.Game;
-import com.google.firebase.firestore.auth.User;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public interface IPersistenceFacade {
 
 
-interface Listener {
+
+    interface Listener {
     void onScore(String name, Integer depth);
 }
         /* ledger-related methods start */
@@ -27,6 +23,8 @@ interface Listener {
          * Retrieves the User with the specified username from the underlying persistence subsystem
          */
         ArrayList retrieveScores();
+
+        public void retRanked(LeaderBoardFragment fragment);
 
 
 
